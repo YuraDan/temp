@@ -267,7 +267,7 @@
   "NaturalPerson.CertificateType": "Тип документа",
   "ExecutivePerson.Selector": "Выбрать должностное лицо",
   "ExecutivePerson.Edit": "Редактировать должностное лицо",
-  "ExecutivePerson.Position": "Позиция",
+  "ExecutivePerson.Position": "Должность",
   "ExecutivePerson.MainInformation": "Основная информация",
   "OKATO": "ОКАТО",
   "KLADR": "КЛАДР",

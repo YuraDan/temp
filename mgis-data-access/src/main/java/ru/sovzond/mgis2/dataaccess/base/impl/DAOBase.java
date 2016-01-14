@@ -24,4 +24,9 @@ public abstract class DAOBase<T> implements IDAOBase<T> {
 		getSession().delete(entity);
 	}
 
+	@Override
+	public void updateOrInsert(T entity) {
+		getSession().merge(entity);
+	}
+
 }
