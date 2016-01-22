@@ -198,6 +198,17 @@
 				</div>
 			</div>
 
+			<!-- other -->
+			<div class="form-group row">
+				<div class="col-sm-4">
+					<label translate>Address.Other</label>
+				</div>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" name="addressOther" ng-model="address.other"
+						   typeahead="availableOther for availableOther in refreshAvailableOther()"/>
+				</div>
+			</div>
+
 		</form>
 	</div>
 </div>

@@ -20,7 +20,7 @@ public class OKATO implements Cloneable {
 	private Long id;
 
 	@Column(unique = true, nullable = false)
-	private String code;
+	private String code; //code okato
 
 	@Column
 	private String name;
@@ -28,8 +28,8 @@ public class OKATO implements Cloneable {
 	@Column(name = "control_number")
 	private Integer controlNumber;
 
-	@Column
-	private Integer nodeCount;
+//	@Column
+//	private Integer nodeCount;
 
 	@Column(name = "parent_code")
 	private String parentCode;
@@ -74,14 +74,14 @@ public class OKATO implements Cloneable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Integer getNodeCount() {
-		return nodeCount;
-	}
-
-	public void setNodeCount(Integer nodeCount) {
-		this.nodeCount = nodeCount;
-	}
+//
+//	public Integer getNodeCount() {
+//		return nodeCount;
+//	}
+//
+//	public void setNodeCount(Integer nodeCount) {
+//		this.nodeCount = nodeCount;
+//	}
 
 	public String getAdditionalInfo() {
 		return additionalInfo;
