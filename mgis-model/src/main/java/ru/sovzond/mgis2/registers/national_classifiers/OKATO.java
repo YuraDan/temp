@@ -73,7 +73,6 @@ public class OKATO implements Cloneable {
 
 	public void setName(String name) {
 		this.name = name;
-		//hello
 	}
 //
 //	public Integer getNodeCount() {
