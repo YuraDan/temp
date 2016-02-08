@@ -51,6 +51,13 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 				return null;
 			}
 
+			function retrieveOther() {
+				if (modalScope.address && modalScope.address.other) {
+					return modalScope.address && modalScope.address.other;
+				}
+				return null;
+			}
+
 			modalScope.refreshAvailableOKATOs = function (name) {
 				NcOKATOService.get("", min, max, null, name).then(function (data) {
 					modalScope.availableOKATOs = data.list;
@@ -143,6 +150,10 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 				//return modalScope.availableApartments;
 			}
 
+			modalScope.refreshAvailableOther = function (name) {
+				return new Array();
+			}
+
 			function emptyRegion() {
 				modalScope.address.region = {};
 				emptyLocality();
@@ -179,6 +190,7 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 			function emptyApartment() {
 				modalScope.address.apartment = "";
 			}
+
 
 			modalScope.subjectSelected = function () {
 				modalScope.refreshAvailableRegions("");

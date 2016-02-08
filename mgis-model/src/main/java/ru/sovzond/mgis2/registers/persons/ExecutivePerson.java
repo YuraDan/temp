@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.registers.persons;
 import javax.persistence.*;
 
 /**
- * Created by Alexander Arakelyan on 31.07.15.
+ * Created by y.donchenko on 31.07.15.
  */
 @Entity
 @Table(name = "common_executive_person")
