@@ -4,7 +4,8 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 ])
 
 	.constant("ConstructsConstructConstants", {
-		CONSTRUCT_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1,10}\b/
+		CONSTRUCT_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1}/,
+		CONSTRUCT_CADASTRAL_NUMBER_MASK: "99:99:9999999:9?9?9?9?9?9?9?9?9?9"
 	})
 			.factory("CapitalConstructsConstructService", function ($q, $resource, MGISErrorService, MGISPropertyRightsService) {
 		var res = $resource('rest/capital-constructs/constructs/:id.json');

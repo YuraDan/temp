@@ -1,4 +1,4 @@
-angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap",
+angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap", "ui.mask",
 	"mgis.commons",
 	"mgis.commons.forms",
 	"mgis.capital-constructs.construct.service",
@@ -26,6 +26,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			var modalScope = $rootScope.$new();
 			modalScope.item = item;
 			modalScope.CONSTRUCT_CADASTRAL_NUMBER = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER;
+			modalScope.CONSTRUCT_CADASTRAL_NUMBER_MASK = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER_MASK;
 			// AddressMunicipalEntities
 			modalScope.availableMunicipalEntities = new Array();
 			modalScope.refreshAvailableMunicipalEntities = function (name) {
