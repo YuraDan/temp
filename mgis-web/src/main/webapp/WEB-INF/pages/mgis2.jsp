@@ -28,6 +28,13 @@
 	<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
 	<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
+
+
+
+	<script type="text/javascript" src="bower_components/jquery.maskedinput/dist/jquery.maskedinput.js"></script>
+
+
+
 	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>

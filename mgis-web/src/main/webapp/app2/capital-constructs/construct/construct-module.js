@@ -16,10 +16,16 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 				templateUrl: "app2/capital-constructs/construct/construct-list.htm"
 			});
 	})
-	.factory("CapitalConstructsConstructCRUDService", function ($rootScope, CapitalConstructsConstructService, CapitalConstructsConstructTypeService, NcOKTMOService, MGISCommonsModalForm) {
+	.factory("CapitalConstructsConstructCRUDService", function ($rootScope,
+																CapitalConstructsConstructService,
+																CapitalConstructsConstructTypeService,
+																NcOKTMOService,
+																MGISCommonsModalForm,
+																ConstructsConstructConstants) {
 		function editItem0(item, updateHandler) {
 			var modalScope = $rootScope.$new();
 			modalScope.item = item;
+			modalScope.CONSTRUCT_CADASTRAL_NUMBER = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER;
 			// AddressMunicipalEntities
 			modalScope.availableMunicipalEntities = new Array();
 			modalScope.refreshAvailableMunicipalEntities = function (name) {

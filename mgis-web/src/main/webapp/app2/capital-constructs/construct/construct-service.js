@@ -2,7 +2,11 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 	"mgis.error.service",
 	"mgis.property.service"
 ])
-	.factory("CapitalConstructsConstructService", function ($q, $resource, MGISErrorService, MGISPropertyRightsService) {
+
+	.constant("ConstructsConstructConstants", {
+		CONSTRUCT_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1,10}\b/
+	})
+			.factory("CapitalConstructsConstructService", function ($q, $resource, MGISErrorService, MGISPropertyRightsService) {
 		var res = $resource('rest/capital-constructs/constructs/:id.json');
 
 		return {
