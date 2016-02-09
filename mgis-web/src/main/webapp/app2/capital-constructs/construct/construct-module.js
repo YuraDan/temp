@@ -21,6 +21,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 																CapitalConstructsConstructTypeService,
 																NcOKTMOService,
 																MGISCommonsModalForm,
+																AddressModule,
 																ConstructsConstructConstants) {
 		function editItem0(item, updateHandler) {
 			var modalScope = $rootScope.$new();
@@ -58,6 +59,10 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			});
 		}
 
+		function editAddressItem(id, updateGrid) {
+			AddressModule.edit(id, updateGrid);
+		}
+
 		function removeItem(id, updateHandler) {
 			MGISCommonsModalForm.confirmRemoval(function ($modalInstance) {
 				CapitalConstructsConstructService.remove(id).then(function () {
@@ -85,7 +90,8 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			addItem: addItem,
 			editItem: editItem,
 			removeItem: removeItem,
-			reloadItemInList: reloadItemInList
+			reloadItemInList: reloadItemInList,
+			editAddressItem: editAddressItem
 		}
 	})
 	.controller("CapitalConstructsConstructListController", function ($scope,
@@ -116,6 +122,11 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		$scope.editItem = function (id) {
 			CapitalConstructsConstructCRUDService.editItem(id, updateGrid);
 		}
+
+		$scope.editAddressItem = function (id) {
+			CapitalConstructsConstructCRUDService.editAddressItem(id, updateGrid);
+		}
+
 		$scope.deleteItem = function (id) {
 			CapitalConstructsConstructCRUDService.removeItem(id, updateGrid);
 		}

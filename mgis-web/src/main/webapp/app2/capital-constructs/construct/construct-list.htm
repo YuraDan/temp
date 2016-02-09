@@ -13,12 +13,16 @@
 
 	<div>
 		<div ng-repeat="item in constructsPager.list" class="row" style="padding: 5px;">
-			<div class="col-sm-2">{{item.name}}</div>
 			<div class="col-sm-2">
-				{{item.cadastralNumber}}
+				<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item.name}}</a>
 				<span class="glyphicon glyphicon-map-marker" ng-if="item.spatialData|spatialDataExistsFilter"></span>
 			</div>
-			<div class="col-sm-3">{{item.address|addressFormatter}}</div>
+			<div class="col-sm-2">
+				{{item.cadastralNumber}}
+			</div>
+			<div class="col-sm-3">
+				<a href="javascript:void(0)" ng-click="editAddressItem(item.address.id)">{{item.address|addressFormatter}}</a>
+			</div>
 			<div class="col-sm-2">{{item.actualUsage}}</div>
 			<div class="col-sm-3">
 				<button class="btn btn-warning btn-sm" ng-click="editItem(item.id)" translate>Edit</button>
