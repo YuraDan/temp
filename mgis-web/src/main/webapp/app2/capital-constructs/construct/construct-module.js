@@ -7,6 +7,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	"mgis.capital-constructs.constructive-elements",
 	"mgis.nc.services",
 	"mgis.reports.report",
+	"mgis.lands.maps",
 	"mgis.geo.spatial.data"
 ])
 	.config(function ($stateProvider) {
@@ -95,6 +96,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		}
 	})
 	.controller("CapitalConstructsConstructListController", function ($scope,
+																	  $state,
 																	  $rootScope,
 																	  CapitalConstructsConstructService,
 																	  CapitalConstructEconomicCharacteristicsCRUDService,
@@ -104,16 +106,30 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 																	  CapitalConstructsConstructiveElementCRUDService,
 																	  NcOKTMOService,
 																	  CommonsPagerManager,
+																	  ConstructsConstructSelectorService,
 																	  CapitalConstructsConstructCRUDService) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.cadastralNumber = "";
+		$scope.selectedIds = {};
+
 		function updateGrid() {
-			CapitalConstructsConstructService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage).then(function (data) {
+			var ids = ConstructsConstructSelectorService.ids();
+			CapitalConstructsConstructService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage,
+				$scope.cadastralNumber,
+				"",
+				ids
+			).then(function (data) {
 				$scope.constructsPager = data;
+				$scope.selectedIds = {};
+				for (var i in data.list) {
+					var construction = data.list[i];
+					if (ids.indexOf(construction.id) > -1) {
+						$scope.selectedIds[construction.id] = {checked: true, cadastralNumber: construction.cadastralNumber};
+					}
+				}
 			});
 		}
-
-		updateGrid();
 
 		$scope.addItem = function () {
 			CapitalConstructsConstructCRUDService.addItem(updateGrid);
@@ -130,11 +146,65 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		$scope.deleteItem = function (id) {
 			CapitalConstructsConstructCRUDService.removeItem(id, updateGrid);
 		}
+
 		$scope.pageChanged = function () {
 			updateGrid();
 		}
 
+		$scope.deleteSelectedItems = function () {
+			MGISCommonsModalForm.confirmRemoval(function (modalInstance) {
+				var ids = ConstructsConstructSelectorService.ids();
+				CapitalConstructsConstructService.removeSelected(ids).then(function (data) {
+					ConstructsConstructSelectorService.removeByIds(data.ids);
+					updateGrid();
+					modalInstance.close();
+				});
+			});
+		}
+
+		updateGrid();
+
+		$scope.displayOnTheMap = function () {
+			//$state.go("^.maps");
+			$state.go("lands.maps"); // временная заглушка
+		}
+
+		function selectConstruct(item) {
+			ConstructsConstructSelectorService.add({id: item.id, cadastralnumber: item.cadastralNumber});
+		}
+
+		$scope.checkConstructSelected = function (checked, item) {
+
+			if (checked) {
+				selectConstruct(item);
+				$scope.selectedIds[item.id] = {checked: true, cadastralNumber: item.cadastralNumber};
+			} else {
+				ConstructsConstructSelectorService.remove(item);
+				delete $scope.selectedIds[item.id];
+			}
+			var ids = ConstructsConstructSelectorService.ids();
+			for (var id in ids) {
+				$scope.selectedIds[ids[id]] = {checked: true, cadastralNumber: item.cadastralNumber};
+			}
+			//updateGrid();
+		}
+		$scope.selectAll = function () {
+			for (var i in $scope.constructsPager.list) {
+				var construct = $scope.constructsPager.list[i];
+				selectConstruct(construct);
+				$scope.selectedIds[construct.id] = {checked: true, cadastralNumber: construct.cadastralNumber};
+			}
+		}
+		$scope.deselectAll = function () {
+			ConstructsConstructSelectorService.removeByIds(Object.keys($scope.selectedIds));
+			$scope.selectedIds = {};
+		}
+		$scope.isNotEmpty = function (obj) {
+			return Object.keys(obj).length > 0;
+		}
+
 	})
+
 	.controller("CapitalConstructsConstructController", function ($scope,
 																  CapitalConstructEconomicCharacteristicsCRUDService,
 																  CapitalConstructTechnicalCharacteristicsCRUDService,

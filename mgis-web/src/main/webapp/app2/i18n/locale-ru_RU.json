@@ -408,6 +408,7 @@
   "CapitalConstructs.Construct.ActualUsage": "Фактическое использование",
   "CapitalConstructs.Construct.Placement": "Местоположение",
   "CapitalConstructs.Construct.ObjectPurpose": "Назначение объекта",
+  "CapitalConstructs.Construct.DisplayOnTheMap": "Показать на карте",
   "Indicators": "Показатели",
   "Indicators.PriceIndicator": "Стоимостной показатель",
   "Indicators.TechnicalIndicator": "Технический показатель",
