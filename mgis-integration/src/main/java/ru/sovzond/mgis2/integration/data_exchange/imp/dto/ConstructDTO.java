@@ -14,6 +14,8 @@ public class ConstructDTO {
 	private Double cadastralCostValue;
 	private Integer cadastralCostUnit;
 	private EntitySpatialDTO entitySpatial;
+	private Integer keyParameterType;
+	private Double keyParameterValue;
 
 	public String getCadastralNumber() {
 		return cadastralNumber;
@@ -79,6 +81,22 @@ public class ConstructDTO {
 		this.entitySpatial = entitySpatial;
 	}
 
+	public Integer getKeyParameterType() {
+		return keyParameterType;
+	}
+
+	public void setKeyParameterType(Integer keyParameterType) {
+		this.keyParameterType = keyParameterType;
+	}
+
+	public Double getKeyParameterValue() {
+		return keyParameterValue;
+	}
+
+	public void setKeyParameterValue(Double keyParameterValue) {
+		this.keyParameterValue = keyParameterValue;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
@@ -88,6 +106,8 @@ public class ConstructDTO {
 				.append("cadastralCostUnit", cadastralCostUnit)
 				.append("assignationBuilding", assignationBuilding)
 				.append("entitySpatial", entitySpatial)
+				.append("keyParameterType", keyParameterType)
+				.append("keyParameterValue", keyParameterValue)
 				.toString();
 	}
 }

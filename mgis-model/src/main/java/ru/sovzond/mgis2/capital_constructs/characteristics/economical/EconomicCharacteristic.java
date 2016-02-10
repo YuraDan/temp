@@ -28,7 +28,7 @@ public class EconomicCharacteristic implements Cloneable {
 	/**
 	 * Значение
 	 */
-	private String value;
+	private Double value;
 
 	/**
 	 * Дата установления значения
@@ -62,11 +62,11 @@ public class EconomicCharacteristic implements Cloneable {
 		this.priceIndicator = priceIndicator;
 	}
 
-	public String getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 

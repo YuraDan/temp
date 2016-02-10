@@ -15,10 +15,10 @@ public class OKTMO implements Cloneable {
 	@Column
 	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String code;
 
-	@Column
+	@Column(length = 300)
 	private String name;
 
 	@ManyToOne
@@ -29,6 +29,9 @@ public class OKTMO implements Cloneable {
 
 	@Column
 	private String comment;
+
+	@Column
+	private String other;
 
 	public Long getId() {
 		return id;
@@ -78,6 +81,14 @@ public class OKTMO implements Cloneable {
 		this.comment = comment;
 	}
 
+	public String getOther() {
+		return other;
+	}
+
+	public void setOther(String other) {
+		this.other = other;
+	}
+
 	public OKTMO clone() {
 		OKTMO oktmo = new OKTMO();
 		oktmo.setId(id);
@@ -85,7 +96,8 @@ public class OKTMO implements Cloneable {
 		oktmo.setControlNumber(controlNumber);
 		oktmo.setName(name);
 		oktmo.setParent(parent != null ? parent.clone() : null);
-
+		oktmo.setComment(comment);
+		oktmo.setOther(other);
 		return oktmo;
 	}
 }
