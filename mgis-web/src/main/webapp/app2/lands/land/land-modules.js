@@ -62,7 +62,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
 											// AddressMunicipalEntities
 											modalScope.availableAddressMunicipalEntities = new Array();
 											modalScope.refreshAvailableMunicipalEntities = function (name) {
-												NcOKTMOService.get("", 0, 15, null, name).then(function (data) {
+												NcOKTMOService.get("", 0, 30, null, name).then(function (data) {
 													modalScope.availableAddressMunicipalEntities = data.list;
 												});
 											}
@@ -70,7 +70,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
 											// NearestMunicipalEntities
 											modalScope.availableNearestMunicipalEntities = new Array();
 											modalScope.refreshAvailableNearestMunicipalEntities = function (name) {
-												NcOKTMOService.get("", 0, 15, null, name).then(function (data) {
+												NcOKTMOService.get("", 0, 30, null, name).then(function (data) {
 													modalScope.availableNearestMunicipalEntities = data.list;
 												});
 											}

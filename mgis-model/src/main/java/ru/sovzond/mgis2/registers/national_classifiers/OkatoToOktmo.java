@@ -28,4 +28,44 @@ public class OkatoToOktmo implements Cloneable {
 	@Column(unique = true)
 	private String oktmo;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOkato() {
+		return okato;
+	}
+
+	public void setOkato(String okato) {
+		this.okato = okato;
+	}
+
+	public String getOktmo() {
+		return oktmo;
+	}
+
+	public void setOktmo(String oktmo) {
+		this.oktmo = oktmo;
+	}
+
+	public OkatoToOktmo clone() {
+		OkatoToOktmo okatoToOktmo = new OkatoToOktmo();
+		okatoToOktmo.setId(id);
+		okatoToOktmo.setName(name);
+		okatoToOktmo.setOkato(okato);
+		okatoToOktmo.setOktmo(oktmo);
+		return okatoToOktmo;
+	}
 }

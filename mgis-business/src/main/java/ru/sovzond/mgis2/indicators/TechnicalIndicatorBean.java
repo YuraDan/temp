@@ -18,6 +18,10 @@ public class TechnicalIndicatorBean extends CRUDBeanBase<TechnicalIndicator> {
 	@Autowired
 	private TechnicalIndicatorDao dao;
 
+	public TechnicalIndicator findByName(String name) {
+		return dao.findByName(name);
+	}
+
 	@Override
 	protected IPageableDAOBase<TechnicalIndicator> getPageableDao() {
 		return dao;

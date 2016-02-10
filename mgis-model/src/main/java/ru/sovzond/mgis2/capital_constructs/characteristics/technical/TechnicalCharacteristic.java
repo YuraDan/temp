@@ -37,7 +37,7 @@ public class TechnicalCharacteristic implements Cloneable {
 	 * Значение
 	 */
 	@Column
-	private String value;
+	private Double value;
 
 	/**
 	 * Единица измерения
@@ -70,11 +70,11 @@ public class TechnicalCharacteristic implements Cloneable {
 		this.technicalIndicator = technicalIndicator;
 	}
 
-	public String getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 

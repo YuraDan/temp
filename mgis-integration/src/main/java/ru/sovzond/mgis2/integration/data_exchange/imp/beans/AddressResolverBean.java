@@ -11,7 +11,10 @@ import ru.sovzond.mgis2.kladr.KLADRLocalityDao;
 import ru.sovzond.mgis2.kladr.KLADRStreet;
 import ru.sovzond.mgis2.kladr.KLADRStreetDao;
 import ru.sovzond.mgis2.national_classifiers.OKATOBean;
+import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
+import ru.sovzond.mgis2.national_classifiers.OkatoToOktmoBean;
 import ru.sovzond.mgis2.registers.national_classifiers.OKATO;
+import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import java.util.List;
 
@@ -28,10 +31,17 @@ public class AddressResolverBean {
 	private KLADRLocalityDao kladrLocalityDao;
 
 	@Autowired
+	private OkatoToOktmoBean okatoToOktmoBean;
+
+	@Autowired
 	private KLADRStreetDao kladrStreetDao;
 
 	@Autowired
 	private OKATOBean okatoBean;
+
+
+	@Autowired
+	private OKTMOBean oktmoBean;
 
 
 	public Address resolveAddress(AddressDTO addressDTO) {
@@ -77,9 +87,14 @@ public class AddressResolverBean {
 		address.setRegion(region);
 		address.setNote(addressDTO.getNote());
 
-
+		//*********Find OKATO by code from nc_okato
 		OKATO okato = okatoBean.findByCode(addressDTO.getOkato());
 		address.setOkato(okato);
+
+		//**********Find OKTMO by OKATO from nc_okato_oktmo
+		//OKTMO oktmo = oktmoBean.findByCode();
+		OKTMO oktmo = okatoToOktmoBean.findByOkato(addressDTO.getOkato());
+		address.setOktmo(oktmo);
 
 		address.setOther(addressDTO.getNote());
 		addressBean.save(address);

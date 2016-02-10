@@ -18,6 +18,10 @@ public class OKEIDao extends CRUDDaoBase<OKEI> {
 		return new OKEIFilter(name, orderBy, first, max);
 	}
 
+	public OKEI findByCode(Integer code) {
+		return (OKEI) createCriteria().add(Restrictions.eq("code", code)).uniqueResult();
+	}
+
 	private class OKEIFilter extends PagerBuilderCriteria<OKEI> {
 
 		private String name;
