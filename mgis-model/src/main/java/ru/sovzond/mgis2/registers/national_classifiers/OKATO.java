@@ -19,17 +19,17 @@ public class OKATO implements Cloneable {
 	@Column
 	private Long id;
 
-	@Column(unique = true, nullable = false)
-	private String code;
+	@Column(nullable = false)
+	private String code; //code okato
 
-	@Column
+	@Column(length = 300)
 	private String name;
 
 	@Column(name = "control_number")
 	private Integer controlNumber;
 
-	@Column
-	private Integer nodeCount;
+//	@Column
+//	private Integer nodeCount;
 
 	@Column(name = "parent_code")
 	private String parentCode;
@@ -74,14 +74,14 @@ public class OKATO implements Cloneable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Integer getNodeCount() {
-		return nodeCount;
-	}
-
-	public void setNodeCount(Integer nodeCount) {
-		this.nodeCount = nodeCount;
-	}
+//
+//	public Integer getNodeCount() {
+//		return nodeCount;
+//	}
+//
+//	public void setNodeCount(Integer nodeCount) {
+//		this.nodeCount = nodeCount;
+//	}
 
 	public String getAdditionalInfo() {
 		return additionalInfo;
@@ -99,17 +99,17 @@ public class OKATO implements Cloneable {
 		this.parent = parent;
 	}
 
-	public String getParentCode() {
-		return parentCode;
-	}
-
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
-	}
-
-	public Integer getNode_count() {
-		return node_count;
-	}
+//	public String getParentCode() {
+//		return parentCode;
+//	}
+//
+//	public void setParentCode(String parentCode) {
+//		this.parentCode = parentCode;
+//	}
+//
+//	public Integer getNode_count() {
+//		return node_count;
+//	}
 
 	public void setNode_count(Integer node_count) {
 		this.node_count = node_count;
@@ -121,7 +121,8 @@ public class OKATO implements Cloneable {
 		okato.setCode(code);
 		okato.setName(name);
 		okato.setControlNumber(controlNumber);
-		okato.setParent(okato.parent != null ? okato.parent.clone() : null);
+//		okato.setParent(okato.parent != null ? okato.parent.clone() : null);
+		okato.setAdditionalInfo(additionalInfo);
 		return okato;
 	}
 }

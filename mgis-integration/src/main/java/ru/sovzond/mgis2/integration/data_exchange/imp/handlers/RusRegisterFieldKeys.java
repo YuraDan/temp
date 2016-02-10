@@ -46,6 +46,7 @@ public class RusRegisterFieldKeys {
 	public static final String VALUE_ATTR = "VALUE_ATTR";
 	public static final String CATEGORY_ATTR = "CATEGORY_ATTR";
 	public static final String UTILIZ_ATTR = "UTILIZ_ATTR";
+	public static final String UTILIZ_ATTR_NC = "UTILIZ_ATTR_NC";
 	public static final String CADASTRAL_COST_VALUE_ATTR = "CADASTRAL_COST_VALUE_ATTR";
 	public static final String CADASTRAL_COST_UNIT_ATTR = "CADASTRAL_COST_UNIT_ATTR";
 	public static final String ENT_SYS_ATTR = "ENT_SYS_ATTR";
@@ -62,4 +63,7 @@ public class RusRegisterFieldKeys {
 	public static final String INCOMPLETE = "INCOMPLETE";
 	public static final String ASSIGNATION_BUILDING = "ASSIGNATION_BUILDING";
 	public static final String OBJECT_TYPE = "OBJECT_TYPE";
+	public static final String KEY_PARAMETER = "KEY_PARAMETER";
+	public static final String KEY_VALUE_ATTR = "KEY_VALUE_ATTR";
+	public static final String KEY_TYPE_ATTR = "KEY_TYPE_ATTR";
 }

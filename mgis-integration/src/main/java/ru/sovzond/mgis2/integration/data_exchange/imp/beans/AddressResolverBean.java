@@ -11,7 +11,10 @@ import ru.sovzond.mgis2.kladr.KLADRLocalityDao;
 import ru.sovzond.mgis2.kladr.KLADRStreet;
 import ru.sovzond.mgis2.kladr.KLADRStreetDao;
 import ru.sovzond.mgis2.national_classifiers.OKATOBean;
+import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
+import ru.sovzond.mgis2.national_classifiers.OkatoToOktmoBean;
 import ru.sovzond.mgis2.registers.national_classifiers.OKATO;
+import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import java.util.List;
 
@@ -28,15 +31,22 @@ public class AddressResolverBean {
 	private KLADRLocalityDao kladrLocalityDao;
 
 	@Autowired
+	private OkatoToOktmoBean okatoToOktmoBean;
+
+	@Autowired
 	private KLADRStreetDao kladrStreetDao;
 
 	@Autowired
 	private OKATOBean okatoBean;
 
 
+	@Autowired
+	private OKTMOBean oktmoBean;
+
+
 	public Address resolveAddress(AddressDTO addressDTO) {
 		AddressFilterBuilder filterBuilder = addressBean.createfilterBuilder();
-		filterBuilder //
+		filterBuilder
 				.subjectCode(addressDTO.getRegion()) //
 				.region(addressDTO.getDistrictName(), addressDTO.getDistrictType()) //
 				.locality(addressDTO.getLocalityName(), addressDTO.getLocalityType()) //
@@ -63,16 +73,28 @@ public class AddressResolverBean {
 
 		KLADRLocality subject = kladrLocalityDao.findSubjectByCode(addressDTO.getRegion());
 		KLADRLocality region = kladrLocalityDao.findRegion(subject.getCode(), addressDTO.getDistrictName(), addressDTO.getDistrictType()).get(0);
-		KLADRLocality locality = kladrLocalityDao.findLocality(region.getCode(), addressDTO.getLocalityName(), addressDTO.getLocalityType()).get(0);
-		KLADRStreet street = kladrStreetDao.findStreet(locality.getCode(), addressDTO.getStreetName(), addressDTO.getStreetType()).get(0);
 
+		if (kladrLocalityDao.findLocality(region.getCode(), addressDTO.getLocalityName(), addressDTO.getLocalityType()).size() != 0) {
+			KLADRLocality locality = kladrLocalityDao.findLocality(region.getCode(), addressDTO.getLocalityName(), addressDTO.getLocalityType()).get(0);
+			address.setLocality(locality);
+
+			if (kladrStreetDao.findStreet(locality.getCode(), addressDTO.getStreetName(), addressDTO.getStreetType()).size() != 0) {
+				KLADRStreet street = kladrStreetDao.findStreet(locality.getCode(), addressDTO.getStreetName(), addressDTO.getStreetType()).get(0);
+				address.setStreet(street);
+			}
+		}
 		address.setSubject(subject);
 		address.setRegion(region);
-		address.setLocality(locality);
-		address.setStreet(street);
+		address.setNote(addressDTO.getNote());
 
+		//*********Find OKATO by code from nc_okato
 		OKATO okato = okatoBean.findByCode(addressDTO.getOkato());
 		address.setOkato(okato);
+
+		//**********Find OKTMO by OKATO from nc_okato_oktmo
+		//OKTMO oktmo = oktmoBean.findByCode();
+		OKTMO oktmo = okatoToOktmoBean.findByOkato(addressDTO.getOkato());
+		address.setOktmo(oktmo);
 
 		address.setOther(addressDTO.getNote());
 		addressBean.save(address);

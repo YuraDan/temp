@@ -6,4 +6,6 @@ public interface IDAOBase<T> {
 
 	void delete(T entity);
 
+	void updateOrInsert(T entity);
+
 }

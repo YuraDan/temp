@@ -18,6 +18,10 @@ public class PriceIndicatorBean extends CRUDBeanBase<PriceIndicator> {
 	@Autowired
 	private PriceIndicatorDao dao;
 
+	public PriceIndicator findByName(String name) {
+		return dao.findByName(name);
+	}
+
 	@Override
 	protected IPageableDAOBase<PriceIndicator> getPageableDao() {
 		return dao;

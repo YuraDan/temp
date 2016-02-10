@@ -12,24 +12,25 @@ public class IncompleteBuilder extends ConstructBuilder<IncompleteDTO> {
 
 
 	public IncompleteBuilder(Predicate<String> buildingPredicate,
-							 Predicate<String> assignationBuildingPredicate,
-							 Predicate<String> objectTypePredicate,
-							 Predicate<String> areaPredicate,
-							 Predicate<String> addressPredicate,
-							 Predicate<String> okatoPredicate,
-							 Predicate<String> kladrPredicate,
-							 Predicate<String> regionPredicate,
-							 Predicate<String> districtPredicate,
-							 Predicate<String> localityPredicate,
-							 Predicate<String> streetPredicate,
-							 Predicate<String> level1Predicate,
-							 Predicate<String> notePredicate,
-							 Predicate<String> cadastralCostPredicate,
-							 Predicate<String> entitySpatialPredicate,
-							 Predicate<String> spatialElementPredicate,
-							 Predicate<String> spelementUnitPredicate,
-							 Predicate<String> ordinatePredicate,
-							 NodeBuilderEndEvent<IncompleteDTO> endEvent
+	                         Predicate<String> assignationBuildingPredicate,
+	                         Predicate<String> objectTypePredicate,
+	                         Predicate<String> areaPredicate,
+	                         Predicate<String> addressPredicate,
+	                         Predicate<String> okatoPredicate,
+	                         Predicate<String> kladrPredicate,
+	                         Predicate<String> regionPredicate,
+	                         Predicate<String> districtPredicate,
+	                         Predicate<String> localityPredicate,
+	                         Predicate<String> streetPredicate,
+	                         Predicate<String> level1Predicate,
+	                         Predicate<String> notePredicate,
+	                         Predicate<String> cadastralCostPredicate,
+	                         Predicate<String> keyParameterPredicate,
+	                         Predicate<String> entitySpatialPredicate,
+	                         Predicate<String> spatialElementPredicate,
+	                         Predicate<String> spelementUnitPredicate,
+	                         Predicate<String> ordinatePredicate,
+	                         NodeBuilderEndEvent<IncompleteDTO> endEvent
 	) {
 		super(buildingPredicate,
 				assignationBuildingPredicate,
@@ -45,6 +46,7 @@ public class IncompleteBuilder extends ConstructBuilder<IncompleteDTO> {
 				level1Predicate,
 				notePredicate,
 				cadastralCostPredicate,
+				keyParameterPredicate,
 				entitySpatialPredicate,
 				spatialElementPredicate,
 				spelementUnitPredicate,
@@ -67,10 +69,16 @@ public class IncompleteBuilder extends ConstructBuilder<IncompleteDTO> {
 
 		constructDTO.setAddress(address.build());
 
+
 		Number[] cadastralCost = this.cadastralCost.build();
 		if (cadastralCost != null) {
 			constructDTO.setCadastralCostValue((Double) cadastralCost[0]);
 			constructDTO.setCadastralCostUnit((Integer) cadastralCost[1]);
+		}
+		Number[] keyParameter = this.keyParameter.build();
+		if (keyParameter != null) {
+			constructDTO.setKeyParameterValue((Double) keyParameter[0]);
+			constructDTO.setKeyParameterType((Integer) keyParameter[1]);
 		}
 
 		constructDTO.setEntitySpatial(entitySpatial.build());

@@ -14,13 +14,8 @@ import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandTargetDecora
 import ru.sovzond.mgis2.lands.*;
 import ru.sovzond.mgis2.lands.characteristics.LandCharacteristics;
 import ru.sovzond.mgis2.lands.rights.LandRights;
-import ru.sovzond.mgis2.national_classifiers.LandCategoryBean;
-import ru.sovzond.mgis2.national_classifiers.LandRightKindBean;
-import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
-import ru.sovzond.mgis2.registers.national_classifiers.LandCategory;
-import ru.sovzond.mgis2.registers.national_classifiers.LandRightKind;
-import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
-import ru.sovzond.mgis2.registers.national_classifiers.TerritorialZoneType;
+import ru.sovzond.mgis2.national_classifiers.*;
+import ru.sovzond.mgis2.registers.national_classifiers.*;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -38,16 +33,26 @@ public class LandResolverBean {
 	private LandBean landBean;
 
 	@Autowired
+	private LandAreaBean landAreaBean;
+
+	@Autowired
+	private LandAllowedUsageBean landAllowedUsageBean;
+
+	@Autowired
+	private LandAreaTypeBean landAreaTypeBean;
+
+
+	@Autowired
 	private LandRightKindBean landRightKindBean;
 
 	@Autowired
 	private LandCategoryBean landCategoryBean;
 
 	@Autowired
-	private OKTMOBean oktmoBean;
+	private TerritorialZoneTypeBean territorialZoneTypeBean;
 
 	@Autowired
-	private TerritorialZoneTypeBean territorialZoneTypeBean;
+	private OKTMOBean oktmoBean;
 
 	@Autowired
 	private TerritorialZoneBean territorialZoneBean;
@@ -117,8 +122,12 @@ public class LandResolverBean {
 		land.setCadastralNumber(landDTO.getCadastralNumber());
 		land.setStateRealEstateCadastreaStaging(landDTO.getDateCreated());
 		land.setAddress(addressResolverBean.resolveAddress(landDTO.getAddress()));
-//		land.setAddressOfMunicipalEntity(resolveOKTMO(null));
 		land.setLandCategory(resolveLandCategory(landDTO.getCategory()));
+
+		if (land.getAddress().getOktmo() != null) {
+			land.setAddressOfMunicipalEntity(land.getAddress().getOktmo());
+		}
+
 		String locationPlaced = landDTO.getLocationPlaced();
 		TerritorialZoneType zoneType;
 		if (locationPlaced != null) {
@@ -127,10 +136,30 @@ public class LandResolverBean {
 		} else {
 			land.setAllowedUsageByTerritorialZone(null);
 		}
+
+		land.setAllowedUsageByDocument(landDTO.getUtilizationByDoc());
+		LandAllowedUsage landAllowedUsage = landAllowedUsageBean.findByCode(landDTO.getUtilizationByNc());
+		land.setAllowedUsageByDictionary(landAllowedUsage);
+
 		if (landDTO.getCadastralCostValue() != null) {
 			land.getCharacteristics().setCadastralCost(landDTO.getCadastralCostValue().floatValue());
 		}
+
 		if (landDTO.getArea() != null) {
+
+			List<LandArea> landAreas = land.getLandAreas();
+			if (landAreas != null && landAreas.size() != 0) {
+				landAreas.get(0).setValue(landDTO.getArea().floatValue());
+				landAreas.get(0).setLandAreaType(landAreaTypeBean.load(3L));
+				land.setLandAreas(landAreas);
+			} else {
+				LandArea landArea = new LandArea();
+				landArea.setValue(landDTO.getArea().floatValue());
+				landArea.setLandAreaType(landAreaTypeBean.load(3L));
+				landAreas.add(landArea);
+				land.setLandAreas(landAreas);
+			}
+
 			LandRights rights = land.getRights();
 			if (rights == null) {
 				rights = new LandRights();
@@ -151,6 +180,7 @@ public class LandResolverBean {
 				}
 			}
 		}
+
 		fillSpatialData(landDTO, land);
 	}
 
