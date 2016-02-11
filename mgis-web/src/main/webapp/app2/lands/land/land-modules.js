@@ -1,4 +1,4 @@
-angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
+angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "ui.mask",//
 	"mgis.commons", //
 	"mgis.commons.forms", //
 	"mgis.lands.services",
@@ -39,9 +39,13 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
 											   LandsInspectionReasonService,
 											   LandsInspectionSubjectService,
 											   TerrZonesZoneService,
+											   AddressModule,
+											   LegalPersonModule,
+											   NaturalPersonModule,
 											   LandsLandConstants) {
 		function editItem0(modalScope, updateGrid) {
 			modalScope.LAND_CADASTRAL_NUMBER = LandsLandConstants.LAND_CADASTRAL_NUMBER;
+			modalScope.LAND_CADASTRAL_NUMBER_MASK = LandsLandConstants.LAND_CADASTRAL_NUMBER_MASK;
 			LandsInspectionKindService.get().then(function (inspectionKinds) {
 				modalScope.availableInspectionKinds = inspectionKinds.list;
 				LandsInspectionTypeService.get().then(function (inspectionTypes) {
@@ -128,6 +132,18 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
 			});
 		}
 
+		function editAddressItem(id, updateGrid) {
+			AddressModule.edit(id, updateGrid);
+		}
+
+		function editRightOwnerItem(id, name, updateGrid) {
+			if(name) {
+				LegalPersonModule.edit(id, updateGrid)
+			} else {
+				NaturalPersonModule.edit(id, updateGrid);
+			}
+		}
+
 		function addItem(updateGrid) {
 			var modalScope = $rootScope.$new();
 			modalScope.land = {
@@ -164,7 +180,9 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
 			addItem: addItem,
 			editItem: editItem,
 			deleteItem: deleteItem,
-			reloadItemInList: reloadItemInList
+			reloadItemInList: reloadItemInList,
+			editAddressItem: editAddressItem,
+			editRightOwnerItem: editRightOwnerItem
 		}
 
 	}) //
@@ -218,6 +236,14 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", //
 
 		$scope.editItem = function (id) {
 			LandsLandCRUDService.editItem(id, updateGrid);
+		}
+
+		$scope.editAddressItem = function (id) {
+			LandsLandCRUDService.editAddressItem(id, updateGrid);
+		}
+
+		$scope.editRightOwnerItem = function (id, name) {
+			LandsLandCRUDService.editRightOwnerItem(id, name, updateGrid);
 		}
 
 		$scope.deleteItem = function (id) {

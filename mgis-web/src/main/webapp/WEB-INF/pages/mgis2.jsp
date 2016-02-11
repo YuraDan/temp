@@ -44,6 +44,7 @@
 	<!-- <script type="text/javascript" src="bower_components/angular-dialog-service/dist/dialogs.js"></script> -->
 	<script type="text/javascript" src="bower_components/select2/select2.js"></script>
 	<script type="text/javascript" src="bower_components/angular-ui-select/dist/select.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-mask/dist/mask.js"></script>
 	<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 
 	<link type="text/css" rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
