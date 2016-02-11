@@ -1,4 +1,4 @@
-angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap",
+angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap", "ui.mask",
 	"mgis.commons",
 	"mgis.commons.forms",
 	"mgis.capital-constructs.construct.service",
@@ -7,6 +7,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	"mgis.capital-constructs.constructive-elements",
 	"mgis.nc.services",
 	"mgis.reports.report",
+	"mgis.lands.maps",
 	"mgis.geo.spatial.data"
 ])
 	.config(function ($stateProvider) {
@@ -16,10 +17,18 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 				templateUrl: "app2/capital-constructs/construct/construct-list.htm"
 			});
 	})
-	.factory("CapitalConstructsConstructCRUDService", function ($rootScope, CapitalConstructsConstructService, CapitalConstructsConstructTypeService, NcOKTMOService, MGISCommonsModalForm) {
+	.factory("CapitalConstructsConstructCRUDService", function ($rootScope,
+																CapitalConstructsConstructService,
+																CapitalConstructsConstructTypeService,
+																NcOKTMOService,
+																MGISCommonsModalForm,
+																AddressModule,
+																ConstructsConstructConstants) {
 		function editItem0(item, updateHandler) {
 			var modalScope = $rootScope.$new();
 			modalScope.item = item;
+			modalScope.CONSTRUCT_CADASTRAL_NUMBER = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER;
+			modalScope.CONSTRUCT_CADASTRAL_NUMBER_MASK = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER_MASK;
 			// AddressMunicipalEntities
 			modalScope.availableMunicipalEntities = new Array();
 			modalScope.refreshAvailableMunicipalEntities = function (name) {
@@ -51,6 +60,10 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			});
 		}
 
+		function editAddressItem(id, updateGrid) {
+			AddressModule.edit(id, updateGrid);
+		}
+
 		function removeItem(id, updateHandler) {
 			MGISCommonsModalForm.confirmRemoval(function ($modalInstance) {
 				CapitalConstructsConstructService.remove(id).then(function () {
@@ -78,10 +91,12 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			addItem: addItem,
 			editItem: editItem,
 			removeItem: removeItem,
-			reloadItemInList: reloadItemInList
+			reloadItemInList: reloadItemInList,
+			editAddressItem: editAddressItem
 		}
 	})
 	.controller("CapitalConstructsConstructListController", function ($scope,
+																	  $state,
 																	  $rootScope,
 																	  CapitalConstructsConstructService,
 																	  CapitalConstructEconomicCharacteristicsCRUDService,
@@ -91,16 +106,30 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 																	  CapitalConstructsConstructiveElementCRUDService,
 																	  NcOKTMOService,
 																	  CommonsPagerManager,
+																	  ConstructsConstructSelectorService,
 																	  CapitalConstructsConstructCRUDService) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.cadastralNumber = "";
+		$scope.selectedIds = {};
+
 		function updateGrid() {
-			CapitalConstructsConstructService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage).then(function (data) {
+			var ids = ConstructsConstructSelectorService.ids();
+			CapitalConstructsConstructService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage,
+				$scope.cadastralNumber,
+				"",
+				ids
+			).then(function (data) {
 				$scope.constructsPager = data;
+				$scope.selectedIds = {};
+				for (var i in data.list) {
+					var construction = data.list[i];
+					if (ids.indexOf(construction.id) > -1) {
+						$scope.selectedIds[construction.id] = {checked: true, cadastralNumber: construction.cadastralNumber};
+					}
+				}
 			});
 		}
-
-		updateGrid();
 
 		$scope.addItem = function () {
 			CapitalConstructsConstructCRUDService.addItem(updateGrid);
@@ -109,14 +138,73 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		$scope.editItem = function (id) {
 			CapitalConstructsConstructCRUDService.editItem(id, updateGrid);
 		}
+
+		$scope.editAddressItem = function (id) {
+			CapitalConstructsConstructCRUDService.editAddressItem(id, updateGrid);
+		}
+
 		$scope.deleteItem = function (id) {
 			CapitalConstructsConstructCRUDService.removeItem(id, updateGrid);
 		}
+
 		$scope.pageChanged = function () {
 			updateGrid();
 		}
 
+		$scope.deleteSelectedItems = function () {
+			MGISCommonsModalForm.confirmRemoval(function (modalInstance) {
+				var ids = ConstructsConstructSelectorService.ids();
+				CapitalConstructsConstructService.removeSelected(ids).then(function (data) {
+					ConstructsConstructSelectorService.removeByIds(data.ids);
+					updateGrid();
+					modalInstance.close();
+				});
+			});
+		}
+
+		updateGrid();
+
+		$scope.displayOnTheMap = function () {
+			//$state.go("^.maps");
+			$state.go("lands.maps"); // временная заглушка
+		}
+
+		function selectConstruct(item) {
+			ConstructsConstructSelectorService.add({id: item.id, cadastralnumber: item.cadastralNumber});
+		}
+
+		$scope.checkConstructSelected = function (checked, item) {
+
+			if (checked) {
+				selectConstruct(item);
+				$scope.selectedIds[item.id] = {checked: true, cadastralNumber: item.cadastralNumber};
+			} else {
+				ConstructsConstructSelectorService.remove(item);
+				delete $scope.selectedIds[item.id];
+			}
+			var ids = ConstructsConstructSelectorService.ids();
+			for (var id in ids) {
+				$scope.selectedIds[ids[id]] = {checked: true, cadastralNumber: item.cadastralNumber};
+			}
+			//updateGrid();
+		}
+		$scope.selectAll = function () {
+			for (var i in $scope.constructsPager.list) {
+				var construct = $scope.constructsPager.list[i];
+				selectConstruct(construct);
+				$scope.selectedIds[construct.id] = {checked: true, cadastralNumber: construct.cadastralNumber};
+			}
+		}
+		$scope.deselectAll = function () {
+			ConstructsConstructSelectorService.removeByIds(Object.keys($scope.selectedIds));
+			$scope.selectedIds = {};
+		}
+		$scope.isNotEmpty = function (obj) {
+			return Object.keys(obj).length > 0;
+		}
+
 	})
+
 	.controller("CapitalConstructsConstructController", function ($scope,
 																  CapitalConstructEconomicCharacteristicsCRUDService,
 																  CapitalConstructTechnicalCharacteristicsCRUDService,

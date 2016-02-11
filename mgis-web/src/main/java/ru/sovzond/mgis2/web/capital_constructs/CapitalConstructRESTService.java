@@ -23,6 +23,7 @@ import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
 import ru.sovzond.mgis2.property.PropertyRightsBean;
 import ru.sovzond.mgis2.rights.PropertyRights;
+import ru.sovzond.mgis2.web.lands.ResultIds;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -346,6 +347,16 @@ public class CapitalConstructRESTService {
 	@Transactional
 	public void delete(@PathVariable Long id) {
 		capitalConstructBean.remove(capitalConstructBean.load(id));
+	}
+
+	@RequestMapping(value = "/remove-selected", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@Transactional
+	public ResultIds delete(@RequestBody Long[] ids) {
+		List<Long> list = Arrays.asList(ids);
+		capitalConstructBean.load(list).forEach(capitalConstructBean::remove);
+		ResultIds resultIds = new ResultIds();
+		resultIds.setIds(list);
+		return resultIds;
 	}
 
 }
