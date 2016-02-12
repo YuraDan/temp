@@ -13,10 +13,12 @@
 		</div>
 
 		<div ng-repeat="item in legalPersonsPager.list" class="row" style="padding-bottom: 7px;">
-			<div class="col-sm-2">{{item.name}}</div>
+			<div class="col-sm-2">
+				<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item.name}}</a>
+			</div>
 			<div class="col-sm-2">{{item.organizationalForm.name}}</div>
 			<div class="col-sm-2">
-				{{item.actualAddress|addressFormatter}}
+				<a href="javascript:void(0)" ng-click="editAddressItem(item.actualAddress.id)">{{item.actualAddress|addressFormatter}}</a>
 			</div>
 			<div class="col-sm-1">{{item.contactPhone}}</div>
 			<div class="col-sm-1">{{item.contactEmail}}</div>
