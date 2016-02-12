@@ -12,7 +12,9 @@
 		</div>
 
 		<div ng-repeat="item in naturalPersonsPager.list" class="row" style="padding-bottom: 7px;">
-			<div class="col-sm-2">{{item.surname}}</div>
+			<div class="col-sm-2">
+				<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item.surname}}</a>
+			</div>
 			<div class="col-sm-2">{{item.firstName}}</div>
 			<div class="col-sm-2">{{item.patronymic}}</div>
 			<div class="col-sm-2" translate>{{item.individualEntrepreneur}}</div>
