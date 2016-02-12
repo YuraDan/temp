@@ -110,6 +110,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 																	  CapitalConstructsConstructCRUDService) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
 		$scope.cadastralNumber = "";
 		$scope.selectedIds = {};
 
