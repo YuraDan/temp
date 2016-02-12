@@ -98,6 +98,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	.controller("CapitalConstructsConstructListController", function ($scope,
 																	  $state,
 																	  $rootScope,
+																	  $filter,
 																	  CapitalConstructsConstructService,
 																	  CapitalConstructEconomicCharacteristicsCRUDService,
 																	  CapitalConstructTechnicalCharacteristicsCRUDService,
@@ -110,13 +111,17 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 																	  CapitalConstructsConstructCRUDService) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
 		$scope.cadastralNumber = "";
+		$scope.constructName = "";
+		$scope.searchText = "";
 		$scope.selectedIds = {};
 
 		function updateGrid() {
 			var ids = ConstructsConstructSelectorService.ids();
 			CapitalConstructsConstructService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage,
 				$scope.cadastralNumber,
+				$scope.constructName,
 				"",
 				ids
 			).then(function (data) {
@@ -145,6 +150,10 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 
 		$scope.deleteItem = function (id) {
 			CapitalConstructsConstructCRUDService.removeItem(id, updateGrid);
+		}
+
+		$scope.find = function () {
+			updateGrid();
 		}
 
 		$scope.pageChanged = function () {

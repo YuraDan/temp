@@ -12,7 +12,15 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 				templateUrl: "app2/persons/legal-person/legal-person-list.htm"
 			})
 	})
-	.factory("LegalPersonModule", function ($rootScope, LegalPersonService, MGISCommonsModalForm, NcOKVEDService, NcOKOGUService, NcOKOPFService, NcOKATOService, NcOKFSService) {
+	.factory("LegalPersonModule", function ($rootScope,
+											LegalPersonService,
+											MGISCommonsModalForm,
+											AddressModule,
+											NcOKVEDService,
+											NcOKOGUService,
+											NcOKOPFService,
+											NcOKATOService,
+											NcOKFSService) {
 
 		function editItem0(modalScope, updateFunction) {
 			modalScope.currentDate = new Date();
@@ -76,6 +84,10 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 			});
 		}
 
+		function editAddressItem(id, updateGrid) {
+			AddressModule.edit(id, updateGrid);
+		}
+
 		function removeItem(id, updateFunction) {
 			MGISCommonsModalForm.confirmRemoval(function ($modalInstance) {
 				LegalPersonService.remove(id).then(function () {
@@ -90,6 +102,7 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 		return {
 			add: addItem,
 			edit: editItem,
+			editAddressItem: editAddressItem,
 			remove: removeItem
 		}
 	})
@@ -135,11 +148,15 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 			templateUrl: "app2/persons/legal-person/legal-person-selector.htm"
 		}
 	})
-	.controller("LegalPersonsController", function ($scope, LegalPersonModule, LegalPersonService, CommonsPagerManager) {
+	.controller("LegalPersonsController", function ($scope, $filter, LegalPersonModule, LegalPersonService, CommonsPagerManager) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
+		$scope.searchText = "";
+		$scope.legalPersonName = "";
+
 		function updateGrid() {
-			LegalPersonService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage).then(function (data) {
+			LegalPersonService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage, $scope.legalPersonName).then(function (data) {
 				$scope.legalPersonsPager = data;
 			})
 		}
@@ -147,7 +164,9 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 		$scope.pageChanged = function () {
 			updateGrid();
 		}
-
+		$scope.find = function () {
+			updateGrid();
+		}
 		$scope.addItem = function () {
 			LegalPersonModule.add("", updateGrid);
 		}
@@ -155,7 +174,9 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 		$scope.editItem = function (id) {
 			LegalPersonModule.edit(id, updateGrid);
 		}
-
+		$scope.editAddressItem = function (id) {
+			LegalPersonModule.editAddressItem(id, updateGrid);
+		}
 		$scope.removeItem = function (id) {
 			LegalPersonModule.remove(id, updateGrid);
 		}
