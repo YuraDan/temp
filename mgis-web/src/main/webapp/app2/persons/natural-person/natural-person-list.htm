@@ -27,7 +27,9 @@
 		<pagination total-items="naturalPersonsPager.totalNumberOfItems" ng-model="currentPage"
 					items-per-page="itemsPerPage" ng-change="pageChanged()"
 					class="pagination-sm" previous-text="&lsaquo;"
-					next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+					next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="pagerMaxSize"></pagination>
+		<label class="mgis-pagination-total-label">{{'Total'|translate}} :
+			{{naturalPersonsPager.totalNumberOfItems}}</label>
 
 	</div>
 	<div>

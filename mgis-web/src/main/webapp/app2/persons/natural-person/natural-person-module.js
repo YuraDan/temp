@@ -118,9 +118,14 @@ angular.module("mgis.persons.person.natural", ["ui.router", "ui.bootstrap", //
 		}
 	})
 
-	.controller("NaturalPersonsController", function ($scope, NaturalPersonModule, NaturalPersonService) {
+	.controller("NaturalPersonsController", function ($scope,
+													  NaturalPersonModule,
+													  NaturalPersonService,
+													  CommonsPagerManager) {
 		$scope.currentPage = 1;
-		$scope.itemsPerPage = 15;
+		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
+
 		function updateGrid() {
 			NaturalPersonService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage).then(function (data) {
 				$scope.naturalPersonsPager = data;

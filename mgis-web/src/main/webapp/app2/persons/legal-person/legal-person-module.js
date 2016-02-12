@@ -151,6 +151,8 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 	.controller("LegalPersonsController", function ($scope, LegalPersonModule, LegalPersonService, CommonsPagerManager) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
+
 		function updateGrid() {
 			LegalPersonService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage).then(function (data) {
 				$scope.legalPersonsPager = data;
