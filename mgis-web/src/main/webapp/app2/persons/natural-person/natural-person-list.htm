@@ -1,6 +1,21 @@
 <div ng-controller="NaturalPersonsController">
 	<h3 translate>NaturalPersons</h3>
 
+	<div class="container">
+		<form name="naturalPersonSearchForm" class="form-horizontal pull-right"
+			  style="position: relative; top: -60px; height: 0px;">
+			<div class="control-group">
+				<label for="naturalPersonSurname" translate>NaturalPerson</label>
+
+				<div class="controls form-inline">
+					<input type="text" id="naturalPersonSurname" name="naturalPersonSurname" ng-model="naturalPersonSurname"
+						   class="form-control"/>
+					<button class="btn btn-primary btn-sm" ng-click="find()" translate>Find</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
 	<div ng-if="naturalPersonsPager.list.length">
 		<div class="row mgis-row-header">
 			<div class="col-sm-2" translate>NaturalPerson.Surname</div>

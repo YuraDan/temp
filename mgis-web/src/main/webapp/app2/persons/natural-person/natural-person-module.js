@@ -119,20 +119,28 @@ angular.module("mgis.persons.person.natural", ["ui.router", "ui.bootstrap", //
 	})
 
 	.controller("NaturalPersonsController", function ($scope,
+													  $filter,
 													  NaturalPersonModule,
 													  NaturalPersonService,
 													  CommonsPagerManager) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
 		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
+		$scope.searchText = "";
+		$scope.naturalPersonSurname = "";
 
 		function updateGrid() {
-			NaturalPersonService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage).then(function (data) {
+			NaturalPersonService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage, $scope.naturalPersonSurname)
+				.then(function (data) {
 				$scope.naturalPersonsPager = data;
 			})
 		}
 
 		$scope.pageChanged = function () {
+			updateGrid();
+		}
+
+		$scope.find = function () {
 			updateGrid();
 		}
 

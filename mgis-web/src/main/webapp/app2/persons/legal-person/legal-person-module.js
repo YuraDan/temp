@@ -148,13 +148,15 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 			templateUrl: "app2/persons/legal-person/legal-person-selector.htm"
 		}
 	})
-	.controller("LegalPersonsController", function ($scope, LegalPersonModule, LegalPersonService, CommonsPagerManager) {
+	.controller("LegalPersonsController", function ($scope, $filter, LegalPersonModule, LegalPersonService, CommonsPagerManager) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
 		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
+		$scope.searchText = "";
+		$scope.legalPersonName = "";
 
 		function updateGrid() {
-			LegalPersonService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage).then(function (data) {
+			LegalPersonService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage, $scope.legalPersonName).then(function (data) {
 				$scope.legalPersonsPager = data;
 			})
 		}
@@ -162,7 +164,9 @@ angular.module("mgis.persons.person.legal", ["ui.router", "ui.bootstrap", //
 		$scope.pageChanged = function () {
 			updateGrid();
 		}
-
+		$scope.find = function () {
+			updateGrid();
+		}
 		$scope.addItem = function () {
 			LegalPersonModule.add("", updateGrid);
 		}
