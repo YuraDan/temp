@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
  * Created by Alexander Arakelyan on 11.11.15.
  */
 @RestController
-@RequestMapping("/capital-constructs/construct-types")
+@RequestMapping("/oks/construct-types")
 @Scope("session")
 public class ConstructTypeRESTService {
 

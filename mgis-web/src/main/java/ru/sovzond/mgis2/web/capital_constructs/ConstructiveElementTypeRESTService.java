@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  * Created by Alexander Arakelyan on 05.11.15.
  */
 @RestController
-@RequestMapping("/capital-constructs/constructive-element-types")
+@RequestMapping("/oks/constructive-element-types")
 @Scope("session")
 public class ConstructiveElementTypeRESTService {
 
