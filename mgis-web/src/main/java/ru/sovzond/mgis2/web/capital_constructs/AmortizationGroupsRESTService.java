@@ -15,7 +15,7 @@ import java.util.Arrays;
  * Created by Alexander Arakelyan on 10.11.15.
  */
 @RestController
-@RequestMapping("/capital-constructs/amortization-groups")
+@RequestMapping("/oks/amortization-groups")
 @Scope("session")
 public class AmortizationGroupsRESTService {
 

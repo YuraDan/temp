@@ -11,10 +11,16 @@
     </div>
 </div>
 
-<pagination total-items="documentsPager.totalNumberOfItems" ng-model="currentPage"
-            items-per-page="itemsPerPage" ng-change="pageChanged()"
-            class="pagination-sm" previous-text="&lsaquo;"
-            next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+<div>
+    <div>
+        <pagination total-items="documentsPager.totalNumberOfItems" ng-model="currentPage"
+                    items-per-page="itemsPerPage" ng-change="pageChanged()"
+                    class="pagination-sm" previous-text="&lsaquo;"
+                    next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="pagerMaxSize"></pagination>
+        <label class="mgis-pagination-total-label">{{'Total'|translate}} :
+            {{documentsPager.totalNumberOfItems}}</label>
+    </div>
+</div>
 
 <div>
     <button class="btn btn-info btn-sm" ng-click="addDocument(stateParams.volumeId)" translate>ISOGD.AddADocument</button>

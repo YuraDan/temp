@@ -2,18 +2,18 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	"mgis.commons",
 	"mgis.commons.forms",
 	"mgis.capital-constructs.construct.service",
+	"mgis.capital-constructs.construct.map",
 	"mgis.property",
 	"mgis.capital-constructs.characteristics",
 	"mgis.capital-constructs.constructive-elements",
 	"mgis.nc.services",
 	"mgis.reports.report",
-	"mgis.lands.maps",
 	"mgis.geo.spatial.data"
 ])
 	.config(function ($stateProvider) {
 		$stateProvider
-			.state("constructs", {
-				url: "/capital-constructs/constructs/",
+			.state("oks.constructs", {
+				url: "/constructs/",
 				templateUrl: "app2/capital-constructs/construct/construct-list.htm"
 			});
 	})
@@ -174,8 +174,8 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		updateGrid();
 
 		$scope.displayOnTheMap = function () {
-			//$state.go("^.maps");
-			$state.go("lands.maps"); // временная заглушка
+			$state.go("^.maps");
+			//$state.go("lands.maps"); // временная заглушка
 		}
 
 		function selectConstruct(item) {

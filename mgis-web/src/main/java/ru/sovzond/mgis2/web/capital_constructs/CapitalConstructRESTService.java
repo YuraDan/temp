@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * Created by Alexander Arakelyan on 05.11.15.
  */
 @RestController
-@RequestMapping("/capital-constructs/constructs")
+@RequestMapping("/oks/constructs")
 @Scope("session")
 public class CapitalConstructRESTService {
 
@@ -359,4 +359,9 @@ public class CapitalConstructRESTService {
 		return resultIds;
 	}
 
+	@RequestMapping(value = "/{id}/spatial-attribute", method = RequestMethod.POST)
+	@Transactional
+	public boolean saveGeospatialAttribute(@PathVariable("id") Long id, @RequestBody(required = true) String wktString) {
+		return capitalConstructBean.saveGeospatialAttribute(id, wktString);
+	}
 }

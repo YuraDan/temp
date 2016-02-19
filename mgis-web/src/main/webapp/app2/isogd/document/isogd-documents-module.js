@@ -12,7 +12,16 @@ angular.module("mgis.isogd.documents", ["ui.router", "ui.bootstrap", "ngFileUplo
 				},
 				url: "/sections/:sectionId/books/:bookId/volumes/:volumeId/documents/",
 				templateUrl: "app2/isogd/document/isogd-documents-list.htm",
-				controller: function ($scope, $state, $stateParams, ISOGDDocumentCRUDService, ISOGDDocumentsService, $modal, $rootScope, MGISCommonsModalForm, ISOGDClassifiersDocumentsTypesService) {
+				controller: function ($scope,
+									  $state,
+									  $stateParams,
+									  ISOGDDocumentCRUDService,
+									  ISOGDDocumentsService,
+									  $modal,
+									  $rootScope,
+									  CommonsPagerManager,
+									  MGISCommonsModalForm,
+									  ISOGDClassifiersDocumentsTypesService) {
 					$scope.stateParams = $stateParams;
 
 					function updateGrid() {
@@ -21,7 +30,8 @@ angular.module("mgis.isogd.documents", ["ui.router", "ui.bootstrap", "ngFileUplo
 						});
 					}
 
-					$scope.itemsPerPage = 15;
+					$scope.itemsPerPage = CommonsPagerManager.pageSize();
+					$scope.pagerMaxSize = CommonsPagerManager.maxSize();
 					$scope.currentPage = 1;
 					$scope.pageChanged = function () {
 						updateGrid();
