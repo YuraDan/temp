@@ -9,8 +9,8 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 	})
 
 	.factory("CapitalConstructsConstructService", function ($q, $resource, MGISErrorService, MGISPropertyRightsService) {
-		var res = $resource('rest/capital-constructs/constructs/:id.json');
-		var resRemoveSelected = $resource('rest/capital-constructs/constructs/remove-selected.json');
+		var res = $resource('rest/oks/constructs/:id.json');
+		var resRemoveSelected = $resource('rest/oks/constructs/remove-selected.json');
 
 		return {
 			get: function (id, first, max, cadastralNumber, name, ids) {
@@ -64,7 +64,7 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 		}
 	})
 	.factory("CapitalConstructsConstructTypeService", function ($q, $resource, MGISErrorService) {
-		var res = $resource('rest/capital-constructs/construct-types/:id.json');
+		var res = $resource('rest/oks/construct-types/:id.json');
 		return {
 			get: function (id, first, max) {
 				var deferred = $q.defer();
@@ -155,6 +155,21 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 						_removeListeners.splice(i, 1);
 					}
 				}
+			}
+		}
+	})
+
+	.factory("CapitalConstructsConstructGeoService", function ($resource, $q, MGISErrorService) {
+		var res = $resource('rest/oks/constructs/:id/spatial-attribute.json');
+		return {
+			save: function (idAttribute, geoAttribute) {
+				var deferred = $q.defer();
+				res.save({id: idAttribute}, geoAttribute, function (data) {
+					deferred.resolve(data);
+				}, function (error) {
+					MGISErrorService.handleError(error);
+				});
+				return deferred.promise;
 			}
 		}
 	})

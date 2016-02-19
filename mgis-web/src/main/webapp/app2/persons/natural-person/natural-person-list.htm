@@ -1,6 +1,21 @@
 <div ng-controller="NaturalPersonsController">
 	<h3 translate>NaturalPersons</h3>
 
+	<div class="container">
+		<form name="naturalPersonSearchForm" class="form-horizontal pull-right"
+			  style="position: relative; top: -60px; height: 0px;">
+			<div class="control-group">
+				<label for="naturalPersonSurname" translate>NaturalPerson</label>
+
+				<div class="controls form-inline">
+					<input type="text" id="naturalPersonSurname" name="naturalPersonSurname" ng-model="naturalPersonSurname"
+						   class="form-control"/>
+					<button class="btn btn-primary btn-sm" ng-click="find()" translate>Find</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
 	<div ng-if="naturalPersonsPager.list.length">
 		<div class="row mgis-row-header">
 			<div class="col-sm-2" translate>NaturalPerson.Surname</div>
@@ -12,7 +27,9 @@
 		</div>
 
 		<div ng-repeat="item in naturalPersonsPager.list" class="row" style="padding-bottom: 7px;">
-			<div class="col-sm-2">{{item.surname}}</div>
+			<div class="col-sm-2">
+				<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item.surname}}</a>
+			</div>
 			<div class="col-sm-2">{{item.firstName}}</div>
 			<div class="col-sm-2">{{item.patronymic}}</div>
 			<div class="col-sm-2" translate>{{item.individualEntrepreneur}}</div>
@@ -25,7 +42,9 @@
 		<pagination total-items="naturalPersonsPager.totalNumberOfItems" ng-model="currentPage"
 					items-per-page="itemsPerPage" ng-change="pageChanged()"
 					class="pagination-sm" previous-text="&lsaquo;"
-					next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+					next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="pagerMaxSize"></pagination>
+		<label class="mgis-pagination-total-label">{{'Total'|translate}} :
+			{{naturalPersonsPager.totalNumberOfItems}}</label>
 
 	</div>
 	<div>

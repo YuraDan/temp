@@ -409,6 +409,7 @@
   "CapitalConstructs.Construct.Placement": "Местоположение",
   "CapitalConstructs.Construct.ObjectPurpose": "Назначение объекта",
   "CapitalConstructs.Construct.DisplayOnTheMap": "Показать на карте",
+  "CapitalConstructs.Construct.DisplayAsAList": "Отобразить списком",
   "Indicators": "Показатели",
   "Indicators.PriceIndicator": "Стоимостной показатель",
   "Indicators.TechnicalIndicator": "Технический показатель",

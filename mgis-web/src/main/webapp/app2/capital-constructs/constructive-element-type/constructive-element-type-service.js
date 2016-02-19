@@ -1,7 +1,7 @@
 angular.module("mgis.capital-constructs.constructive-element-type.service", ["ngResource",
 	"mgis.error.service"])
 	.factory("CapitalConstructsConstructiveElementTypeService", function ($q, $resource, MGISErrorService) {
-		var res = $resource('rest/capital-constructs/constructive-element-types/:id.json');
+		var res = $resource('rest/oks/constructive-element-types/:id.json');
 		return {
 			get: function (id, first, max) {
 				var deferred = $q.defer();

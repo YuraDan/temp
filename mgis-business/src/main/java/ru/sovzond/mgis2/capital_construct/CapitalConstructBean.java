@@ -1,5 +1,8 @@
 package ru.sovzond.mgis2.capital_construct;
 
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Polygon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
@@ -8,6 +11,7 @@ import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
+import ru.sovzond.mgis2.geo.GeometryParser;
 
 import java.util.stream.Collectors;
 
@@ -37,4 +41,14 @@ public class CapitalConstructBean extends CRUDBeanBase<CapitalConstruction> {
 	public CapitalConstruction findByCadastralNumber(String cadastralNumber) {
 		return dao.findByCadastralNumber(cadastralNumber);
 	}
+
+	public boolean saveGeospatialAttribute(Long id, String wktString) {
+		CapitalConstruction construction = dao.findById(id);
+		Polygon polygon = (Polygon) GeometryParser.wktToGeometry(wktString);
+		MultiPolygon geom = new MultiPolygon(new Polygon[]{polygon}, new GeometryFactory());
+		construction.setGeometry(geom);
+		dao.save(construction);
+		return true;
+	}
+
 }

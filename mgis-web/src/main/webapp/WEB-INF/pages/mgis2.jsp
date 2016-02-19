@@ -147,6 +147,11 @@
 			src="app2/capital-constructs/constructive-element-type/constructive-element-type-service.js"></script>
 	<script type="text/javascript" src="app2/capital-constructs/construct/construct-module.js"></script>
 	<script type="text/javascript" src="app2/capital-constructs/construct/construct-service.js"></script>
+	<script type="text/javascript" src="app2/capital-constructs/construct/construct-map-module.js"></script>
+	<script type="text/javascript" src="app2/capital-constructs/construct/construct-maps-module.js"></script>
+	<link type="text/css" rel="stylesheet" href="app2/capital-constructs/construct/constructs-leaflet-control.css">
+	<script type="text/javascript" src="app2/capital-constructs/construct/constructs-leaflet-control.js"></script>
+
 
 	<link type="text/css" rel="stylesheet" href="app2/lands/land/lands-leaflet-control.css">
 	<script type="text/javascript" src="app2/lands/land/lands-leaflet-control.js"></script>

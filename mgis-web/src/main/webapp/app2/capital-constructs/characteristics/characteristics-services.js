@@ -2,7 +2,7 @@ angular.module("mgis.capital-constructs.characteristics.services", ["ngResource"
 	"mgis.error.service"
 ])
 	.factory("CapitalConstructCharacteristicsAmortizationGroup", function ($q, $resource, MGISErrorService) {
-		var res = $resource('rest/capital-constructs/amortization-groups/:id.json');
+		var res = $resource('rest/oks/amortization-groups/:id.json');
 		return {
 			get: function (id, first, max) {
 				var deferred = $q.defer();

@@ -2,18 +2,18 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	"mgis.commons",
 	"mgis.commons.forms",
 	"mgis.capital-constructs.construct.service",
+	"mgis.capital-constructs.construct.map",
 	"mgis.property",
 	"mgis.capital-constructs.characteristics",
 	"mgis.capital-constructs.constructive-elements",
 	"mgis.nc.services",
 	"mgis.reports.report",
-	"mgis.lands.maps",
 	"mgis.geo.spatial.data"
 ])
 	.config(function ($stateProvider) {
 		$stateProvider
-			.state("constructs", {
-				url: "/capital-constructs/constructs/",
+			.state("oks.constructs", {
+				url: "/constructs/",
 				templateUrl: "app2/capital-constructs/construct/construct-list.htm"
 			});
 	})
@@ -98,6 +98,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	.controller("CapitalConstructsConstructListController", function ($scope,
 																	  $state,
 																	  $rootScope,
+																	  $filter,
 																	  CapitalConstructsConstructService,
 																	  CapitalConstructEconomicCharacteristicsCRUDService,
 																	  CapitalConstructTechnicalCharacteristicsCRUDService,
@@ -110,13 +111,17 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 																	  CapitalConstructsConstructCRUDService) {
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
 		$scope.cadastralNumber = "";
+		$scope.constructName = "";
+		$scope.searchText = "";
 		$scope.selectedIds = {};
 
 		function updateGrid() {
 			var ids = ConstructsConstructSelectorService.ids();
 			CapitalConstructsConstructService.get("", CommonsPagerManager.offset($scope.currentPage), $scope.itemsPerPage,
 				$scope.cadastralNumber,
+				$scope.constructName,
 				"",
 				ids
 			).then(function (data) {
@@ -147,6 +152,10 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			CapitalConstructsConstructCRUDService.removeItem(id, updateGrid);
 		}
 
+		$scope.find = function () {
+			updateGrid();
+		}
+
 		$scope.pageChanged = function () {
 			updateGrid();
 		}
@@ -165,8 +174,8 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		updateGrid();
 
 		$scope.displayOnTheMap = function () {
-			//$state.go("^.maps");
-			$state.go("lands.maps"); // временная заглушка
+			$state.go("^.maps");
+			//$state.go("lands.maps"); // временная заглушка
 		}
 
 		function selectConstruct(item) {
