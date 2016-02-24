@@ -7,7 +7,8 @@ angular.module("mgis.lands.land-selector", ["ui.bootstrap",
 		return {
 			restrict: "E",
 			scope: {
-				lands: "="
+				lands: "=",
+				withoutControls: "="
 			},
 			templateUrl: "app2/lands/land-selector/lands-selector-component.htm",
 			controller: function ($scope, $rootScope, MGISCommonsModalForm, LandsLandCRUDService) {
@@ -38,6 +39,9 @@ angular.module("mgis.lands.land-selector", ["ui.bootstrap",
 						}
 						modalInstance.close();
 					});
+				}
+				$scope.isControlsVisible = function() {
+					return !$scope.withoutControls;
 				}
 			}
 		}

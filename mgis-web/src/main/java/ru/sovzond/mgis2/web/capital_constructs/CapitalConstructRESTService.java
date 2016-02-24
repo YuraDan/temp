@@ -17,6 +17,7 @@ import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.indicators.PriceIndicatorBean;
 import ru.sovzond.mgis2.indicators.TechnicalIndicatorBean;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
+import ru.sovzond.mgis2.lands.Land;
 import ru.sovzond.mgis2.lands.LandBean;
 import ru.sovzond.mgis2.lands.LandIncludedObjectsBean;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
@@ -370,4 +371,21 @@ public class CapitalConstructRESTService {
 	public boolean saveGeospatialAttribute(@PathVariable("id") Long id, @RequestBody(required = true) String wktString) {
 		return capitalConstructBean.saveGeospatialAttribute(id, wktString);
 	}
+
+	@RequestMapping(value = "/parent-lands/{id}", method = RequestMethod.GET)
+	@Transactional
+	public List<Land> getParentLands(@PathVariable("id") Long id) {
+		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		if(includedObjects.size() == 0) return null;
+		return landBean.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
+	}
+
+	@RequestMapping(value = "/parent-oks/{id}", method = RequestMethod.GET)
+	@Transactional
+	public List<CapitalConstruction> getParentCapitalConstructs(@PathVariable("id") Long id) {
+		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		if(includedObjects.size() == 0) return null;
+		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
+	}
+
 }

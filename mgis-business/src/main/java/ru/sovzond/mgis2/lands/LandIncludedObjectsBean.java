@@ -7,6 +7,8 @@ import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 
+import java.util.List;
+
 /**
  * Created by Alexander Arakelyan on 16.12.15.
  */
@@ -25,4 +27,13 @@ public class LandIncludedObjectsBean extends CRUDBeanBase<LandIncludedObjects> {
 	protected IIdentifiableDao<LandIncludedObjects> getIIdentifiableDao() {
 		return dao;
 	}
+
+	public List<LandIncludedObjects> getIncludedObjectsByCapitalConstruct(Long constructId) {
+		return dao.findByNestedObject(null,  constructId);
+	}
+
+	public List<LandIncludedObjects> getIncludedObjectsByLand(Long landId) {
+		return dao.findByNestedObject(landId, null);
+	}
+
 }

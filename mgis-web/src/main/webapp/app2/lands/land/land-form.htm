@@ -1,3 +1,4 @@
+<div ng-controller="LandsLandItemController">
 <div class="modal-header">
 	<h3 class="modal-title"><span translate>Lands.Land</span>: {{land.cadastralNumber}}</h3>
 </div>
@@ -28,9 +29,16 @@
 			</tab>
 			<tab>
 				<tab-heading>
-					<span translate>Lands.Land.IncludedObjects</span>
+					<a href="javascript:void(0)" data-toggle="dropdown" role="button" aria-expanded="false">
+						<span translate>Lands.Land.RelatedObjects</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="javascript:void(0)" ng-click="setSubmenuState(0)" translate>Lands.Land.IncludedObjects</a></li>
+						<li><a href="javascript:void(0)" ng-click="setSubmenuState(1)" translate>Lands.Land.ParentObjects</a></li>
+					</ul>
 				</tab-heading>
-				<div ng-include src="'app2/lands/land/land-form-included-objects.htm'"></div>
+				<div ng-include src="submenuState.url"></div>
 			</tab>
 			<!--<tab>-->
 			<!--<tab-heading>-->

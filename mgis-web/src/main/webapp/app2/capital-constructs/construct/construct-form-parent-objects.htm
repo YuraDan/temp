@@ -1,27 +1,27 @@
-<!--
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 translate>CapitalConstructs.Construct.IncludedObjects.IncludedLands</h3>
+		<h3 translate>CapitalConstructs.Construct.ParentObjects.ParentLands</h3>
 	</div>
 	<div class="panel-body">
 
+		<!--
 		<div class="form-group row">
 			<div class="col-sm-4"><label translate>CapitalConstructs.Construct.IncludedObjects.LandDealDocument</label></div>
 			<div class="col-sm-8">
 				<isogd-document-selector document="item.landIncludedObjects.landDealDocument"/>
 			</div>
 		</div>
+		-->
 
-		<lands-selector lands="item.landIncludedObjects.includedLands"></lands-selector>
+		<lands-selector lands="parentLands" without-controls="true"></lands-selector>
 
 	</div>
 
 </div>
--->
 
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 translate>CapitalConstructs.Construct.IncludedObjects.IncludedConstructs</h3>
+		<h3 translate>CapitalConstructs.Construct.ParentObjects.ParentConstructs</h3>
 	</div>
 	<div class="panel-body">
 
@@ -34,7 +34,7 @@
 		</div>
 		-->
 
-		<capital-constructs-selector constructs="item.landIncludedObjects.includedCapitalConstructions"></capital-constructs-selector>
+		<capital-constructs-selector constructs="parentCapitalConstructions" without-controls="true"></capital-constructs-selector>
 
 
 	</div>

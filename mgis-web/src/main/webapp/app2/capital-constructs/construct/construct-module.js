@@ -217,7 +217,8 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	.controller("CapitalConstructsConstructController", function ($scope,
 																  CapitalConstructEconomicCharacteristicsCRUDService,
 																  CapitalConstructTechnicalCharacteristicsCRUDService,
-																  CapitalConstructsConstructiveElementCRUDService) {
+																  CapitalConstructsConstructiveElementCRUDService,
+																  CapitalConstructsConstructService) {
 
 		// Economic Characteristics
 		$scope.addEconomicCharacteristic = function (item) {
@@ -251,5 +252,33 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 		$scope.removeConstructiveElement = function (item, element) {
 			CapitalConstructsConstructiveElementCRUDService.remove(item, element);
 		}
+		// Included objects
+		$scope.submenuStates =
+			[
+				{ name: 'included-objects', url: 'app2/capital-constructs/construct/construct-form-included-objects.htm'},
+				{ name: 'parent-objects', url: 'app2/capital-constructs/construct/construct-form-parent-objects.htm'}
+			];
+		$scope.submenuState=$scope.submenuStates[0];
+		$scope.parentLands = {};
+		$scope.parentCapitalConstructions = {};
+
+		function updateGrid() {
+			CapitalConstructsConstructService.getParentLands($scope.item.id).then(function (data) {
+					$scope.parentLands = data;
+				}
+			);
+			CapitalConstructsConstructService.getParentCapitalConstructs($scope.item.id).then(function (data) {
+					$scope.parentCapitalConstructions = data;
+				}
+			);
+		}
+
+		updateGrid();
+
+		$scope.setSubmenuState = function(submenuState) {
+			$scope.submenuState = $scope.submenuStates[submenuState];
+		}
+
+
 	})
 ;

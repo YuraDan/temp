@@ -360,4 +360,19 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 			}
 		}
 	})
+	.factory("LandsLandItemService", function ($resource, $q, MGISErrorService) {
+		return {
+			getParentLands: function (id) {
+				var resLands = $resource('rest/lands/land/parent-lands/:id.json');
+				var deferred = $q.defer();
+				resLands.query({id: id}, function (data) {
+					deferred.resolve(data);
+				}, function (error) {
+					MGISErrorService.handleError(error);
+				});
+				return deferred.promise;
+			}
+		}
+	})
+
 ;

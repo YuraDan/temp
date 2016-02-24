@@ -337,4 +337,21 @@ public class LandRESTController implements Serializable {
 	public boolean saveGeospatialAttribute(@PathVariable("id") Long id, @RequestBody(required = true) String wktString) {
 		return landBean.saveGeospatialAttribute(id, wktString);
 	}
+
+	@RequestMapping(value = "/parent-lands/{id}", method = RequestMethod.GET)
+	@Transactional
+	public List<Land> getParentLands(@PathVariable("id") Long id) {
+		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByLand(id);
+		if(includedObjects.size() == 0) return null;
+		return landBean.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
+	}
+
+	@RequestMapping(value = "/parent-oks/{id}", method = RequestMethod.GET)
+	@Transactional
+	public List<CapitalConstruction> getParentCapitalConstructs(@PathVariable("id") Long id) {
+		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByLand(id);
+		if(includedObjects.size() == 0) return null;
+		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
+	}
+
 }
