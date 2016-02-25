@@ -6,7 +6,8 @@ angular.module("mgis.capital-constructs.construct-selector", ["ui.bootstrap",
 		return {
 			restrict: "E",
 			scope: {
-				constructs: "="
+				constructs: "=",
+				withoutControls: "="
 			},
 			templateUrl: "app2/capital-constructs/capital-construct-selector/capital-constructs-selector-component.htm",
 			controller: function ($scope, $rootScope, MGISCommonsModalForm, CapitalConstructsConstructCRUDService) {
@@ -17,6 +18,7 @@ angular.module("mgis.capital-constructs.construct-selector", ["ui.bootstrap",
 				}
 				$scope.select = function () {
 					var modalScope = $rootScope.$new();
+
 					modalScope.selectedItems = new Array();
 					for (var i in $scope.constructs) {
 						var construct = $scope.constructs[i];
@@ -36,6 +38,9 @@ angular.module("mgis.capital-constructs.construct-selector", ["ui.bootstrap",
 						}
 						modalInstance.close();
 					});
+				}
+				$scope.isControlsVisible = function() {
+					return !$scope.withoutControls;
 				}
 			}
 		}

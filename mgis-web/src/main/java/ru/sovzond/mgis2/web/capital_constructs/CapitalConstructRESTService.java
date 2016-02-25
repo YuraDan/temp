@@ -17,7 +17,9 @@ import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.indicators.PriceIndicatorBean;
 import ru.sovzond.mgis2.indicators.TechnicalIndicatorBean;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
+import ru.sovzond.mgis2.lands.Land;
 import ru.sovzond.mgis2.lands.LandBean;
+import ru.sovzond.mgis2.lands.LandIncludedObjectsBean;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
@@ -93,6 +95,9 @@ public class CapitalConstructRESTService {
 
 	@Autowired
 	private LandBean landBean;
+
+	@Autowired
+	private LandIncludedObjectsBean landIncludedObjectsBean;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
@@ -206,6 +211,7 @@ public class CapitalConstructRESTService {
 			if (landIncludedObjects2 == null) {
 				landIncludedObjects2 = new LandIncludedObjects();
 				capitalConstruct2.setLandIncludedObjects(landIncludedObjects2);
+				landIncludedObjectsBean.save(landIncludedObjects2);
 			}
 			landIncludedObjects2.setLandDealDocument(landIncludedObjects.getLandDealDocument() != null ? documentBean.load(landIncludedObjects.getLandDealDocument().getId()) : null);
 			landIncludedObjects2.setInventoryDealDocument(landIncludedObjects.getInventoryDealDocument() != null ? documentBean.load(landIncludedObjects.getInventoryDealDocument().getId()) : null);
@@ -229,6 +235,7 @@ public class CapitalConstructRESTService {
 			if (capitalConstruct2.getLandIncludedObjects() == null) {
 				landIncludedObjects = new LandIncludedObjects();
 				capitalConstruct2.setLandIncludedObjects(landIncludedObjects);
+				landIncludedObjectsBean.save(landIncludedObjects);
 			}
 			capitalConstructBean.save(capitalConstruct2);
 		}
@@ -364,4 +371,21 @@ public class CapitalConstructRESTService {
 	public boolean saveGeospatialAttribute(@PathVariable("id") Long id, @RequestBody(required = true) String wktString) {
 		return capitalConstructBean.saveGeospatialAttribute(id, wktString);
 	}
+
+	@RequestMapping(value = "/parent-lands/{id}", method = RequestMethod.GET)
+	@Transactional
+	public List<Land> getParentLands(@PathVariable("id") Long id) {
+		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		if(includedObjects.size() == 0) return null;
+		return landBean.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
+	}
+
+	@RequestMapping(value = "/parent-oks/{id}", method = RequestMethod.GET)
+	@Transactional
+	public List<CapitalConstruction> getParentCapitalConstructs(@PathVariable("id") Long id) {
+		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		if(includedObjects.size() == 0) return null;
+		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
+	}
+
 }

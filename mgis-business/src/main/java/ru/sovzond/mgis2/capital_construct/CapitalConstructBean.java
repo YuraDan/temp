@@ -12,7 +12,9 @@ import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
 import ru.sovzond.mgis2.geo.GeometryParser;
+import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -51,4 +53,8 @@ public class CapitalConstructBean extends CRUDBeanBase<CapitalConstruction> {
 		return true;
 	}
 
+	public List<CapitalConstruction> getByIncludedObjects(List<LandIncludedObjects> includedObjects) {
+		return dao.getByIncludedObjects(includedObjects);
+	}
 }
+

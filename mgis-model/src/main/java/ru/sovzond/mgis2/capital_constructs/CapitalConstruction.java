@@ -135,10 +135,7 @@ public class CapitalConstruction implements Cloneable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
 	private List<ConstructiveElement> constructiveElements = new ArrayList<>();
 
-	@ManyToOne(optional = true, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinTable(name = "lands_included_objects_occ_capital_construction",
-			joinColumns = {@JoinColumn(name = "includedcapitalconstructions_id")},
-			inverseJoinColumns = {@JoinColumn(name = "lands_included_objects_id")})
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private LandIncludedObjects landIncludedObjects;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
