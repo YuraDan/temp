@@ -1,4 +1,4 @@
-angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap", "ui.mask",
+angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap", "ui.mask", "ngCleanMask",
 	"mgis.commons",
 	"mgis.commons.forms",
 	"mgis.capital-constructs.construct.service",
