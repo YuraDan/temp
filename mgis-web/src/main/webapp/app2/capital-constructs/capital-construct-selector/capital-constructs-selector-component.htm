@@ -13,12 +13,10 @@
 				<li class="list-group-item mgis-document-selector-list-item" ng-repeat="item in constructs">
 					<div class="row mgis-grid-row">
 						<div class="col-sm-2">
-							<a ng-if="isControlsVisible()" href="javascript:void(0)" ng-click="editItem(item.id)">{{item.cadastralNumber}}</a>
-							<span ng-if="!isControlsVisible()">{{item.cadastralNumber}}</span>
+							<a  href="javascript:void(0)" ng-click="editItem(item.id)">{{item.cadastralNumber}}</a>
 						</div>
 						<div class="col-sm-3">
-							<a ng-if="isControlsVisible()" href="javascript:void(0)" ng-click="editItem(item.id)">{{item.name}}</a>
-							<span ng-if="!isControlsVisible()">{{item.name}}</span>
+							<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item.name}}</a>
 						</div>
 						<div class="col-sm-3">{{item.address|addressFormatter}}</div>
 						<div ng-if="isControlsVisible()" class="col-sm-4">

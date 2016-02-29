@@ -1,4 +1,4 @@
-angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "ui.mask",//
+angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "ui.mask", "ngCleanMask", //
 	"mgis.commons", //
 	"mgis.commons.forms", //
 	"mgis.lands.services",
