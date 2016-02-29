@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.capital_constructs.CapitalConstruction;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
+import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
+
+import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 05.11.15.
@@ -19,6 +22,11 @@ public class CapitalConstructDao extends CRUDDaoBase<CapitalConstruction> {
 	public CapitalConstruction findByCadastralNumber(String cadastralNumber) {
 		return (CapitalConstruction) createCriteria().add(Restrictions.eq("cadastralNumber", cadastralNumber)).uniqueResult();
 	}
+
+	public List<CapitalConstruction> getByIncludedObjects(List<LandIncludedObjects> landIncludedObjects) {
+		return getSession().createCriteria(persistentClass).add(Restrictions.in("landIncludedObjects", landIncludedObjects)).list();
+	}
+
 
 	private class CapitalConstructFilter extends PagerBuilderCriteria<CapitalConstruction> {
 

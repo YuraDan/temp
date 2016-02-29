@@ -28,13 +28,13 @@ public class LandIncludedObjects implements Cloneable {
 	@ManyToOne
 	private Document landDealDocument;
 
-	@OneToMany
+	@ManyToMany
 	private List<Land> includedLands = new ArrayList<>();
 
 	@ManyToOne
 	private Document inventoryDealDocument;
 
-	@OneToMany
+	@ManyToMany
 	private List<CapitalConstruction> includedCapitalConstructions = new ArrayList<>();
 
 	@OneToMany

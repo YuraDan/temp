@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div ng-if="item.surname" class="panel panel-default">
 	<div class="panel-heading">
 		<h3 translate>Document.Identity.Data</h3>
 	</div>
@@ -26,5 +26,17 @@
 										 ng-model="item.passportIssuerDepartment"/></div>
 		</div>
 
+	</div>
+
+
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Documents</h3>
+	</div>
+
+	<div class="panel-body">
+		<isogd-document-selector multiple-documents="true"></isogd-document-selector>
 	</div>
 </div>

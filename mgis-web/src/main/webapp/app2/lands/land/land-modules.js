@@ -1,4 +1,4 @@
-angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "ui.mask",//
+angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "ui.mask", "ngCleanMask", //
 	"mgis.commons", //
 	"mgis.commons.forms", //
 	"mgis.lands.services",
@@ -302,6 +302,30 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 		}
 
 	})
+
+	.controller("LandsLandItemController", function ($scope, LandsLandItemService) {
+		// Included objects
+		$scope.submenuStates =
+			[
+				{ name: 'included-objects', url: 'app2/lands/land/land-form-included-objects.htm'},
+				{ name: 'parent-objects', url: 'app2/lands/land/land-form-parent-objects.htm'}
+			];
+		$scope.submenuState=$scope.submenuStates[0];
+		$scope.parentLands = {};
+
+		function updateGrid() {
+			LandsLandItemService.getParentLands($scope.land.id).then(function (data) {
+					$scope.parentLands = data;
+				}
+			);
+		}
+		updateGrid();
+
+		$scope.setSubmenuState = function(submenuState) {
+			$scope.submenuState=$scope.submenuStates[submenuState];
+		}
+	})
+
 	.controller("LandsLandAreaController", function ($scope, $rootScope, MGISCommonsModalForm, LandsLandAreaTypeService) {
 
 		var areas = $scope.areas;

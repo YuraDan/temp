@@ -10,8 +10,6 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 
 	.factory("CapitalConstructsConstructService", function ($q, $resource, MGISErrorService, MGISPropertyRightsService) {
 		var res = $resource('rest/oks/constructs/:id.json');
-		var resRemoveSelected = $resource('rest/oks/constructs/remove-selected.json');
-
 		return {
 			get: function (id, first, max, cadastralNumber, name, ids) {
 				var deferred = $q.defer();
@@ -53,8 +51,29 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 				return deferred.promise;
 			},
 			removeSelected: function (ids) {
+				var resRemoveSelected = $resource('rest/oks/constructs/remove-selected.json');
 				var deferred = $q.defer();
 				resRemoveSelected.save({}, ids, function (data) {
+					deferred.resolve(data);
+				}, function (error) {
+					MGISErrorService.handleError(error);
+				});
+				return deferred.promise;
+			},
+			getParentLands: function (id) {
+				var resLands = $resource('rest/oks/constructs/parent-lands/:id.json');
+				var deferred = $q.defer();
+				resLands.query({id: id}, function (data) {
+					deferred.resolve(data);
+				}, function (error) {
+					MGISErrorService.handleError(error);
+				});
+				return deferred.promise;
+			},
+			getParentCapitalConstructs: function (id) {
+				var resOks = $resource('rest/oks/constructs/parent-oks/:id.json');
+				var deferred = $q.defer();
+				resOks.query({id: id}, function (data) {
 					deferred.resolve(data);
 				}, function (error) {
 					MGISErrorService.handleError(error);

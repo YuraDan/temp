@@ -4,6 +4,7 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 ])
 	.constant("LandsLandConstants", {
 		LAND_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1}/,
+		//LAND_CADASTRAL_NUMBER_MASK: ""
 		LAND_CADASTRAL_NUMBER_MASK: "99:99:9999999:9?9?9?9?9?9?9?9?9?9"
 	})
 	.factory("LandsLandService", function ($resource, $q, MGISErrorService, MGISPropertyRightsService) {
@@ -360,4 +361,19 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 			}
 		}
 	})
+	.factory("LandsLandItemService", function ($resource, $q, MGISErrorService) {
+		return {
+			getParentLands: function (id) {
+				var resLands = $resource('rest/lands/land/parent-lands/:id.json');
+				var deferred = $q.defer();
+				resLands.query({id: id}, function (data) {
+					deferred.resolve(data);
+				}, function (error) {
+					MGISErrorService.handleError(error);
+				});
+				return deferred.promise;
+			}
+		}
+	})
+
 ;
