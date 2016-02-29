@@ -105,7 +105,7 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 	boolean t_IssueOrgan = false;
 	boolean t_MunicipalBoundary = false;
 	boolean t_Name_MB = false;
-	//-------Coord_System---------
+	//-------Coord_Srystem---------
 	boolean t_Coord_System = false;
 	//-------Certification_Doc-----
 	boolean t_Certification_Doc = false;
