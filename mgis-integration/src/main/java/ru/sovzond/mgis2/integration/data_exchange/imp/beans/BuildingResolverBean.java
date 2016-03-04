@@ -2,7 +2,6 @@ package ru.sovzond.mgis2.integration.data_exchange.imp.beans;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sovzond.mgis2.address.Address;
 import ru.sovzond.mgis2.capital_construct.CapitalConstructBean;
 import ru.sovzond.mgis2.capital_construct.ConstructTypeBean;
 import ru.sovzond.mgis2.capital_construct.EconomicCharacteristicBean;
@@ -12,6 +11,7 @@ import ru.sovzond.mgis2.capital_constructs.ConstructionType;
 import ru.sovzond.mgis2.capital_constructs.characteristics.ConstructionCharacteristics;
 import ru.sovzond.mgis2.capital_constructs.characteristics.economical.EconomicCharacteristic;
 import ru.sovzond.mgis2.capital_constructs.characteristics.technical.TechnicalCharacteristic;
+import ru.sovzond.mgis2.capital_constructs.rights.ConstructionRights;
 import ru.sovzond.mgis2.geo.CoordinateSystem;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
@@ -31,14 +31,13 @@ import ru.sovzond.mgis2.national_classifiers.ObjectsPurposeBean;
 import ru.sovzond.mgis2.national_classifiers.OkatoToOktmoBean;
 import ru.sovzond.mgis2.registers.national_classifiers.OKEI;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
-import ru.sovzond.mgis2.registers.national_classifiers.ObjectsPurpose;
-import ru.sovzond.mgis2.rights.PropertyRights;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 25/12/15.
+ *
  */
 @Service
 public class BuildingResolverBean {
@@ -50,8 +49,11 @@ public class BuildingResolverBean {
 	private static String HEIGHT = "Высота";
 	private static String AREA_OF_BUILDING = "Площадь застройки";
 	private static String DEPTH_OF_OCC = "Глубина залегания";
+	@SuppressWarnings("FieldCanBeLocal")
 	private static Integer METR = 6;
+	@SuppressWarnings("FieldCanBeLocal")
 	private static Integer METER3 = 113;
+	@SuppressWarnings("FieldCanBeLocal")
 	private static Integer METER2 = 55;
 
 	@Autowired
@@ -139,9 +141,9 @@ public class BuildingResolverBean {
 			resolveConstruction(capitalConstruction, constructDTO);
 		}
 
-		PropertyRights rights = capitalConstruction.getRights();
+		ConstructionRights rights = capitalConstruction.getRights();
 		if (rights == null) {
-			rights = new PropertyRights();
+			rights = new ConstructionRights();
 			capitalConstruction.setRights(rights);
 		}
 
@@ -191,13 +193,13 @@ public class BuildingResolverBean {
 	}
 
 	private void setEconomicsToCharacteristic(EconomicCharacteristic economicCharacteristic, ConstructionCharacteristics constructionCharacteristics, CapitalConstruction capitalConstruction) {
-		List<EconomicCharacteristic> economicCharacteristics = Arrays.asList(economicCharacteristic);
+		@SuppressWarnings("ArraysAsListWithZeroOrOneArgument") List<EconomicCharacteristic> economicCharacteristics = Arrays.asList(economicCharacteristic);
 		constructionCharacteristics.setEconomicCharacteristics(economicCharacteristics);
 		capitalConstruction.setCharacteristics(constructionCharacteristics);
 	}
 
 	private void setTechnicsToCharacteristic(TechnicalCharacteristic technicalCharacteristic, ConstructionCharacteristics constructionCharacteristics, CapitalConstruction capitalConstruction) {
-		List<TechnicalCharacteristic> technicalCharacteristics = Arrays.asList(technicalCharacteristic);
+		@SuppressWarnings("ArraysAsListWithZeroOrOneArgument") List<TechnicalCharacteristic> technicalCharacteristics = Arrays.asList(technicalCharacteristic);
 		constructionCharacteristics.setTechnicalCharacteristics(technicalCharacteristics);
 		capitalConstruction.setCharacteristics(constructionCharacteristics);
 	}
@@ -247,7 +249,7 @@ public class BuildingResolverBean {
 	}
 
 	private void setTechnicalIndicator(TechnicalCharacteristic technicalCharacteristic, Integer code_Okei, String characteristicType) {
-		TechnicalIndicator technicalIndicator = null;
+		TechnicalIndicator technicalIndicator;
 		technicalIndicator = technicalIndicatorBean.findByName(characteristicType);
 		if (technicalIndicator != null) {
 			technicalCharacteristic.setTechnicalIndicator(technicalIndicator);

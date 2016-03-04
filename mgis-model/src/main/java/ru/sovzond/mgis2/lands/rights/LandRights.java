@@ -1,39 +1,44 @@
 package ru.sovzond.mgis2.lands.rights;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import ru.sovzond.mgis2.isogd.document.Document;
-import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
-import ru.sovzond.mgis2.rights.PropertyRights;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "lands_land_right")
-@OnDelete(action = OnDeleteAction.CASCADE)
-public class LandRights extends PropertyRights {
+@Table(name = "lands_rights")
+public class LandRights implements Cloneable {
 
+	@Id
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_rights_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
+	@Column
+	private Long id;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<LandRight> rights = new ArrayList<>();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<LandRight> getRights() {
+		return rights;
+	}
+
+	public void setRights(List<LandRight> rights) {
+		this.rights = rights;
+	}
+
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandRights clone() {
 		LandRights rights = new LandRights();
 		rights.setId(getId());
-		rights.setOwnershipDate(getOwnershipDate());
-		rights.setTerminationDate(getTerminationDate());
-		rights.setRightOwner(getRightOwner() != null ? getRightOwner().clone() : null);
-		rights.setRightKind(getRightKind() != null ? getRightKind().clone() : null);
-		rights.setOwnershipForm(getOwnershipForm() != null ? getOwnershipForm().clone() : null);
-		rights.setShare(getShare());
-		rights.setRegistrationDocuments(getRegistrationDocuments() != null ? getRegistrationDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		rights.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		rights.setOtherDocuments(getOtherDocuments() != null ? getOtherDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		rights.setComment(getComment());
-		rights.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
-		rights.setObligations(isObligations());
-		rights.setAnnualTax(getAnnualTax());
-		rights.setTotalArea(getTotalArea());
+		rights.setRights(getRights() != null ? getRights().stream().map(LandRight::clone).collect(Collectors.toList()) : null);
 		return rights;
 	}
 

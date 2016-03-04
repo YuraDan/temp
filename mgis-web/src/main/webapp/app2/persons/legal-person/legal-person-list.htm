@@ -43,13 +43,15 @@
 			</div>
 		</div>
 
+	</div>
+
+	<div>
 		<pagination total-items="legalPersonsPager.totalNumberOfItems" ng-model="currentPage"
 					items-per-page="itemsPerPage" ng-change="pageChanged()"
 					class="pagination-sm" previous-text="&lsaquo;"
 					next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="pagerMaxSize"></pagination>
 		<label class="mgis-pagination-total-label">{{'Total'|translate}} :
 			{{legalPersonsPager.totalNumberOfItems}}</label>
-
 	</div>
 	<div>
 		<button class="btn btn-info btn-sm" ng-click="addItem()" translate>Add</button>

@@ -9,6 +9,7 @@ import ru.sovzond.mgis2.lands.rights.LandRights;
 
 /**
  * Created by Alexander Arakelyan on 30.07.15.
+ *
  */
 @Service
 public class LandRightsBean extends CRUDBeanBase<LandRights> {
