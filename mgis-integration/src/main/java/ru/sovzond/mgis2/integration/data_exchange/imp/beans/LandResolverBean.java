@@ -15,7 +15,10 @@ import ru.sovzond.mgis2.lands.*;
 import ru.sovzond.mgis2.lands.characteristics.LandCharacteristics;
 import ru.sovzond.mgis2.lands.rights.LandRight;
 import ru.sovzond.mgis2.lands.rights.LandRights;
-import ru.sovzond.mgis2.national_classifiers.*;
+import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
+import ru.sovzond.mgis2.national_classifiers.LandCategoryBean;
+import ru.sovzond.mgis2.national_classifiers.LandRightKindBean;
+import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
 import ru.sovzond.mgis2.registers.national_classifiers.*;
 
 import java.util.List;
