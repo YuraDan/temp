@@ -21,6 +21,7 @@ public class Person implements Cloneable {
 		this.id = id;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Person clone() {
 		Person person = new Person();
 		person.setId(id);
