@@ -6,10 +6,20 @@
         <form name="documentSelectorForm" ng-controller="ISOGDDocumentSelectorController" novalidate>
             <div>
                 <ul class="list-group">
+                    <li class="list-group-item mgis-document-selector-list-item">
+                        <div class="row mgis-row-header">
+                            <div class="col-sm-4" translate>ISOGD.Document.Name</div>
+                            <div class="col-sm-2" translate>ISOGD.Document.Number</div>
+                            <div class="col-sm-2" translate>ISOGD.Document.Date</div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </li>
                     <li ng-repeat="selectedDocument in selectedDocuments"
                         class="list-group-item mgis-document-selector-list-item">
                         <div class="row">
-                            <div class="col-sm-8">{{selectedDocument.name}}</div>
+                            <div class="col-sm-4">{{selectedDocument.name}}</div>
+                            <div class="col-sm-2">{{selectedDocument.docNumber}}</div>
+                            <div class="col-sm-2">{{selectedDocument.docDate | date:'yyyy/MM/dd'}}</div>
                             <div class="col-sm-4 pull-right">
                                 <button ng-click="removeSelectedDocument(selectedDocument)"
                                         class="btn btn-danger btn-sm" translate>Remove

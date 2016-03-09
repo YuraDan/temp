@@ -82,11 +82,11 @@ angular.module("mgis.isogd.document.selector", ["ui.bootstrap", "ui.select", //
 		$scope.selectedDocuments = $scope.selectedDocuments || new Array();
 
 		$scope.selectSearchItemClick = function (item, updateAction) {
-			$scope.documentSelectClicked(item.id, item.name);
+			$scope.documentSelectClicked(item.id, item.name, item.docNumber, item.docDate);
 		}
 
-		$scope.documentSelectClicked = function (id, name) {
-			var item = {id: id, name: name};
+		$scope.documentSelectClicked = function (id, name, docNumber, docDate) {
+			var item = {id: id, name: name, docNumber: docNumber, docDate: docDate};
 			if ($scope.multipleDocuments) {
 				var found = false;
 				for (var i = 0; i < $scope.selectedDocuments.length; i++) {
