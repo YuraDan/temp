@@ -5,10 +5,10 @@ import org.hibernate.annotations.Type;
 import ru.sovzond.mgis2.address.Address;
 import ru.sovzond.mgis2.capital_constructs.characteristics.ConstructionCharacteristics;
 import ru.sovzond.mgis2.capital_constructs.constructive_elements.ConstructiveElement;
+import ru.sovzond.mgis2.capital_constructs.rights.ConstructionRights;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
-import ru.sovzond.mgis2.rights.PropertyRights;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 05.11.15.
+ *
  */
 @Entity
 @Table(name = "occ_capital_construction")
@@ -125,9 +126,8 @@ public class CapitalConstruction implements Cloneable {
 	@Column
 	private Integer rebuildingLastYear;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name = "rights_id")
-	private PropertyRights rights;
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+	private ConstructionRights rights;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private ConstructionCharacteristics characteristics;
@@ -170,6 +170,7 @@ public class CapitalConstruction implements Cloneable {
 		this.type = type;
 	}
 
+	@SuppressWarnings("unused")
 	public String getObjectPurpose() {
 		return objectPurpose;
 	}
@@ -186,6 +187,7 @@ public class CapitalConstruction implements Cloneable {
 		this.cadastralNumber = cadastralNumber;
 	}
 
+	@SuppressWarnings("unused")
 	public String getConditionalNumber() {
 		return conditionalNumber;
 	}
@@ -194,6 +196,7 @@ public class CapitalConstruction implements Cloneable {
 		this.conditionalNumber = conditionalNumber;
 	}
 
+	@SuppressWarnings("unused")
 	public String getInventoryNumber() {
 		return inventoryNumber;
 	}
@@ -202,6 +205,7 @@ public class CapitalConstruction implements Cloneable {
 		this.inventoryNumber = inventoryNumber;
 	}
 
+	@SuppressWarnings("unused")
 	public Double getOverallArea() {
 		return overallArea;
 	}
@@ -242,6 +246,7 @@ public class CapitalConstruction implements Cloneable {
 		this.letter = letter;
 	}
 
+	@SuppressWarnings("unused")
 	public Date getTechnicalAccountingStatementDate() {
 		return technicalAccountingStatementDate;
 	}
@@ -250,6 +255,7 @@ public class CapitalConstruction implements Cloneable {
 		this.technicalAccountingStatementDate = technicalAccountingStatementDate;
 	}
 
+	@SuppressWarnings("unused")
 	public String getActualUsage() {
 		return actualUsage;
 	}
@@ -258,6 +264,7 @@ public class CapitalConstruction implements Cloneable {
 		this.actualUsage = actualUsage;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getOperationStartYear() {
 		return operationStartYear;
 	}
@@ -266,6 +273,7 @@ public class CapitalConstruction implements Cloneable {
 		this.operationStartYear = operationStartYear;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getBuildCompletionYear() {
 		return buildCompletionYear;
 	}
@@ -274,6 +282,7 @@ public class CapitalConstruction implements Cloneable {
 		this.buildCompletionYear = buildCompletionYear;
 	}
 
+	@SuppressWarnings("unused")
 	public Date getLastReconstructionDate() {
 		return lastReconstructionDate;
 	}
@@ -282,6 +291,7 @@ public class CapitalConstruction implements Cloneable {
 		this.lastReconstructionDate = lastReconstructionDate;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getRebuildingLastYear() {
 		return rebuildingLastYear;
 	}
@@ -290,11 +300,11 @@ public class CapitalConstruction implements Cloneable {
 		this.rebuildingLastYear = rebuildingLastYear;
 	}
 
-	public PropertyRights getRights() {
+	public ConstructionRights getRights() {
 		return rights;
 	}
 
-	public void setRights(PropertyRights rights) {
+	public void setRights(ConstructionRights rights) {
 		this.rights = rights;
 	}
 
@@ -310,10 +320,10 @@ public class CapitalConstruction implements Cloneable {
 		return constructiveElements;
 	}
 
+	@SuppressWarnings("unused")
 	public void setConstructiveElements(List<ConstructiveElement> constructiveElements) {
 		this.constructiveElements = constructiveElements;
 	}
-
 
 	public LandIncludedObjects getLandIncludedObjects() {
 		return landIncludedObjects;
@@ -331,6 +341,7 @@ public class CapitalConstruction implements Cloneable {
 		this.spatialData = spatialData;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public CapitalConstruction clone() {
 		CapitalConstruction construct = new CapitalConstruction();
 		construct.setId(id);
@@ -354,7 +365,6 @@ public class CapitalConstruction implements Cloneable {
 		construct.setTechnicalAccountingStatementDate(technicalAccountingStatementDate);
 		construct.setType(type != null ? type.clone() : null);
 		construct.setCharacteristics(characteristics != null ? characteristics.clone() : null);
-		construct.setConstructiveElements(constructiveElements.stream().map(ConstructiveElement::clone).collect(Collectors.toList()));
 		construct.setLandIncludedObjects(landIncludedObjects != null ? landIncludedObjects.clone() : null);
 		construct.setSpatialData(spatialData != null ? spatialData.clone() : null);
 		return construct;

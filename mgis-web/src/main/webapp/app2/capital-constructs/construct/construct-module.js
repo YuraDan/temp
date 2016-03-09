@@ -30,7 +30,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 			modalScope.CONSTRUCT_CADASTRAL_NUMBER = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER;
 			modalScope.CONSTRUCT_CADASTRAL_NUMBER_MASK = ConstructsConstructConstants.CONSTRUCT_CADASTRAL_NUMBER_MASK;
 			// AddressMunicipalEntities
-			modalScope.availableMunicipalEntities = new Array();
+			modalScope.availableMunicipalEntities = [];
 			modalScope.refreshAvailableMunicipalEntities = function (name) {
 				NcOKTMOService.get("", 0, 15, null, name).then(function (data) {
 					modalScope.availableMunicipalEntities = data.list;

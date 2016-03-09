@@ -3,44 +3,52 @@ angular.module("mgis.property.service", [])
 		return {
 			buildDocumentsCertifyingRights: function (rights) {
 				if (rights.documentsCertifyingRights && rights.documentsCertifyingRights.length) {
-					return new Array().concat(rights.documentsCertifyingRights);
+					return [].concat(rights.documentsCertifyingRights);
 				}
 				return null;
 			},
 			buildRegistrationDocuments: function (rights) {
 				if (rights.registrationDocuments && rights.registrationDocuments.length) {
-					return new Array().concat(rights.registrationDocuments);
+					return [].concat(rights.registrationDocuments);
 				}
 				return null;
 			},
 			buildOtherDocuments: function (rights) {
 				if (rights.otherDocuments && rights.otherDocuments.length) {
-					return new Array().concat(rights.otherDocuments);
+					return [].concat(rights.otherDocuments);
 				}
 				return null;
 			},
 			buildRights: function (rights) {
-				var rights2;
+				var rights2 = {};
+				var right2 = {};
+				rights2.rights = {};
 				if (rights) {
-					rights2 = {
-						ownershipForm: rights.ownershipForm ? {id: rights.ownershipForm.id} : null,
-						rightKind: rights.rightKind ? {id: rights.rightKind.id} : null,
-						rightOwner: rights.rightOwner ? {id: rights.rightOwner.id} : null,
-						encumbrance: rights.encumbrance,
-						obligations: rights.obligations,
-						ownershipDate: rights.ownershipDate,
-						terminationDate: rights.terminationDate,
-						comment: rights.comment,
-						share: rights.share,
-						annualTax: rights.annualTax,
-						totalArea: rights.totalArea,
-						registrationDocuments: this.buildRegistrationDocuments(rights),
-						documentsCertifyingRights: this.buildDocumentsCertifyingRights(rights),
-						otherDocuments: this.buildOtherDocuments(rights)
-
+					rights_rights = rights.rights;
+					if(rights_rights) {
+						for(var index in rights_rights) {
+							var right = rights_rights[index];
+							right2 = {
+								ownershipForm: right.ownershipForm ? {id: right.ownershipForm.id} : null,
+								rightKind: right.rightKind ? {id: right.rightKind.id} : null,
+								rightOwner: right.rightOwner ? {id: right.rightOwner.id} : null,
+								encumbrance: right.encumbrance,
+								obligations: right.obligations,
+								ownershipDate: right.ownershipDate,
+								terminationDate: right.terminationDate,
+								comment: right.comment,
+								share: right.share,
+								annualTax: right.annualTax,
+								totalArea: right.totalArea,
+								registrationDocuments: this.buildRegistrationDocuments(right),
+								documentsCertifyingRights: this.buildDocumentsCertifyingRights(right),
+								otherDocuments: this.buildOtherDocuments(right)
+							}
+							rights2.rights.push(right2);
+						}
 					}
 				} else {
-					rights2 = {}
+					rights2 = {};
 				}
 				return rights2;
 			}
