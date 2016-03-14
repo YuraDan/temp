@@ -1,6 +1,7 @@
 package ru.sovzond.mgis2.isogd.document;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +13,13 @@ import java.util.stream.Collectors;
 @Table(name = "included_documents")
 public class IncludedDocuments implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "included_documents", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "included_documents_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
 
-	private List<Document> documents;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Document> documents = new ArrayList<>();
 
 	public Long getId() {
 		return id;

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 11.08.15.
+ *
  */
 @Service
 public class LegalPersonBean extends CRUDBeanBase<LegalPerson> {

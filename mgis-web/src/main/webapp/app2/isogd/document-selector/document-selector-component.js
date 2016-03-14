@@ -19,15 +19,15 @@ angular.module("mgis.isogd.document.selector", ["ui.bootstrap", "ui.select", //
 			controller: function ($scope, ISOGDDocumentCRUDService, MGISCommonsModalForm) {
 				$scope.openSelector = function () {
 					var modalScope = $rootScope.$new();
-					modalScope.selectedDocuments = new Array();
+					modalScope.selectedDocuments = [];
 					modalScope.multipleDocuments = $scope.multipleDocuments;
 					if ($scope.multipleDocuments) {
 						if ($scope.documents) {
-							modalScope.selectedDocuments = new Array().concat($scope.documents);
+							modalScope.selectedDocuments = [].concat($scope.documents);
 						}
 					} else {
 						if ($scope.document) {
-							modalScope.selectedDocuments = new Array().concat($scope.document);
+							modalScope.selectedDocuments = [].concat($scope.document);
 						}
 					}
 

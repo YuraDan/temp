@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.persons.PersonDao;
 import ru.sovzond.mgis2.registers.persons.Person;
 
 /**
  * Created by Alexander Arakelyan on 27.07.15.
+ *
  */
 @Service
 public class PersonBean extends CRUDBeanBase<Person> {
