@@ -31,6 +31,7 @@ import java.util.Properties;
 
 /**
  * Created by Alexander Arakelyan on 28/11/15.
+ *
  */
 @Configuration
 @EnableWebMvc
@@ -52,7 +53,7 @@ public class ApplicationWebMvcConfiguration extends WebMvcConfigurerAdapter {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
-		sessionFactory.setPackagesToScan(new String[]{"ru.sovzond.mgis2"});
+		sessionFactory.setPackagesToScan("ru.sovzond.mgis2");
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
@@ -163,11 +164,10 @@ public class ApplicationWebMvcConfiguration extends WebMvcConfigurerAdapter {
 	@Bean
 	public HttpMessageConverter<String> responseBodyConverter() {
 		StringHttpMessageConverter converter = new StringHttpMessageConverter();
-		converter.setSupportedMediaTypes(Arrays.asList( //
-				new MediaType[]{ //
-						new MediaType("text", "plain", Charset.forName("UTF-8")), //
-						new MediaType("text", "html", Charset.forName("UTF-8")) //
-				}));
+		converter.setSupportedMediaTypes(Arrays.asList(
+				new MediaType("text", "plain", Charset.forName("UTF-8")),
+				new MediaType("text", "html", Charset.forName("UTF-8"))
+		));
 		return converter;
 	}
 }
