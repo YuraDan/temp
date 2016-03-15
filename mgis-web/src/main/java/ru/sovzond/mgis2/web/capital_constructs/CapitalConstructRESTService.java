@@ -147,10 +147,15 @@ public class CapitalConstructRESTService {
 			rights2 = constructionRightsBean.load(rights.getId());
 		}
 		if (rights != null) {
-			syncConstructionRights(rights2.getRights(), rights.getRights());
-			constructionRightsBean.save(rights2);
+			if(syncConstructionRights(rights2.getRights(), rights.getRights())) {
+				constructionRightsBean.save(rights2);
+				capitalConstruct2.setRights(rights2);
+			}
+		} else {
+			if(rights2.getId() != null && rights2.getId() != 0) {
+				constructionRightsBean.remove(rights2);
+			}
 		}
-		capitalConstruct2.setRights(rights2);
 
 		// Characteristics
 		ConstructionCharacteristics characteristics = capitalConstruct.getCharacteristics();
@@ -320,7 +325,8 @@ public class CapitalConstructRESTService {
 		}
 	}
 
-	private void syncConstructionRights(List<ConstructionRight> persistentList, List<ConstructionRight> newList) {
+	private boolean syncConstructionRights(List<ConstructionRight> persistentList, List<ConstructionRight> newList) {
+		int oldPersistentListSize = persistentList.size();
 		Map<Long, ConstructionRight> persistentMap = new HashMap<>();
 		for (ConstructionRight right : persistentList) {
 			persistentMap.put(right.getId(), right);
@@ -369,6 +375,7 @@ public class CapitalConstructRESTService {
 			constructionRightBean.remove(entity);
 			persistentList.remove(entity);
 		}
+		return !toBeRemoved.isEmpty() || oldPersistentListSize != persistentList.size();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")

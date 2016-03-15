@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 22.06.15.
+ *
  */
 public class CRUDDaoBase<T> extends DAOBase<T> implements IPageableDAOBase<T>, IIdentifiableDao<T> {
 
@@ -19,11 +20,13 @@ public class CRUDDaoBase<T> extends DAOBase<T> implements IPageableDAOBase<T>, I
 	public static final String NO_IDENTIFIERS_PROVIDED = "NO_IDENTIFIERS_PROVIDED";
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public T findById(Long id) {
-		return (T) createCriteria().add(Restrictions.eq(ID, id)).uniqueResult();
+		 return (T) createCriteria().add(Restrictions.eq(ID, id)).uniqueResult();
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<T> findByIds(List<Long> ids) {
 		if (ids.size() == 0) {
 			throw new IllegalArgumentException(NO_IDENTIFIERS_PROVIDED);

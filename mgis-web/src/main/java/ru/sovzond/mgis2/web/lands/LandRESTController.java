@@ -192,8 +192,14 @@ public class LandRESTController implements Serializable {
 			rights2 = landRightsBean.load(rights.getId());
 		}
 		if (rights != null) {
-			syncLandRights(rights2.getRights(), rights.getRights());
-			landRightsBean.save(rights2);
+			if(syncLandRights(rights2.getRights(), rights.getRights())) {
+				landRightsBean.save(rights2);
+				land2.setRights(rights2);
+			}
+		} else {
+			if(rights2.getId() != null && rights2.getId() != 0) {
+				landRightsBean.remove(rights2);
+			}
 		}
 
 		LandCharacteristics chars = land.getCharacteristics();
@@ -332,7 +338,8 @@ public class LandRESTController implements Serializable {
 		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
 	}
 
-	private void syncLandRights(List<LandRight> persistentList, List<LandRight> newList) {
+	private boolean syncLandRights(List<LandRight> persistentList, List<LandRight> newList) {
+		int oldPersistentListSize = persistentList.size();
 		Map<Long, LandRight> persistentMap = new HashMap<>();
 		for (LandRight right : persistentList) {
 			persistentMap.put(right.getId(), right);
@@ -390,7 +397,7 @@ public class LandRESTController implements Serializable {
 			landRightBean.remove(entity);
 			persistentList.remove(entity);
 		}
+		return !toBeRemoved.isEmpty() || oldPersistentListSize != persistentList.size();
 	}
-
 
 }
