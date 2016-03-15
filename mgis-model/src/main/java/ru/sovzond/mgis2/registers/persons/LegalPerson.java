@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 /**
  *
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "mgis2_legal_person")
 public class LegalPerson extends Person {
@@ -487,9 +488,11 @@ public class LegalPerson extends Person {
 	}
 
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LegalPerson clone() {
 		LegalPerson person = new LegalPerson();
 		person.setId(getId());
+		person.setDocuments(getDocuments() != null ? getDocuments().clone() : null);
 		person.setName(getName());
 		person.setActivityType(activityType != null ? activityType.clone() : null);
 		person.setActualAddress(actualAddress != null ? actualAddress.clone() : null);

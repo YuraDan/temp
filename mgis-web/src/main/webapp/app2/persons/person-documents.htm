@@ -1,4 +1,4 @@
-<div ng-if="item.surname" class="panel panel-default">
+<div ng-if="isNatural" class="panel panel-default">
 	<div class="panel-heading">
 		<h3 translate>Document.Identity.Data</h3>
 	</div>
@@ -37,6 +37,6 @@
 	</div>
 
 	<div class="panel-body">
-		<isogd-document-selector multiple-documents="true"></isogd-document-selector>
+		<isogd-document-selector multiple-documents="true" documents="item.documents.documents"></isogd-document-selector>
 	</div>
 </div>

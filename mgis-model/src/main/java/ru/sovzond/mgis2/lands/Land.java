@@ -157,10 +157,13 @@ public class Land implements Cloneable {
 		this.address = address;
 	}
 
+
+	@SuppressWarnings("unused")
 	public Land getPreviousVersion() {
 		return previousVersion;
 	}
 
+	@SuppressWarnings("unused")
 	public void setPreviousVersion(Land previousVersion) {
 		this.previousVersion = previousVersion;
 	}
@@ -237,6 +240,7 @@ public class Land implements Cloneable {
 		this.spatialData = spatialData;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	@Override
 	public Land clone() {
 		Land land = new Land();
@@ -254,7 +258,7 @@ public class Land implements Cloneable {
 		land.setCharacteristics(characteristics != null ? characteristics.clone() : null);
 		land.setControl(control != null ? control.clone() : null);
 		land.setIncludedObjects(includedObjects != null ? includedObjects.clone() : null);
-		land.getLandAreas().addAll(landAreas.stream().map(landArea1 -> landArea1.clone()).collect(Collectors.toList()));
+		land.getLandAreas().addAll(landAreas.stream().map(LandArea::clone).collect(Collectors.toList()));
 		land.setSpatialData(spatialData != null ? spatialData.clone() : null);
 		return land;
 	}

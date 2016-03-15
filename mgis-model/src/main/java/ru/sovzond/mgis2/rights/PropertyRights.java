@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 06.11.15.
+ *
  */
 @Entity
 @Table(name = "mgis2_property_right")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PropertyRights implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rights_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -41,7 +42,10 @@ public class PropertyRights implements Cloneable {
 	private Date terminationDate;
 
 	@Column
-	private float share;
+	private int shareNumerator;
+
+	@Column
+	private int shareDenominator;
 
 	@ManyToMany
 	@JoinTable(name = "mgis2_property_rights_reg_docs", joinColumns = @JoinColumn(name = "mgis2_property_rights_id"), inverseJoinColumns = @JoinColumn(name = "registration_doc_id"))
@@ -119,12 +123,20 @@ public class PropertyRights implements Cloneable {
 		this.terminationDate = terminationDate;
 	}
 
-	public float getShare() {
-		return share;
+	public int getShareNumerator() {
+		return shareNumerator;
 	}
 
-	public void setShare(float share) {
-		this.share = share;
+	public void setShareNumerator(int shareNumerator) {
+		this.shareNumerator = shareNumerator;
+	}
+
+	public int getShareDenominator() {
+		return shareDenominator;
+	}
+
+	public void setShareDenominator(int shareDenominator) {
+		this.shareDenominator = shareDenominator;
 	}
 
 	public List<Document> getRegistrationDocuments() {
@@ -191,7 +203,7 @@ public class PropertyRights implements Cloneable {
 		this.comment = comment;
 	}
 
-
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public PropertyRights clone() {
 		PropertyRights rights = new PropertyRights();
 		rights.setId(id);
@@ -200,7 +212,8 @@ public class PropertyRights implements Cloneable {
 		rights.setRightOwner(rightOwner != null ? rightOwner.clone() : null);
 		rights.setRightKind(rightKind != null ? rightKind.clone() : null);
 		rights.setOwnershipForm(ownershipForm != null ? ownershipForm.clone() : null);
-		rights.setShare(share);
+		rights.setShareNumerator(getShareNumerator());
+		rights.setShareDenominator(getShareDenominator());
 		rights.setRegistrationDocuments(getRegistrationDocuments() != null ? getRegistrationDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setOtherDocuments(getOtherDocuments() != null ? getOtherDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);

@@ -1,5 +1,7 @@
 package ru.sovzond.mgis2.registers.persons;
 
+import ru.sovzond.mgis2.isogd.document.IncludedDocuments;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,17 @@ public class Person implements Cloneable {
 	@Column
 	private Long id;
 
+	@OneToOne
+	private IncludedDocuments documents;
+
+	public IncludedDocuments getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(IncludedDocuments documents) {
+		this.documents = documents;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -21,9 +34,11 @@ public class Person implements Cloneable {
 		this.id = id;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Person clone() {
 		Person person = new Person();
 		person.setId(id);
+		person.setDocuments(getDocuments() != null ? getDocuments().clone() : null);
 		return person;
 	}
 }

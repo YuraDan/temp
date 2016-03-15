@@ -1,5 +1,6 @@
 package ru.sovzond.mgis2.address;
 
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,7 +9,9 @@ import ru.sovzond.mgis2.dataaccess.base.HibernateConfiguration;
 
 /**
  * Created by Alexander Arakelyan on 21/11/15.
+ *
  */
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = HibernateConfiguration.class)
 public class AddressDaoTest {

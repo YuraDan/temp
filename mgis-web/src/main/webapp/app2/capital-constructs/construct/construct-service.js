@@ -31,7 +31,14 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 				var deferred = $q.defer();
 				var p = {}
 				angular.copy(item, p);
+
+
+
 				p.rights = MGISPropertyRightsService.buildRights(item.rights)
+
+
+
+
 				res.save({id: item.id}, p, function (data) {
 					deferred.resolve(data);
 				}, function (error) {

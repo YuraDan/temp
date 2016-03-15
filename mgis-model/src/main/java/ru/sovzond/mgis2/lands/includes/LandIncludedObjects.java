@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 22.07.15.
+ *
  */
 @Entity
 @Table(name = "lands_included_objects")
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class LandIncludedObjects implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_included_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -62,6 +63,7 @@ public class LandIncludedObjects implements Cloneable {
 		return includedLands;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIncludedLands(List<Land> includedLands) {
 		this.includedLands = includedLands;
 	}
@@ -78,6 +80,7 @@ public class LandIncludedObjects implements Cloneable {
 		return includedCapitalConstructions;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIncludedCapitalConstructions(List<CapitalConstruction> includedCapitalConstructions) {
 		this.includedCapitalConstructions = includedCapitalConstructions;
 	}
@@ -90,6 +93,7 @@ public class LandIncludedObjects implements Cloneable {
 		this.urbanPlanningDocuments = urbanPlanningDocuments;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandIncludedObjects clone() {
 		LandIncludedObjects ic = new LandIncludedObjects();
 		ic.setId(id);
@@ -114,7 +118,7 @@ public class LandIncludedObjects implements Cloneable {
 		}).collect(Collectors.toList()));
 		ic.setInventoryDealDocument(inventoryDealDocument != null ? inventoryDealDocument.clone() : null);
 		ic.setLandDealDocument(landDealDocument != null ? landDealDocument.clone() : null);
-		ic.setUrbanPlanningDocuments(urbanPlanningDocuments.stream().map(document -> document.clone()).collect(Collectors.toList()));
+		ic.setUrbanPlanningDocuments(urbanPlanningDocuments.stream().map(Document::clone).collect(Collectors.toList()));
 		return ic;
 	}
 }

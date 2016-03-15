@@ -13,8 +13,12 @@ import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandSourceDecora
 import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandTargetDecorator;
 import ru.sovzond.mgis2.lands.*;
 import ru.sovzond.mgis2.lands.characteristics.LandCharacteristics;
+import ru.sovzond.mgis2.lands.rights.LandRight;
 import ru.sovzond.mgis2.lands.rights.LandRights;
-import ru.sovzond.mgis2.national_classifiers.*;
+import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
+import ru.sovzond.mgis2.national_classifiers.LandCategoryBean;
+import ru.sovzond.mgis2.national_classifiers.LandRightKindBean;
+import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
 import ru.sovzond.mgis2.registers.national_classifiers.*;
 
 import java.util.List;
@@ -23,6 +27,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Alexander Arakelyan on 19.11.15.
+ *
  */
 @Service
 public class LandResolverBean {
@@ -156,7 +161,7 @@ public class LandResolverBean {
 				LandArea landArea = new LandArea();
 				landArea.setValue(landDTO.getArea().floatValue());
 				landArea.setLandAreaType(landAreaTypeBean.load(3L));
-				landAreas.add(landArea);
+				if (landAreas != null)  landAreas.add(landArea);
 				land.setLandAreas(landAreas);
 			}
 
@@ -166,18 +171,19 @@ public class LandResolverBean {
 				landRightsBean.save(rights);
 				land.setRights(rights);
 			}
-			rights.setTotalArea(landDTO.getArea().floatValue());
-
-			if (landDTO.getRights() != null) {
-				switch (landDTO.getRights().size()) {
-					case 0:
-						throw new IllegalArgumentException("No land right found while land.rights node container exists.");
-					case 1:
-						LandRightDTO landRightDTO = landDTO.getRights().get(0);
-						rights.setRightKind(resolveLandRightKind(landRightDTO.getName(), landRightDTO.getType()));
-						break;
-					default:
-						throw new IllegalArgumentException("More than one land right found in node land.rights node container exists.");
+			for(LandRight right: rights.getRights()) {
+				right.setTotalArea(landDTO.getArea().floatValue());
+				if (landDTO.getRights() != null) {
+					switch (landDTO.getRights().size()) {
+						case 0:
+							throw new IllegalArgumentException("No land right found while land.rights node container exists.");
+						case 1:
+							LandRightDTO landRightDTO = landDTO.getRights().get(0);
+							right.setRightKind(resolveLandRightKind(landRightDTO.getName(), landRightDTO.getType()));
+							break;
+						default:
+							throw new IllegalArgumentException("More than one land right found in node land.rights node container exists.");
+					}
 				}
 			}
 		}

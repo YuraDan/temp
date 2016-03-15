@@ -11,20 +11,21 @@ import ru.sovzond.mgis2.capital_constructs.characteristics.ConstructionCharacter
 import ru.sovzond.mgis2.capital_constructs.characteristics.economical.EconomicCharacteristic;
 import ru.sovzond.mgis2.capital_constructs.characteristics.technical.TechnicalCharacteristic;
 import ru.sovzond.mgis2.capital_constructs.constructive_elements.ConstructiveElement;
+import ru.sovzond.mgis2.capital_constructs.rights.ConstructionRight;
+import ru.sovzond.mgis2.capital_constructs.rights.ConstructionRights;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.indicators.PriceIndicatorBean;
 import ru.sovzond.mgis2.indicators.TechnicalIndicatorBean;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
+import ru.sovzond.mgis2.isogd.document.Document;
 import ru.sovzond.mgis2.lands.Land;
 import ru.sovzond.mgis2.lands.LandBean;
 import ru.sovzond.mgis2.lands.LandIncludedObjectsBean;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
-import ru.sovzond.mgis2.property.PropertyRightsBean;
-import ru.sovzond.mgis2.rights.PropertyRights;
 import ru.sovzond.mgis2.web.lands.ResultIds;
 
 import javax.transaction.Transactional;
@@ -33,6 +34,8 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 05.11.15.
+ *
+ *
  */
 @RestController
 @RequestMapping("/oks/constructs")
@@ -52,7 +55,10 @@ public class CapitalConstructRESTService {
 	private AddressBean addressBean;
 
 	@Autowired
-	private PropertyRightsBean propertyRightsBean;
+	private ConstructionRightsBean constructionRightsBean;
+
+	@Autowired
+	private ConstructionRightBean constructionRightBean;
 
 	@Autowired
 	private DocumentBean documentBean;
@@ -117,59 +123,32 @@ public class CapitalConstructRESTService {
 		} else {
 			capitalConstruct2 = capitalConstructBean.load(id);
 		}
-		BeanUtils.copyProperties(capitalConstruct, capitalConstruct2, new String[]{ //
-				"id", //
-				"constructType", //
-				"municipalEntity", //
-				"address", //
-				"rights", //
-				"characteristics", //
-				"constructiveElements", //
-				"landIncludedObjects", //
-				"spatialData" //
-
-		});
+		BeanUtils.copyProperties(capitalConstruct, capitalConstruct2,
+				"id",
+				"constructType",
+				"municipalEntity",
+				"address",
+				"rights",
+				"characteristics",
+				"constructiveElements",
+				"landIncludedObjects",
+				"spatialData"
+		);
 		capitalConstruct2.setType(capitalConstruct.getType() != null ? constructTypeBean.load(capitalConstruct.getType().getId()) : null);
 		capitalConstruct2.setMunicipalEntity(capitalConstruct.getMunicipalEntity() != null ? oktmoBean.load(capitalConstruct.getMunicipalEntity().getId()) : null);
 		capitalConstruct2.setAddress(capitalConstruct.getAddress() != null ? addressBean.load(capitalConstruct.getAddress().getId()) : null);
-		PropertyRights rights = capitalConstruct.getRights();
+
 		// Rights
-		PropertyRights rights2;
+		ConstructionRights rights = capitalConstruct.getRights();
+		ConstructionRights rights2;
 		if (rights == null || rights.getId() == null || rights.getId() == 0) {
-			rights2 = new PropertyRights();
+			rights2 = new ConstructionRights();
 		} else {
-			rights2 = propertyRightsBean.load(rights.getId());
+			rights2 = constructionRightsBean.load(rights.getId());
 		}
 		if (rights != null) {
-			BeanUtils.copyProperties(rights, rights2, new String[]{
-							"id",
-							"documentsCertifyingRights",
-							"registrationDocuments",
-							"otherDocuments",
-							"ownershipForm",
-							"rightKind",
-							"rightOwner"
-					}
-			);
-			if (rights.getDocumentsCertifyingRights() == null || rights.getDocumentsCertifyingRights().size() == 0) {
-				rights2.getDocumentsCertifyingRights().clear();
-			} else {
-				rights2.setDocumentsCertifyingRights(documentBean.load(rights.getDocumentsCertifyingRights().stream().map(document -> document.getId()).collect(Collectors.toList())));
-			}
-			if (rights.getRegistrationDocuments() == null || rights.getRegistrationDocuments().size() == 0) {
-				rights2.getRegistrationDocuments().clear();
-			} else {
-				rights2.setRegistrationDocuments(documentBean.load(rights.getRegistrationDocuments().stream().map(document -> document.getId()).collect(Collectors.toList())));
-			}
-			if (rights.getOtherDocuments() == null || rights.getOtherDocuments().size() == 0) {
-				rights2.getOtherDocuments().clear();
-			} else {
-				rights2.setOtherDocuments(documentBean.load(rights.getOtherDocuments().stream().map(document -> document.getId()).collect(Collectors.toList())));
-			}
-			rights2.setOwnershipForm(rights.getOwnershipForm() != null ? okfsBean.load(rights.getOwnershipForm().getId()) : null);
-			rights2.setRightKind(rights.getRightKind() != null ? landRightKindBean.load(rights.getRightKind().getId()) : null);
-			rights2.setRightOwner(rights.getRightOwner() != null ? personBean.load(rights.getRightOwner().getId()) : null);
-			propertyRightsBean.save(rights2);
+			syncConstructionRights(rights2.getRights(), rights.getRights());
+			constructionRightsBean.save(rights2);
 		}
 		capitalConstruct2.setRights(rights2);
 
@@ -218,17 +197,17 @@ public class CapitalConstructRESTService {
 			// Urban planning documents
 			landIncludedObjects2.getUrbanPlanningDocuments().clear();
 			if (landIncludedObjects.getUrbanPlanningDocuments().size() > 0) {
-				landIncludedObjects2.getUrbanPlanningDocuments().addAll(documentBean.load(landIncludedObjects.getUrbanPlanningDocuments().stream().map(document -> document.getId()).collect(Collectors.toList())));
+				landIncludedObjects2.getUrbanPlanningDocuments().addAll(documentBean.load(landIncludedObjects.getUrbanPlanningDocuments().stream().map(Document::getId).collect(Collectors.toList())));
 			}
 			// Included lands
 			landIncludedObjects2.getIncludedLands().clear();
 			if (landIncludedObjects.getIncludedLands().size() > 0) {
-				landIncludedObjects2.getIncludedLands().addAll(landBean.load(landIncludedObjects.getIncludedLands().stream().map(land -> land.getId()).collect(Collectors.toList())));
+				landIncludedObjects2.getIncludedLands().addAll(landBean.load(landIncludedObjects.getIncludedLands().stream().map(Land::getId).collect(Collectors.toList())));
 			}
 			// Included constructs
 			landIncludedObjects2.getIncludedCapitalConstructions().clear();
 			if (landIncludedObjects.getIncludedCapitalConstructions().size() > 0) {
-				landIncludedObjects2.getIncludedCapitalConstructions().addAll(capitalConstructBean.load(landIncludedObjects.getIncludedCapitalConstructions().stream().map(construction -> construction.getId()).collect(Collectors.toList())));
+				landIncludedObjects2.getIncludedCapitalConstructions().addAll(capitalConstructBean.load(landIncludedObjects.getIncludedCapitalConstructions().stream().map(CapitalConstruction::getId).collect(Collectors.toList())));
 			}
 			capitalConstructBean.save(capitalConstruct2);
 		} else {
@@ -271,14 +250,13 @@ public class CapitalConstructRESTService {
 				persistent = persistentMap.get(characteristic.getId());
 				newIds.add(persistent.getId());
 			}
-			BeanUtils.copyProperties(characteristic, persistent, new String[]{"id", "priceIndicator", "okof"});
+			BeanUtils.copyProperties(characteristic, persistent, "id", "priceIndicator", "okof");
 			persistent.setPriceIndicator(characteristic.getPriceIndicator() != null ? priceIndicatorBean.load(characteristic.getPriceIndicator().getId()) : null);
 			persistent.setOkof(characteristic.getOkof() != null ? okofBean.load(characteristic.getOkof().getId()) : null);
 			economicCharacteristicBean.save(persistent);
 		}
-		List<EconomicCharacteristic> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(entry -> entry.getValue()).collect(Collectors.toList());
-		for (int i = 0; i < toBeRemoved.size(); i++) {
-			EconomicCharacteristic entity = toBeRemoved.get(i);
+		List<EconomicCharacteristic> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
+		for (EconomicCharacteristic entity : toBeRemoved) {
 			economicCharacteristicBean.remove(entity);
 			persistentList.remove(entity);
 		}
@@ -299,15 +277,14 @@ public class CapitalConstructRESTService {
 				persistent = persistentMap.get(characteristic.getId());
 				newIds.add(persistent.getId());
 			}
-			BeanUtils.copyProperties(characteristic, persistent, new String[]{"id", "constructType", "technicalIndicator", "unitOfMeasure"});
+			BeanUtils.copyProperties(characteristic, persistent, "id", "constructType", "technicalIndicator", "unitOfMeasure");
 			persistent.setConstructType(characteristic.getConstructType() != null ? constructTypeBean.load(characteristic.getConstructType().getId()) : null);
 			persistent.setTechnicalIndicator(characteristic.getTechnicalIndicator() != null ? technicalIndicatorBean.load(characteristic.getTechnicalIndicator().getId()) : null);
 			persistent.setUnitOfMeasure(characteristic.getUnitOfMeasure() != null ? okeiBean.load(characteristic.getUnitOfMeasure().getId()) : null);
 			technicalCharacteristicBean.save(persistent);
 		}
-		List<TechnicalCharacteristic> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(entry -> entry.getValue()).collect(Collectors.toList());
-		for (int i = 0; i < toBeRemoved.size(); i++) {
-			TechnicalCharacteristic entity = toBeRemoved.get(i);
+		List<TechnicalCharacteristic> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
+		for (TechnicalCharacteristic entity : toBeRemoved) {
 			technicalCharacteristicBean.remove(entity);
 			persistentList.remove(entity);
 		}
@@ -331,16 +308,66 @@ public class CapitalConstructRESTService {
 					persistent = persistentMap.get(element.getId());
 					newIds.add(persistent.getId());
 				}
-				BeanUtils.copyProperties(element, persistent, new String[]{"id", "type"});
+				BeanUtils.copyProperties(element, persistent, "id", "type");
 				persistent.setType(element.getType() != null ? constructiveElementTypeBean.load(element.getType().getId()) : null);
 				constructiveElementBean.save(persistent);
 			}
-			List<ConstructiveElement> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(entry -> entry.getValue()).collect(Collectors.toList());
-			for (int i = 0; i < toBeRemoved.size(); i++) {
-				ConstructiveElement entity = toBeRemoved.get(i);
+			List<ConstructiveElement> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
+			for (ConstructiveElement entity : toBeRemoved) {
 				constructiveElementBean.remove(entity);
 				persistentList.remove(entity);
 			}
+		}
+	}
+
+	private void syncConstructionRights(List<ConstructionRight> persistentList, List<ConstructionRight> newList) {
+		Map<Long, ConstructionRight> persistentMap = new HashMap<>();
+		for (ConstructionRight right : persistentList) {
+			persistentMap.put(right.getId(), right);
+		}
+		Set<Long> newIds = new HashSet<>();
+		for (ConstructionRight right : newList) {
+			ConstructionRight persistent;
+			if (right.getId() == null || right.getId() == 0) {
+				persistent = new ConstructionRight();
+				persistentList.add(persistent);
+			} else {
+				persistent = persistentMap.get(right.getId());
+				newIds.add(persistent.getId());
+			}
+			BeanUtils.copyProperties(right, persistent,
+					"id",
+					"documentsCertifyingRights",
+					"registrationDocuments",
+					"otherDocuments",
+					"ownershipForm",
+					"rightKind",
+					"rightOwner"
+			);
+			if (right.getDocumentsCertifyingRights() == null || right.getDocumentsCertifyingRights().size() == 0) {
+				persistent.getDocumentsCertifyingRights().clear();
+			} else {
+				persistent.setDocumentsCertifyingRights(documentBean.load(right.getDocumentsCertifyingRights().stream().map(Document::getId).collect(Collectors.toList())));
+			}
+			if (right.getRegistrationDocuments() == null || right.getRegistrationDocuments().size() == 0) {
+				persistent.getRegistrationDocuments().clear();
+			} else {
+				persistent.setRegistrationDocuments(documentBean.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
+			}
+			if (right.getOtherDocuments() == null || right.getOtherDocuments().size() == 0) {
+				persistent.getOtherDocuments().clear();
+			} else {
+				persistent.setOtherDocuments(documentBean.load(right.getOtherDocuments().stream().map(Document::getId).collect(Collectors.toList())));
+			}
+			persistent.setOwnershipForm(right.getOwnershipForm() != null ? okfsBean.load(right.getOwnershipForm().getId()) : null);
+			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);
+			persistent.setRightOwner(right.getRightOwner() != null ? personBean.load(right.getRightOwner().getId()) : null);
+			constructionRightBean.save(persistent);
+		}
+		List<ConstructionRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
+		for (ConstructionRight entity : toBeRemoved) {
+			constructionRightBean.remove(entity);
+			persistentList.remove(entity);
 		}
 	}
 
