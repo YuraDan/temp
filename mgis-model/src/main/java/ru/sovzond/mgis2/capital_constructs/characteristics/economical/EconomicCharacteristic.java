@@ -8,12 +8,14 @@ import java.util.Date;
 
 /**
  * Created by Alexander Arakelyan on 06.11.15.
+ *
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "occ_economic_characteristic")
 public class EconomicCharacteristic implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_e_characteristics_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -94,6 +96,7 @@ public class EconomicCharacteristic implements Cloneable {
 		this.amortizationGroup = amortizationGroup;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public EconomicCharacteristic clone() {
 		EconomicCharacteristic characteristic = new EconomicCharacteristic();
 		characteristic.setId(id);

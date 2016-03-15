@@ -153,6 +153,7 @@ public class Document implements Cloneable {
 		this.author = author;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Document clone() {
 		Document document = new Document();
 		document.setId(id);
@@ -163,7 +164,7 @@ public class Document implements Cloneable {
 		document.setCommonPart(commonPart != null ? commonPart.clone() : null);
 		document.setSpecialPart(specialPart != null ? specialPart.clone() : null);
 		document.setDocumentSubObject(documentSubObject != null ? documentSubObject.clone() : null);
-		document.setVolume(volume.clone());
+		document.setVolume(volume != null ? volume.clone(): null);
 		document.setAuthor(author != null ? author.clone() : null);
 		return document;
 	}

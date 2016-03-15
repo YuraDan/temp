@@ -6,6 +6,7 @@ import ru.sovzond.mgis2.registers.national_classifiers.OKVED;
 import javax.persistence.*;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "mgis2_natural_person")
 public class NaturalPerson extends Person {
@@ -345,10 +346,11 @@ public class NaturalPerson extends Person {
 		this.certificateType = certificateType;
 	}
 
-
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public NaturalPerson clone() {
 		NaturalPerson np = new NaturalPerson();
 		np.setId(getId());
+		np.setDocuments(getDocuments() != null ? getDocuments().clone() : null);
 		np.setFirstName(firstName);
 		np.setSurname(surname);
 		np.setPatronymic(patronymic);

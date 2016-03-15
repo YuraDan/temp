@@ -1,11 +1,13 @@
 package ru.sovzond.mgis2.admin;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.sovzond.mgis2.authentication.model.Group;
 import ru.sovzond.mgis2.authentication.model.Privilege;
 import ru.sovzond.mgis2.authentication.model.User;
 
+@Ignore
 public class AuthenticationCloneTest {
 
 	@Test

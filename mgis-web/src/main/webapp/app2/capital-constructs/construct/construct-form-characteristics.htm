@@ -1,20 +1,27 @@
+<!--suppress HtmlUnknownAttribute -->
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 translate>CapitalConstructs.Construct.Characteristics.EconomicCharacteristics</h3>
 	</div>
 	<div class="panel-body">
-		<div class="form-group row">
-			<div class="col-sm-12"><label translate>CapitalConstructs.Construct.Characteristics.EconomicCharacteristics</label></div>
+		<div class="form-group row mgis-row-header">
+			<div class="col-sm-2" translate>Indicators.PriceIndicator</div>
+			<div class="col-sm-2" translate>NationalClassifiers.UnitOfMeasure</div>
+			<div class="col-sm-2" translate>Value</div>
+			<!--<div class="col-sm-1" translate>Date</div>-->
+			<div class="col-sm-2" translate>NationalClassifiers.OKOF</div>
+			<!--<div class="col-sm-2" translate>CapitalConstructs.Construct.Characteristics.AmortizationGroup</div>-->
+			<div class="col-sm-4"></div>
 		</div>
 		<div class="form-group row">
 			<div class="col-sm-12" ng-controller="CapitalConstructsConstructController">
 				<div ng-repeat="chr in item.characteristics.economicCharacteristics" class="row mgis-grid-row">
-					<div class="col-sm-2">{{chr.priceIndicator.name}}</div>
+					<div class="col-sm-2"><a href="javascript:void(0)" ng-click="editEconomicCharacteristic(chr)">{{chr.priceIndicator.name}}</a></div>
 					<div class="col-sm-2">{{chr.priceIndicator.unitOfMeasure.name}}</div>
-					<div class="col-sm-1">{{chr.value}}</div>
-					<div class="col-sm-1">{{chr.valueImplementationDate|date:'yyyy/MM/dd'}}</div>
-					<div class="col-sm-1">{{chr.okof.code}}</div>
-					<div class="col-sm-1">{{chr.amortizationGroup}}</div>
+					<div class="col-sm-2">{{chr.value}}</div>
+					<!--<div class="col-sm-1">{{chr.valueImplementationDate|date:'yyyy/MM/dd'}}</div>-->
+					<div class="col-sm-2">{{chr.okof.name}}</div>
+					<!--<div class="col-sm-2">{{chr.amortizationGroup}}</div>-->
 					<div class="col-sm-4">
 						<button class="btn btn-sm btn-warning" ng-click="editEconomicCharacteristic(chr)" translate>Edit</button>
 						<button class="btn btn-sm btn-danger" ng-click="removeEconomicCharacteristic(item, chr)" translate>Remove</button>
@@ -31,14 +38,16 @@
 		<h3 translate>CapitalConstructs.Construct.Characteristics.TechnicalCharacteristics</h3>
 	</div>
 	<div class="panel-body">
-		<div class="form-group row">
-			<div class="col-sm-12"><label translate>CapitalConstructs.Construct.Characteristics.TechnicalCharacteristics</label></div>
+		<div class="form-group row mgis-row-header">
+			<div class="col-sm-2" translate>Indicators.TechnicalIndicator</div>
+			<div class="col-sm-2" translate>NationalClassifiers.UnitOfMeasure</div>
+			<div class="col-sm-2" translate>Value</div>
+			<div class="col-sm-4"></div>
 		</div>
 		<div class="form-group row">
 			<div class="col-sm-12" ng-controller="CapitalConstructsConstructController">
 				<div ng-repeat="chr in item.characteristics.technicalCharacteristics" class="row mgis-grid-row">
-					<div class="col-sm-2">{{chr.constructType.name}}</div>
-					<div class="col-sm-2">{{chr.technicalIndicator.name}}</div>
+					<div class="col-sm-2"><a href="javascript:void(0)" ng-click="editTechnicalCharacteristic(chr)">{{chr.technicalIndicator.name}}</a></div>
 					<div class="col-sm-2">{{chr.technicalIndicator.unitOfMeasure.name}}</div>
 					<div class="col-sm-2">{{chr.value}}</div>
 					<div class="col-sm-4">

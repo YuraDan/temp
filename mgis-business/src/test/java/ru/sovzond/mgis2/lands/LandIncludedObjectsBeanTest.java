@@ -1,6 +1,7 @@
 package ru.sovzond.mgis2.lands;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class LandIncludedObjectsBeanTest {
 	CapitalConstructBean capitalConstructBean;
 
 	@Test
-//	@Ignore
+	@Ignore
 	@Transactional
 	public void getIncludedObjectsByCapitalConstructTest() {
 
@@ -39,7 +40,7 @@ public class LandIncludedObjectsBeanTest {
 	}
 
 	@Test
-//	@Ignore
+	@Ignore
 	@Transactional
 	public void getIncludedObjectsByLandTest() {
 

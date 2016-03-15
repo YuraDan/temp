@@ -19,15 +19,15 @@ angular.module("mgis.isogd.document.selector", ["ui.bootstrap", "ui.select", //
 			controller: function ($scope, ISOGDDocumentCRUDService, MGISCommonsModalForm) {
 				$scope.openSelector = function () {
 					var modalScope = $rootScope.$new();
-					modalScope.selectedDocuments = new Array();
+					modalScope.selectedDocuments = [];
 					modalScope.multipleDocuments = $scope.multipleDocuments;
 					if ($scope.multipleDocuments) {
 						if ($scope.documents) {
-							modalScope.selectedDocuments = new Array().concat($scope.documents);
+							modalScope.selectedDocuments = [].concat($scope.documents);
 						}
 					} else {
 						if ($scope.document) {
-							modalScope.selectedDocuments = new Array().concat($scope.document);
+							modalScope.selectedDocuments = [].concat($scope.document);
 						}
 					}
 
@@ -82,11 +82,11 @@ angular.module("mgis.isogd.document.selector", ["ui.bootstrap", "ui.select", //
 		$scope.selectedDocuments = $scope.selectedDocuments || new Array();
 
 		$scope.selectSearchItemClick = function (item, updateAction) {
-			$scope.documentSelectClicked(item.id, item.name);
+			$scope.documentSelectClicked(item.id, item.name, item.docNumber, item.docDate);
 		}
 
-		$scope.documentSelectClicked = function (id, name) {
-			var item = {id: id, name: name};
+		$scope.documentSelectClicked = function (id, name, docNumber, docDate) {
+			var item = {id: id, name: name, docNumber: docNumber, docDate: docDate};
 			if ($scope.multipleDocuments) {
 				var found = false;
 				for (var i = 0; i < $scope.selectedDocuments.length; i++) {

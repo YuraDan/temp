@@ -73,7 +73,7 @@
 			<version>9.4-1201-jdbc41</version>
 		</dependency>
 
-		<!-- JUnit depeldency -->
+		<!-- JUnit dependency -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

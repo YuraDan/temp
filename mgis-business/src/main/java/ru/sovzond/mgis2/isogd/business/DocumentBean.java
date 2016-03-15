@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 28/06/15.
+ *
  */
 @Service
 public class DocumentBean extends CRUDBeanBase<Document> {

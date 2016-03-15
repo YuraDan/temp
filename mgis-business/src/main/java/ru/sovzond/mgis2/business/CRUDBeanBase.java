@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 20/06/15.
+ *
  */
 public abstract class CRUDBeanBase<T> {
 
@@ -52,4 +53,5 @@ public abstract class CRUDBeanBase<T> {
 	public void remove(T entity) {
 		getPageableDao().delete(entity);
 	}
+
 }

@@ -4,6 +4,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 public class BlankA4Test {
 
+	@Ignore
 	@Test
 	public void test2() throws IOException, JRException {
 		try (InputStream inputStream = BlankA4Test.class.getResourceAsStream("Blank_A4.jasper")) {
