@@ -15,7 +15,7 @@ public class OKTMO implements Cloneable {
 	@Column
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false , unique = false)
 	private String code;
 
 	@Column(length = 300)

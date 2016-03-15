@@ -22,6 +22,7 @@ angular.module("mgis.property.service", [])
 			buildRights: function (rights) {
 				var rights2 = {};
 				var right2 = {};
+				var rights_rights = {};
 				rights2.rights = {};
 				if (rights) {
 					rights_rights = rights.rights;

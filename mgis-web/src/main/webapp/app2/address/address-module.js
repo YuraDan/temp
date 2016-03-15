@@ -281,6 +281,7 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = 15;
+		$scope.pagerMaxSize = 15;
 
 		function updateGrid() {
 			AddressService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage).then(function (data) {
