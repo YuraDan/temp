@@ -1,22 +1,14 @@
 <div>
 	<h3>{{spatialGroup.coortinateSystem.code}}</h3>
 
-	<div class="form-group row">
-		<div class="col-sm-4">
-			<label translate>GEO.CoordinateSystem</label>
-		</div>
 
-		<div class="col-sm-8">
-			<p class="input-group input-group-sm">
-				<multiselect ng-model="spatialGroup.coordinateSystem"
-							 options="c.code for c in availableCoordinateSystems"
-							 data-multiple="false"
-							 data-compare-by="id"
-							 scroll-after-rows="15">
-				</multiselect>
-			</p>
-		</div>
-	</div>
+	<commons-forms-drop-down form="editForm" name="coordinateSystem"
+							 property="spatialGroup.coordinateSystem"
+							 title="GEO.CoordinateSystem"
+							 available-elements="availableCoordinateSystems"
+							 element-label-expression="element.code"
+			></commons-forms-drop-down>
+
 
 	<div ng-repeat="element in spatialGroup.spatialElements" class="row" style="vertical-align: top;">
 		<div class="col-sm-2"><h4><span translate>SortOrder</span>: {{element.position}}</h4></div>
@@ -28,8 +20,11 @@
 			</div>
 		</div>
 		<div class="col-sm-4">
-			<button class="btn btn-sm btn-warning" ng-click="editElement(element)" translate>GEO.Spatial.Element.Edit</button>
-			<button class="btn btn-sm btn-danger" ng-click="removeElement(element)" translate>GEO.Spatial.Element.Remove</button>
+			<button class="btn btn-sm btn-warning" ng-click="editElement(element)" translate>GEO.Spatial.Element.Edit
+			</button>
+			<button class="btn btn-sm btn-danger" ng-click="removeElement(element)" translate>
+				GEO.Spatial.Element.Remove
+			</button>
 		</div>
 	</div>
 	<button class="btn btn-sm btn-info" ng-click="addElement()" translate>GEO.Spatial.Element.Add</button>
