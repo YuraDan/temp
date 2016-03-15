@@ -19,7 +19,7 @@ public class OKATO implements Cloneable {
 	@Column
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false , unique = false)
 	private String code; //code okato
 
 	@Column(length = 300)
