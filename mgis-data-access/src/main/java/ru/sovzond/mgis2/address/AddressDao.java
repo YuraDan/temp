@@ -18,6 +18,7 @@ public class AddressDao extends CRUDDaoBase<Address> {
 		return new AddressPagerBuilder(name, orderBy, first, max);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Address> find(KLADRLocality subject, KLADRLocality region, KLADRLocality locality, KLADRStreet street, String home, String housing, String building, String apartment) {
 		Criteria criteria = getSession().createCriteria(persistentClass);
 		criteria.add(subject != null ? Restrictions.eq("subject", subject) : Restrictions.isNull("subject"));
