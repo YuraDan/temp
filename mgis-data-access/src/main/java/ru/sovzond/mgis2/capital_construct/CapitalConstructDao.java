@@ -45,7 +45,7 @@ public class CapitalConstructDao extends CRUDDaoBase<CapitalConstruction> {
 				criteria.add(Restrictions.like("cadastralNumber", "%" + cadastralNumber + "%"));
 			}
 			if (name != null && name.length() > 0) {
-				criteria.add(Restrictions.like("name", "%" + name + "%"));
+				criteria.add(Restrictions.ilike("name", "%" + name + "%"));
 			}
 		}
 	}

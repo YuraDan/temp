@@ -48,11 +48,11 @@ public class AddressDao extends CRUDDaoBase<Address> {
 				criteria.createAlias("locality", "locality");
 				criteria.createAlias("street", "street");
 				criteria.add(Restrictions.or( //
-						Restrictions.like("subject.name", name + "%"), //
-						Restrictions.like("region.name", name + "%"),//
-						Restrictions.like("locality.name", name + "%"), //
-						Restrictions.like("street.name", name + "%"), //
-						Restrictions.like("home", name + "%") //
+						Restrictions.ilike("subject.name", name + "%"), //
+						Restrictions.ilike("region.name", name + "%"),//
+						Restrictions.ilike("locality.name", name + "%"), //
+						Restrictions.ilike("street.name", name + "%"), //
+						Restrictions.ilike("home", name + "%") //
 				));
 			}
 		}
