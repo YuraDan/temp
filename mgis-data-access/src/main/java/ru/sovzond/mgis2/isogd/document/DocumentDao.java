@@ -85,7 +85,7 @@ public class DocumentDao extends CRUDDaoBase<Document> {
 				criteria.add(Restrictions.eq("bk.section", section));
 			}
 			if (documentName != null && documentName.length() > 0) {
-				criteria.add(Restrictions.like("name", "%" + documentName + "%"));
+				criteria.add(Restrictions.ilike("name", "%" + documentName + "%"));
 			}
 			if (documentDate != null) {
 				criteria.add(Restrictions.eq("docDate", documentDate));

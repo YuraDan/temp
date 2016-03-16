@@ -39,7 +39,7 @@ public class TerritorialZoneDao extends CRUDDaoBase<TerritorialZone> {
 		@Override
 		protected void applyFilter(Criteria criteria) {
 			if (name != null && name.length() > 0) {
-				criteria.add(Restrictions.like("name", "%" + name + "%"));
+				criteria.add(Restrictions.ilike("name", "%" + name + "%"));
 			}
 		}
 	}
