@@ -1,5 +1,6 @@
 /**
  * Created by Alexander Arakelyan on 24.06.15.
+ *
  */
 angular.module("mgis.commons", ["ui.bootstrap",
 	"mgis.error"

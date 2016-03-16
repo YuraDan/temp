@@ -29,7 +29,6 @@ public class ConstructionRight extends PropertyRights {
 		rights.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setOtherDocuments(getOtherDocuments() != null ? getOtherDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setComment(getComment());
-		rights.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
 		rights.setObligations(isObligations());
 		rights.setAnnualTax(getAnnualTax());
 		rights.setTotalArea(getTotalArea());

@@ -150,6 +150,9 @@ public class LandRESTController implements Serializable {
 		if (land.getLandCategory() != null) {
 			land2.setLandCategory(landCategoryBean.load(land.getLandCategory().getId()));
 		}
+		if (land.getEncumbrance() != null) {
+			land2.setEncumbrance(landEncumbranceBean.load(land.getEncumbrance().getId()));
+		}
 		//		land2.setLandAreas();
 		if (land.getAllowedUsageByDictionary() != null) {
 			land2.setAllowedUsageByDictionary(allowedUsageByDocumentBean.load(land.getAllowedUsageByDictionary().getId()));
@@ -389,7 +392,6 @@ public class LandRESTController implements Serializable {
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? landOwnershipFormBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);
 			persistent.setRightOwner(right.getRightOwner() != null ? personBean.load(right.getRightOwner().getId()) : null);
-			persistent.setEncumbrance(right.getEncumbrance() != null ? landEncumbranceBean.load(right.getEncumbrance().getId()) : null);
 			landRightBean.save(persistent);
 		}
 		List<LandRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());

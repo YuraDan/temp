@@ -33,7 +33,6 @@ angular.module("mgis.property.service", [])
 								ownershipForm: right.ownershipForm ? {id: right.ownershipForm.id} : null,
 								rightKind: right.rightKind ? {id: right.rightKind.id} : null,
 								rightOwner: right.rightOwner ? {id: right.rightOwner.id} : null,
-								encumbrance: right.encumbrance,
 								obligations: right.obligations,
 								ownershipDate: right.ownershipDate,
 								terminationDate: right.terminationDate,

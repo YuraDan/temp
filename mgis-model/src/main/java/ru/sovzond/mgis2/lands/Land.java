@@ -11,6 +11,7 @@ import ru.sovzond.mgis2.lands.rights.LandRights;
 import ru.sovzond.mgis2.lands.works.LandWorks;
 import ru.sovzond.mgis2.registers.national_classifiers.LandAllowedUsage;
 import ru.sovzond.mgis2.registers.national_classifiers.LandCategory;
+import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import javax.persistence.*;
@@ -84,6 +85,9 @@ public class Land implements Cloneable {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "spatial_data_id")
 	private SpatialGroup spatialData;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private LandEncumbrance encumbrance;
 
 	public Long getId() {
 		return id;
@@ -240,6 +244,14 @@ public class Land implements Cloneable {
 		this.spatialData = spatialData;
 	}
 
+	public LandEncumbrance getEncumbrance() {
+		return encumbrance;
+	}
+
+	public void setEncumbrance(LandEncumbrance encumbrance) {
+		this.encumbrance = encumbrance;
+	}
+
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	@Override
 	public Land clone() {
@@ -260,6 +272,7 @@ public class Land implements Cloneable {
 		land.setIncludedObjects(includedObjects != null ? includedObjects.clone() : null);
 		land.getLandAreas().addAll(landAreas.stream().map(LandArea::clone).collect(Collectors.toList()));
 		land.setSpatialData(spatialData != null ? spatialData.clone() : null);
+		land.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
 		return land;
 	}
 

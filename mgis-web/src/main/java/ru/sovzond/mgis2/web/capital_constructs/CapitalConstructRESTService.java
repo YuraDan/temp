@@ -105,6 +105,9 @@ public class CapitalConstructRESTService {
 	@Autowired
 	private LandIncludedObjectsBean landIncludedObjectsBean;
 
+	@Autowired
+	private LandEncumbranceBean landEncumbranceBean;
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<CapitalConstruction> list(@RequestParam(value = "orderBy", defaultValue = "id DESC") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max,
@@ -132,11 +135,13 @@ public class CapitalConstructRESTService {
 				"characteristics",
 				"constructiveElements",
 				"landIncludedObjects",
+				"encumbrance",
 				"spatialData"
 		);
 		capitalConstruct2.setType(capitalConstruct.getType() != null ? constructTypeBean.load(capitalConstruct.getType().getId()) : null);
 		capitalConstruct2.setMunicipalEntity(capitalConstruct.getMunicipalEntity() != null ? oktmoBean.load(capitalConstruct.getMunicipalEntity().getId()) : null);
 		capitalConstruct2.setAddress(capitalConstruct.getAddress() != null ? addressBean.load(capitalConstruct.getAddress().getId()) : null);
+		capitalConstruct2.setEncumbrance(capitalConstruct.getEncumbrance() != null ? landEncumbranceBean.load(capitalConstruct.getEncumbrance().getId()) : null);
 
 		// Rights
 		ConstructionRights rights = capitalConstruct.getRights();

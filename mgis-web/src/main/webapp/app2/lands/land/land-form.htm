@@ -17,7 +17,7 @@
 					<span translate>Lands.Land.Rights</span>
 				</tab-heading>
 				<div>
-					<mgis-property-rights rights="land.rights" form="landForm"></mgis-property-rights>
+					<mgis-property-rights rights="land.rights" form="landForm" encumbrance="land.encumbrance"></mgis-property-rights>
 					<mgis-property-payments payments="land.rights" form="landForm"></mgis-property-payments>
 				</div>
 			</tab>
@@ -80,4 +80,5 @@
 <div class="modal-footer">
 	<button type="submit" class="btn btn-primary" ng-disabled="landForm.$invalid" ng-click="ok()" translate>Submit</button>
 	<button type="button" class="btn btn-default" ng-click="cancel()" translate>Cancel</button>
+</div>
 </div>

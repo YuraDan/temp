@@ -64,7 +64,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 											modalScope.availableLandsAllowedUsage = availableLandsAllowedUsage.list;
 
 											// AddressMunicipalEntities
-											modalScope.availableAddressMunicipalEntities = new Array();
+											modalScope.availableAddressMunicipalEntities = [];
 											modalScope.refreshAvailableMunicipalEntities = function (name) {
 												NcOKTMOService.get("", 0, 30, null, name).then(function (data) {
 													modalScope.availableAddressMunicipalEntities = data.list;
@@ -72,7 +72,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 											}
 
 											// NearestMunicipalEntities
-											modalScope.availableNearestMunicipalEntities = new Array();
+											modalScope.availableNearestMunicipalEntities = [];
 											modalScope.refreshAvailableNearestMunicipalEntities = function (name) {
 												NcOKTMOService.get("", 0, 30, null, name).then(function (data) {
 													modalScope.availableNearestMunicipalEntities = data.list;
@@ -80,7 +80,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 											}
 
 											// TerritorialZones
-											modalScope.availableAllowedUsageByTerritorialZones = new Array();
+											modalScope.availableAllowedUsageByTerritorialZones = [];
 											modalScope.refreshAvailableAllowedUsageByTerritorialZones = function (name) {
 												TerrZonesZoneService.get("", 0, 15, name).then(function (availableTerritorialZones) {
 													modalScope.availableAllowedUsageByTerritorialZones = availableTerritorialZones.list;
@@ -97,7 +97,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 											modalScope.areas = modalScope.land.landAreas;
 
 											MGISCommonsModalForm.edit("app2/lands/land/land-form.htm", modalScope, function (scope, $modalInstance) {
-												LandsLandService.save(scope.land).then(function (data) {
+												LandsLandService.save(scope.land).then(function () {
 													$modalInstance.close();
 													updateGrid();
 												});

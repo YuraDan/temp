@@ -4,7 +4,7 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 ])
 
 	.constant("ConstructsConstructConstants", {
-		CONSTRUCT_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1}/,
+		CONSTRUCT_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1,10}/,
 		CONSTRUCT_CADASTRAL_NUMBER_MASK: "99:99:9999999:9?9?9?9?9?9?9?9?9?9"
 	})
 
@@ -29,7 +29,7 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 			},
 			save: function (item) {
 				var deferred = $q.defer();
-				var p = {}
+				var p = {};
 				angular.copy(item, p);
 
 
@@ -105,17 +105,18 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 	})
 	// Selected Constructs Service
 	.factory("ConstructsConstructSelectorService", function () {
-		var _constructs = new Array();
-		var _addListeners = new Array();
-		var _removeListeners = new Array();
+		var _constructs = [];
+		var _addListeners = [];
+		var _removeListeners = [];
 		return {
 			add: function (construct) {
 				var found = false;
+
 				for (var i in _constructs) {
 					var construct2 = _constructs[i];
 					if ((construct.id && construct.id == construct2.id) ||
 						(construct.cadastralnumber && construct.cadastralnumber == construct2.cadastralnumber)) {
-						var construct2 = _constructs[i];
+						construct2 = _constructs[i];
 						found |= true;
 					}
 				}
@@ -149,14 +150,14 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 				}
 			},
 			list: function () {
-				var result = new Array();
+				var result = [];
 				for (var i in _constructs) {
 					result.push(_constructs[i]);
 				}
 				return result;
 			},
 			ids: function () {
-				var result = new Array();
+				var result = [];
 				for (var i in _constructs) {
 					result.push(_constructs[i].id);
 				}
