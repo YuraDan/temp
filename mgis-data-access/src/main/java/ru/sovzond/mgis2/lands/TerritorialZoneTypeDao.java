@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class TerritorialZoneTypeDao extends CRUDDaoBase<TerritorialZoneType> {
 	public List<TerritorialZoneType> findByNameSubstring(String nameSubstring) {
-		return createCriteria().add(Restrictions.like("name", nameSubstring)).list();
+		return createCriteria().add(Restrictions.ilike("name", nameSubstring)).list();
 	}
 
 	public TerritorialZoneType findByCode(String code) {

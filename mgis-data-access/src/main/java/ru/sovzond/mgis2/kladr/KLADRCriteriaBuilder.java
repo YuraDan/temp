@@ -48,7 +48,7 @@ public class KLADRCriteriaBuilder {
 			criteria.add(Restrictions.like("code", "__" + SUBJECT_TAIL));
 		}
 		if (subjectName != null && subjectName.length() > 0) {
-			criteria.add(Restrictions.like("name", "%" + subjectName + "%"));
+			criteria.add(Restrictions.ilike("name", "%" + subjectName + "%"));
 		}
 	}
 
@@ -74,7 +74,7 @@ public class KLADRCriteriaBuilder {
 			criteria.add(Restrictions.like("code", subjectCode.substring(0, 2) + SUBJECT_ANY));
 		}
 		if (localityName != null && localityName.length() > 0) {
-			criteria.add(Restrictions.like("name", "%" + localityName + "%"));
+			criteria.add(Restrictions.ilike("name", "%" + localityName + "%"));
 		}
 	}
 
@@ -87,7 +87,7 @@ public class KLADRCriteriaBuilder {
 			criteria.add(Restrictions.like("code", subjectCode.substring(0, 2) + "___" + "___" + "_________"));
 		}
 		if (streetName != null && streetName.length() > 0) {
-			criteria.add(Restrictions.like("name", "%" + streetName + "%"));
+			criteria.add(Restrictions.ilike("name", "%" + streetName + "%"));
 		}
 	}
 

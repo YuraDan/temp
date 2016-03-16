@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 10.11.15.
- * <p/>
+ * <p>
  * ОКОФ
  */
 @Repository

@@ -40,7 +40,7 @@ public class KLADRHomeDao extends CRUDDaoBase<KLADRHome> {
 				criteria.add(Restrictions.like("code", streetCode.substring(0, 15) + "%"));
 			}
 			if (homeName != null && !"".equals(homeName)) {
-				criteria.add(Restrictions.like("name", "%" + homeName + "%"));
+				criteria.add(Restrictions.ilike("name", "%" + homeName + "%"));
 			}
 		}
 	}
@@ -57,7 +57,7 @@ public class KLADRHomeDao extends CRUDDaoBase<KLADRHome> {
 		protected void applyFilter(Criteria criteria) {
 			super.applyFilter(criteria);
 			if (housingName != null && !"".equals(housingName)) {
-				criteria.add(Restrictions.like("housing", "%" + housingName + "%"));
+				criteria.add(Restrictions.ilike("housing", "%" + housingName + "%"));
 			}
 		}
 	}

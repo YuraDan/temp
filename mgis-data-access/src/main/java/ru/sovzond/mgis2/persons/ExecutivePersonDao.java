@@ -31,9 +31,9 @@ public class ExecutivePersonDao extends CRUDDaoBase<ExecutivePerson> {
 		protected void applyFilter(Criteria criteria) {
 			if (name != null && name.length() > 0) {
 				criteria.add(Restrictions.or(
-						Restrictions.like("surname", "%" + name + "%"),
-						Restrictions.like("firstName", "%" + name + "%"),
-						Restrictions.like("patronymic", "%" + name + "%")
+						Restrictions.ilike("surname", "%" + name + "%"),
+						Restrictions.ilike("firstName", "%" + name + "%"),
+						Restrictions.ilike("patronymic", "%" + name + "%")
 				));
 			}
 		}

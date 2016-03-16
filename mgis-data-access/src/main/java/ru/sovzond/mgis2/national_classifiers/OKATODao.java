@@ -56,7 +56,7 @@ public class OKATODao extends CRUDDaoBase<OKATO> {
 				criteria.add(Restrictions.like("code", "%" + code + "%"));
 			}
 			if (name != null && name.length() > 0) {
-				criteria.add(Restrictions.like("name", "%" + name + "%"));
+				criteria.add(Restrictions.ilike("name", "%" + name + "%"));
 			}
 		}
 	}
