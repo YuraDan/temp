@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.capital_construct.ConstructiveElementTypeBean;
-import ru.sovzond.mgis2.capital_constructs.constructive_elements.ConstructiveElementType;
+import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElementType;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 
 import javax.transaction.Transactional;

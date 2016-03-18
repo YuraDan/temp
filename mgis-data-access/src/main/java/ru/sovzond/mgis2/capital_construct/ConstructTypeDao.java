@@ -2,7 +2,7 @@ package ru.sovzond.mgis2.capital_construct;
 
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import ru.sovzond.mgis2.capital_constructs.ConstructionType;
+import ru.sovzond.mgis2.property.model.oks.ConstructionType;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 
 /**

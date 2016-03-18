@@ -11,7 +11,7 @@ import ru.sovzond.mgis2.integration.data_exchange.imp.dto.*;
 import ru.sovzond.mgis2.integration.data_exchange.imp.handlers.kpt.KptLandsImporter;
 import ru.sovzond.mgis2.integration.data_exchange.imp.handlers.region_cadastr.RegionCadastrLandsImporter;
 import ru.sovzond.mgis2.integration.data_exchange.imp.beans.LandResolverBean;
-import ru.sovzond.mgis2.lands.Land;
+import ru.sovzond.mgis2.property.model.lands.Land;
 
 import javax.transaction.Transactional;
 import java.io.IOException;

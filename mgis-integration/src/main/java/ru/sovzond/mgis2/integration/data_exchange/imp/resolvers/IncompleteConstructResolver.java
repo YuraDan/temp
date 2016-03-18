@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.integration.data_exchange.imp.resolvers;
 
-import ru.sovzond.mgis2.capital_constructs.CapitalConstruction;
+import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.integration.data_exchange.imp.beans.BuildingResolverBean;
 import ru.sovzond.mgis2.integration.data_exchange.imp.dto.CoordinateSystemDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.dto.EntitySpatialDTO;

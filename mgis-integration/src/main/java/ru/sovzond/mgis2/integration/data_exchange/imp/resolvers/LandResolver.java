@@ -4,7 +4,7 @@ import ru.sovzond.mgis2.integration.data_exchange.imp.beans.LandResolverBean;
 import ru.sovzond.mgis2.integration.data_exchange.imp.dto.CoordinateSystemDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.dto.LandDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.report.ReportCollector;
-import ru.sovzond.mgis2.lands.Land;
+import ru.sovzond.mgis2.property.model.lands.Land;
 
 /**
  * Created by Alexander Arakelyan on 26.11.15.

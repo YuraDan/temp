@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
-import ru.sovzond.mgis2.lands.TerritorialZone;
+import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
 import ru.sovzond.mgis2.lands.TerritorialZoneBean;
 import ru.sovzond.mgis2.lands.TerritorialZoneTypeBean;
 import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
