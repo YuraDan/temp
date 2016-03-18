@@ -282,9 +282,11 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = 15;
 		$scope.pagerMaxSize = 10;
+		$scope.addressFind = "";
+		$scope.oktmoFind = "";
 
 		function updateGrid() {
-			AddressService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage).then(function (data) {
+			AddressService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage, $scope.addressFind, $scope.oktmoFind).then(function (data) {
 				$scope.addressPager = data;
 			});
 		}
@@ -303,6 +305,15 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 
 		$scope.deleteItem = function (id) {
 			AddressModule.remove(id, updateGrid);
+		}
+
+		$scope.find = function () {
+			updateGrid();
+		}
+
+		$scope.resetSearchClick = function () {
+			$scope.addressFind = "";
+			$scope.find();
 		}
 
 		updateGrid();

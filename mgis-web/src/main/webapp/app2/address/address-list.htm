@@ -1,14 +1,87 @@
 <div ng-controller="AddressController">
 	<h3 translate>Addresses</h3>
 
-	<div ng-repeat="item in addressPager.list" class="row" style="padding-bottom: 7px;">
-		<div class="col-sm-8">
-			{{item|addressFormatter}}
+	<form>
+		<div class="control-group">
+			<div class="controls form-inline row">
+				<div class="col-sm-8">
+					<input type="text" class="form-control pull-right" style="width:100%" id="addressFind"
+						   name="addressFind" ng-model="addressFind"/>
+				</div>
+				<div class="col-sm-4">
+					<button class="btn btn-sm btn-primary" style="width:20%" ng-click="find()" translate>Find</button>
+					<button class="btn btn-sm btn-info" ng-click="resetSearchClick()" ng-if="addressFind" translate>
+						ResetSearch
+					</button>
+				</div>
+			</div>
 		</div>
-		<div class="col-sm-4">
-			<button class="btn btn-warning btn-sm" ng-click="editItem(item.id)" translate>Edit</button>
-			<button class="btn btn-danger btn-sm" ng-click="deleteItem(item.id)" translate>Delete</button>
+	</form>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+
+			<div class="row mgis-row-header">
+				<div class="col-sm-3">
+					<div class="control-group">
+						<label for="addressFiltr" translate>Address</label>
+						<input type="text" id="addressFiltr" name="addressFiltr" ng-model="addressFind"
+							   ng-change="find()"
+							   class=" form-control"/>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<label for="oktmoFind" translate>OKTMO</label>
+						<input type="text" id="oktmoFind" name="oktmoFind" ng-model="oktmoFind"
+							   ng-change="find()"
+							   class=" form-control"/>
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="control-group">
+						<label for="addressStatusFind" translate>Addresses.status</label>
+						<input type="text" id="addressStatusFind" name="addressStatusFind" ng-model="addressStatusFind"
+							   ng-change="findStatusAddress()"
+							   class=" form-control"/>
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<div class="control-group">
+						<label for="docNameFind" translate>ISOGD.Document.Name</label>
+						<input type="text" id="docNameFind" name="docNameFind" ng-model="docNameFind"
+							   ng-change="findDocName()"
+							   class=" form-control"/>
+					</div>
+				</div>
+
+				<div class="col-sm-3"></div>
+			</div>
 		</div>
+		<div ng-repeat="item in addressPager.list" class="row" style="padding-bottom: 7px;">
+			<div class="col-sm-3">
+				<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item|addressFormatter}}</a>
+			</div>
+			<div class="col-sm-2">
+				{{item.oktmo.code}}
+			</div>
+			<div class="col-sm-2">
+				{{'Адрес подтвержден'}}
+			</div>
+			<div class="col-sm-2">
+				<!--{{item.cadastralNumber}}-->
+			</div>
+			<div class="col-sm-3">
+				<button class="btn btn-warning btn-sm" style="margin-left:30%" ng-click="editItem(item.id)"
+						translate>
+					Edit
+				</button>
+				<button class="btn btn-danger btn-sm" ng-click="deleteItem(item.id)" translate>Delete</button>
+			</div>
+		</div>
+
 	</div>
 
 	<div>

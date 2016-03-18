@@ -254,7 +254,7 @@ span.mgis-input-group-date button {
 
 }
 
-multiselect button.btn {
+.multiselect button.btn {
 	white-space: normal !important;
 }
 
@@ -285,8 +285,8 @@ multiselect button.btn {
 	top: 165px;
 }
 
-.search-control-group{
-padding: 0px 0px 20px;
+.search-control-group {
+	padding: 0px 0px 20px;
 }
 
 .leaflet-layer-tree-control-leaf-wfs-zoom-to {

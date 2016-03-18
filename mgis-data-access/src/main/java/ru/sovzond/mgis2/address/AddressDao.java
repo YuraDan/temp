@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public class AddressDao extends CRUDDaoBase<Address> {
 
-	public PagerBuilderBase<Address> createFilter(String name, String orderBy, int first, int max) {
-		return new AddressPagerBuilder(name, orderBy, first, max);
+	public PagerBuilderBase<Address> createFilter(String name, String okato, String orderBy, int first, int max) {
+		return new AddressPagerBuilder(name, okato, orderBy, first, max);
 	}
 
 	public List<Address> find(KLADRLocality subject, KLADRLocality region, KLADRLocality locality, KLADRStreet street, String home, String housing, String building, String apartment) {
@@ -34,10 +34,12 @@ public class AddressDao extends CRUDDaoBase<Address> {
 	private class AddressPagerBuilder extends PagerBuilderCriteria<Address> {
 
 		private String name;
+		private String oktmo;
 
-		public AddressPagerBuilder(String name, String orderBy, int first, int max) {
+		public AddressPagerBuilder(String name, String oktmo, String orderBy, int first, int max) {
 			super(orderBy, first, max);
 			this.name = name;
+			this.oktmo = oktmo;
 		}
 
 		@Override
@@ -48,12 +50,16 @@ public class AddressDao extends CRUDDaoBase<Address> {
 				criteria.createAlias("locality", "locality");
 				criteria.createAlias("street", "street");
 				criteria.add(Restrictions.or( //
-						Restrictions.ilike("subject.name", name + "%"), //
-						Restrictions.ilike("region.name", name + "%"),//
-						Restrictions.ilike("locality.name", name + "%"), //
-						Restrictions.ilike("street.name", name + "%"), //
+						Restrictions.ilike("subject.name", "%" + name + "%"), //
+						Restrictions.ilike("region.name", "%" + name + "%"),//
+						Restrictions.ilike("locality.name", "%" + name + "%"), //
+						Restrictions.ilike("street.name", "%" + name + "%"), //
 						Restrictions.ilike("home", name + "%") //
 				));
+			}
+			if (oktmo != null && oktmo.length() > 0) {
+				criteria.createAlias("oktmo", "oktmo");
+				criteria.add(Restrictions.ilike("oktmo.code", "%" + oktmo + "%"));
 			}
 		}
 	}
