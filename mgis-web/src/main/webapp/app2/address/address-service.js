@@ -4,13 +4,14 @@ angular.module("mgis.address.service", ["ngResource",
 	.factory("AddressService", function ($resource, $q, MGISErrorService) {
 		var res = $resource('rest/addresses/:id.json');
 		return {
-			get: function (id, first, max, name) {
+			get: function (id, first, max, name, oktmo) {
 				var deferred = $q.defer();
 				res.get({
 					id: id,
 					first: first,
 					max: max,
-					name: name
+					name: name,
+					oktmo: oktmo
 				}, {}, function (data) {
 					deferred.resolve(data);
 				}, function (error) {
