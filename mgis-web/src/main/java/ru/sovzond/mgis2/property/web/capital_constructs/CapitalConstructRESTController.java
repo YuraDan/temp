@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.capital_constructs;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import ru.sovzond.mgis2.lands.LandIncludedObjectsBean;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
-import ru.sovzond.mgis2.web.property.ResultIds;
+import ru.sovzond.mgis2.property.web.ResultIds;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/oks/constructs")
 @Scope("session")
-public class CapitalConstructRESTService {
+public class CapitalConstructRESTController {
 
 	@Autowired
 	private CapitalConstructBean capitalConstructBean;

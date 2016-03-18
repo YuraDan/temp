@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.lands;
+package ru.sovzond.mgis2.property.web.lands;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.capital_constructs;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 @RestController
 @RequestMapping("/oks/constructive-element-types")
 @Scope("session")
-public class ConstructiveElementTypeRESTService {
+public class ConstructiveElementTypeRESTController {
 
 	@Autowired
 	private ConstructiveElementTypeBean constructiveElementTypeBean;
