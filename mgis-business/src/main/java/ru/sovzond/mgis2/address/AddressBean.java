@@ -40,8 +40,8 @@ public class AddressBean extends CRUDBeanBase<Address> {
 		return dao;
 	}
 
-	public PageableContainer<Address> list(String orderBy, int first, int max, String name) {
-		Pageable<Address> pager = dao.pager(dao.createFilter(name, orderBy, first, max));
+	public PageableContainer<Address> list(String orderBy, int first, int max, String name, String oktmo) {
+		Pageable<Address> pager = dao.pager(dao.createFilter(name, oktmo, orderBy, first, max));
 		return new PageableContainer<>(pager.list().stream().map(Address::clone).collect(Collectors.toList()), pager.count(), first, max);
 	}
 

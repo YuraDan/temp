@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
+import ru.sovzond.mgis2.property.model.lands.LandArea;
 
 /**
  * Created by Alexander Arakelyan on 03.08.15.
+ *
+ *
  */
 @Service
 public class LandAreaBean extends CRUDBeanBase<LandArea> {

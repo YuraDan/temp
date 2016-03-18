@@ -46,7 +46,12 @@ public class IncludedDocumentsBean extends CRUDBeanBase<IncludedDocuments> {
 	@Transactional(propagation = Propagation.MANDATORY)
 	public IncludedDocuments syncIncludedDocuments(IncludedDocuments persistIncludedDocuments, IncludedDocuments newIncludedDocuments) {
 		if(persistIncludedDocuments == null || persistIncludedDocuments.getId() == null || persistIncludedDocuments.getId() == 0) {
+			if(newIncludedDocuments == null) return null;
 			persistIncludedDocuments = new IncludedDocuments();
+		}
+		if(newIncludedDocuments == null) {
+			dao.delete(persistIncludedDocuments);
+			return null;
 		}
 		List<Document> persistentList = persistIncludedDocuments.getDocuments();
 		List<Document> newList = newIncludedDocuments.getDocuments();

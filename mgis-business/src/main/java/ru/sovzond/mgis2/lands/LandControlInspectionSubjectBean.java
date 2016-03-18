@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.lands.control.LandControlInspectionSubject;
+import ru.sovzond.mgis2.property.model.lands.control.LandControlInspectionSubject;
 
 /**
  * Created by Alexander Arakelyan on 31.07.15.

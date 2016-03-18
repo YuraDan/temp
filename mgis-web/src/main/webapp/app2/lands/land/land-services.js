@@ -3,8 +3,7 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 	"mgis.property.service"
 ])
 	.constant("LandsLandConstants", {
-		LAND_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1}/,
-		//LAND_CADASTRAL_NUMBER_MASK: ""
+		LAND_CADASTRAL_NUMBER: /^\d{2}:\d{2}:\d{7}:\d{1,10}/,
 		LAND_CADASTRAL_NUMBER_MASK: "99:99:9999999:9?9?9?9?9?9?9?9?9?9"
 	})
 	.factory("LandsLandService", function ($resource, $q, MGISErrorService, MGISPropertyRightsService) {
@@ -23,13 +22,13 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 
 		function buildInspectionResultDocuments(control) {
 			if (control.inspectionResultDocuments && control.inspectionResultDocuments.length) {
-				return new Array().concat(control.inspectionResultDocuments);
+				return [].concat(control.inspectionResultDocuments);
 			}
 			return null;
 		}
 
 		function copyArray(arr) {
-			var result = new Array();
+			var result = [];
 			for (var i in arr) {
 				var land = arr[i];
 				result.push({id: land.id});
@@ -57,7 +56,7 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 				res.get({
 					id: id,
 					cadastralNumber: cadastralNumber,
-					ids: ids ? ids.join() : new Array(),
+					ids: ids ? ids.join() : [],
 					first: first,
 					max: max
 				}, {}, function (data) {
@@ -82,7 +81,7 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 						landDealDocument: includedObjects.landDealDocument ? {id: includedObjects.landDealDocument.id} : null,
 						inventoryDealDocument: includedObjects.inventoryDealDocument ? {id: includedObjects.inventoryDealDocument.id} : null,
 						includedLands: buildIncludedLands(includedObjects),
-						includedCapitalConstructions: buildIncludedCapitalConstructions(includedObjects),
+						includedCapitalConstructions: buildIncludedCapitalConstructions(includedObjects)
 					};
 				}
 				var land = {
@@ -132,6 +131,9 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 						timelineForViolations: control.timelineForViolations
 					},
 					includedObjects: includedObjects2,
+					encumbrance: item.encumbrance,
+					landCadastralStatus: item.landCadastralStatus ? item.landCadastralStatus : null,
+					cadastralRecordStatus: item.cadastralRecordStatus ? item.cadastralRecordStatus : null,
 					spatialData: item.spatialData
 				};
 				res.save({id: item.id}, land, function (data) {
@@ -268,17 +270,18 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 	})
 	// Selected Lands Service
 	.factory("LandsLandSelectorService", function () {
-		var _lands = new Array();
-		var _addListeners = new Array();
-		var _removeListeners = new Array();
+		var _lands = [];
+		var _addListeners = [];
+		var _removeListeners = [];
 		return {
 			add: function (land) {
 				var found = false;
+				var land2 = {};
 				for (var i in _lands) {
-					var land2 = _lands[i];
+					land2 = _lands[i];
 					if ((land.id && land.id == land2.id) ||
 						(land.cadastralnumber && land.cadastralnumber == land2.cadastralnumber)) {
-						var land2 = _lands[i];
+						land2 = _lands[i];
 						found |= true;
 					}
 				}
@@ -312,14 +315,14 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 				}
 			},
 			list: function () {
-				var result = new Array();
+				var result = [];
 				for (var i in _lands) {
 					result.push(_lands[i]);
 				}
 				return result;
 			},
 			ids: function () {
-				var result = new Array();
+				var result = [];
 				for (var i in _lands) {
 					result.push(_lands[i].id);
 				}
@@ -375,5 +378,18 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 			}
 		}
 	})
-
+	.factory("LandCadastralStatusService", function ($q, $resource, MGISErrorService) {
+		var res = $resource('rest/lands/land-cadastral-status.json');
+		return {
+			query: function () {
+				var deferred = $q.defer();
+				res.query({}, {}, function (data) {
+					deferred.resolve(data);
+				}, function (error) {
+					MGISErrorService.handleError(error);
+				});
+				return deferred.promise;
+			}
+		}
+	})
 ;

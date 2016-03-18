@@ -3,10 +3,10 @@ package ru.sovzond.mgis2.capital_construct;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import ru.sovzond.mgis2.capital_constructs.CapitalConstruction;
+import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
-import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
 
 import java.util.List;
 

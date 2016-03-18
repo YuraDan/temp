@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
 
 import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 16.12.15.
+ *
  */
 @Service
 public class LandIncludedObjectsBean extends CRUDBeanBase<LandIncludedObjects> {
