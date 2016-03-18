@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 16.12.15.
+ *
  */
 @Service
 public class LandIncludedObjectsBean extends CRUDBeanBase<LandIncludedObjects> {

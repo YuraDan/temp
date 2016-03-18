@@ -5,6 +5,7 @@ import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 
 /**
  * Created by Alexander Arakelyan on 03.08.15.
+ *
  */
 @Repository
 public class LandAreaDao extends CRUDDaoBase<LandArea> {

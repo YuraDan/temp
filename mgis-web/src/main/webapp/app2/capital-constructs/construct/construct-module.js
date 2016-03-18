@@ -20,6 +20,7 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 	.factory("CapitalConstructsConstructCRUDService", function ($rootScope,
 																CapitalConstructsConstructService,
 																CapitalConstructsConstructTypeService,
+																CadastralRecordStatusService,
 																NcOKTMOService,
 																MGISCommonsModalForm,
 																AddressModule,
@@ -35,7 +36,12 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 				NcOKTMOService.get("", 0, 15, null, name).then(function (data) {
 					modalScope.availableMunicipalEntities = data.list;
 				});
-			}
+			};
+			// CadastralRecordStatus
+			modalScope.availableCadastralRecordStatus = [];
+			CadastralRecordStatusService.query().then(function (statuses) {
+				modalScope.availableCadastralRecordStatus = statuses;
+			});
 			CapitalConstructsConstructTypeService.get().then(function (constructTypePager) {
 				modalScope.availableTypes = constructTypePager.list;
 				MGISCommonsModalForm.edit("app2/capital-constructs/construct/construct-form.htm", modalScope, function (scope, modalInstance) {
@@ -48,7 +54,6 @@ angular.module("mgis.capital-constructs.construct", ["ui.router", "ui.bootstrap"
 				}, {windowClass: "mgis-capital-construct-modal-form"});
 			});
 		}
-
 
 		function addItem(updateHandler) {
 			editItem0({id: 0}, updateHandler);

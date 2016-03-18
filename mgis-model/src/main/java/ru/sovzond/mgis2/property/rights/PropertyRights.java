@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.rights;
+package ru.sovzond.mgis2.property.rights;
 
 import ru.sovzond.mgis2.isogd.document.Document;
 import ru.sovzond.mgis2.registers.national_classifiers.LandRightKind;

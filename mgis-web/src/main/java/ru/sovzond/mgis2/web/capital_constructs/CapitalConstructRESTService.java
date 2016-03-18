@@ -26,7 +26,8 @@ import ru.sovzond.mgis2.lands.LandIncludedObjectsBean;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
-import ru.sovzond.mgis2.web.lands.ResultIds;
+import ru.sovzond.mgis2.property.CadastralRecordStatusBean;
+import ru.sovzond.mgis2.web.property.ResultIds;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -108,6 +109,9 @@ public class CapitalConstructRESTService {
 	@Autowired
 	private LandEncumbranceBean landEncumbranceBean;
 
+	@Autowired
+	private CadastralRecordStatusBean cadastralRecordStatusBean;
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<CapitalConstruction> list(@RequestParam(value = "orderBy", defaultValue = "id DESC") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max,
@@ -130,6 +134,7 @@ public class CapitalConstructRESTService {
 				"id",
 				"constructType",
 				"municipalEntity",
+				"cadastralRecordStatus",
 				"address",
 				"rights",
 				"characteristics",
@@ -142,6 +147,7 @@ public class CapitalConstructRESTService {
 		capitalConstruct2.setMunicipalEntity(capitalConstruct.getMunicipalEntity() != null ? oktmoBean.load(capitalConstruct.getMunicipalEntity().getId()) : null);
 		capitalConstruct2.setAddress(capitalConstruct.getAddress() != null ? addressBean.load(capitalConstruct.getAddress().getId()) : null);
 		capitalConstruct2.setEncumbrance(capitalConstruct.getEncumbrance() != null ? landEncumbranceBean.load(capitalConstruct.getEncumbrance().getId()) : null);
+		capitalConstruct2.setCadastralRecordStatus(capitalConstruct.getCadastralRecordStatus() != null ? cadastralRecordStatusBean.load(capitalConstruct.getCadastralRecordStatus().getId()) : null);
 
 		// Rights
 		ConstructionRights rights = capitalConstruct.getRights();

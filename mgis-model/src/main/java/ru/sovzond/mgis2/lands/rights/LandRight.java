@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.lands.rights;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.sovzond.mgis2.isogd.document.Document;
-import ru.sovzond.mgis2.rights.PropertyRights;
+import ru.sovzond.mgis2.property.rights.PropertyRights;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

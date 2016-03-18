@@ -38,7 +38,9 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 											   LandsAvailabilityOfViolationsService,
 											   LandsInspectionReasonService,
 											   LandsInspectionSubjectService,
+											   CadastralRecordStatusService,
 											   TerrZonesZoneService,
+											   LandCadastralStatusService,
 											   AddressModule,
 											   LegalPersonModule,
 											   NaturalPersonModule,
@@ -69,7 +71,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 												NcOKTMOService.get("", 0, 30, null, name).then(function (data) {
 													modalScope.availableAddressMunicipalEntities = data.list;
 												});
-											}
+											};
 
 											// NearestMunicipalEntities
 											modalScope.availableNearestMunicipalEntities = [];
@@ -77,7 +79,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 												NcOKTMOService.get("", 0, 30, null, name).then(function (data) {
 													modalScope.availableNearestMunicipalEntities = data.list;
 												});
-											}
+											};
 
 											// TerritorialZones
 											modalScope.availableAllowedUsageByTerritorialZones = [];
@@ -85,14 +87,26 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 												TerrZonesZoneService.get("", 0, 15, name).then(function (availableTerritorialZones) {
 													modalScope.availableAllowedUsageByTerritorialZones = availableTerritorialZones.list;
 												});
-											}
+											};
 
 											// Characteristics - AvailableCountrySubjects
 											modalScope.refreshAvailableCountrySubjects = function (name) {
 												NcOKATOService.get("", 0, 15, "__", name).then(function (availableCountrySubjects) {
 													modalScope.availableCountrySubjects = availableCountrySubjects.list;
 												});
-											}
+											};
+											// CadastralRecordStatus
+											modalScope.availableCadastralRecordStatus = [];
+											CadastralRecordStatusService.query().then(function (statuses) {
+												modalScope.availableCadastralRecordStatus = statuses;
+											});
+											// LandCadastralStatus
+											modalScope.availableLandCadastralStatus = [];
+											LandCadastralStatusService.get().then(function (statuses) {
+												//noinspection JSUnresolvedVariable
+												if(statuses != null)
+													modalScope.availableLandCadastralStatus = statuses.landCadastralStatusList;
+											});
 
 											modalScope.areas = modalScope.land.landAreas;
 
@@ -152,7 +166,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 				landAreas: [],
 				rights: {},
 				characteristics: {}
-			}
+			};
 			editItem0(modalScope, updateGrid);
 		}
 
@@ -222,33 +236,33 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 
 		$scope.pageChanged = function () {
 			updateGrid();
-		}
+		};
 
 		// editItem
 
 		$scope.find = function () {
 			updateGrid();
-		}
+		};
 
 		$scope.addItem = function () {
 			LandsLandCRUDService.addItem(updateGrid);
-		}
+		};
 
 		$scope.editItem = function (id) {
 			LandsLandCRUDService.editItem(id, updateGrid);
-		}
+		};
 
 		$scope.editAddressItem = function (id) {
 			LandsLandCRUDService.editAddressItem(id, updateGrid);
-		}
+		};
 
 		$scope.editRightOwnerItem = function (id, name) {
 			LandsLandCRUDService.editRightOwnerItem(id, name, updateGrid);
-		}
+		};
 
 		$scope.deleteItem = function (id) {
 			LandsLandCRUDService.deleteItem(id, updateGrid);
-		}
+		};
 
 		$scope.deleteSelectedItems = function () {
 			MGISCommonsModalForm.confirmRemoval(function (modalInstance) {
@@ -259,13 +273,13 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 					modalInstance.close();
 				});
 			});
-		}
+		};
 
 		updateGrid();
 
 		$scope.displayOnTheMap = function () {
 			$state.go("^.maps");
-		}
+		};
 
 		function selectLand(item) {
 			LandsLandSelectorService.add({id: item.id, cadastralnumber: item.cadastralNumber});
@@ -285,18 +299,18 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 				$scope.selectedIds[ids[id]] = {checked: true, cadastralNumber: item.cadastralNumber};
 			}
 			//updateGrid();
-		}
+		};
 		$scope.selectAll = function () {
 			for (var i in $scope.landsPager.list) {
 				var land = $scope.landsPager.list[i];
 				selectLand(land);
 				$scope.selectedIds[land.id] = {checked: true, cadastralNumber: land.cadastralNumber};
 			}
-		}
+		};
 		$scope.deselectAll = function () {
 			LandsLandSelectorService.removeByIds(Object.keys($scope.selectedIds));
 			$scope.selectedIds = {};
-		}
+		};
 		$scope.isNotEmpty = function (obj) {
 			return Object.keys(obj).length > 0;
 		}
@@ -332,7 +346,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 
 		function editItem(area, addFlag) {
 			var modalScope = $rootScope.$new();
-			modalScope.NUMBER_FORMAT = /^\d+([\.\,]\d+)?$/
+			modalScope.NUMBER_FORMAT = /^\d+([\.\,]\d+)?$/;
 			modalScope.area = {id: area.id, value: area.value, landAreaType: area.landAreaType};
 			LandsLandAreaTypeService.get("", 0, 0).then(function (data) {
 				modalScope.availableLandAreaTypes = data.list;
@@ -358,10 +372,10 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 
 		$scope.addLandArea = function () {
 			editItem({id: 0}, true);
-		}
+		};
 		$scope.editLandArea = function (area) {
 			editItem(area);
-		}
+		};
 		$scope.removeLandArea = function (area) {
 			if (MGISCommonsModalForm.confirmRemoval(function ($modalInstance) {
 					var i = areas.indexOf(area);

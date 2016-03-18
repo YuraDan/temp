@@ -23,10 +23,10 @@ angular.module("mgis.property.service", [])
 				var rights2 = {};
 				var right2 = {};
 				var rights_rights = {};
-				rights2.rights = {};
 				if (rights) {
 					rights_rights = rights.rights;
 					if(rights_rights) {
+						rights2.rights = [];
 						for(var index in rights_rights) {
 							var right = rights_rights[index];
 							right2 = {
@@ -43,7 +43,8 @@ angular.module("mgis.property.service", [])
 								registrationDocuments: this.buildRegistrationDocuments(right),
 								documentsCertifyingRights: this.buildDocumentsCertifyingRights(right),
 								otherDocuments: this.buildOtherDocuments(right)
-							}
+							};
+
 							rights2.rights.push(right2);
 						}
 					}
@@ -54,4 +55,19 @@ angular.module("mgis.property.service", [])
 			}
 		}
 	})
-;
+
+.factory("CadastralRecordStatusService", function ($q, $resource, MGISErrorService) {
+	var res = $resource('rest/property/cadastral-record-status.json');
+	return {
+		query: function () {
+			var deferred = $q.defer();
+			res.query({}, {}, function (data) {
+				deferred.resolve(data);
+			}, function (error) {
+				MGISErrorService.handleError(error);
+			});
+			return deferred.promise;
+		}
+	}
+});
+

@@ -8,6 +8,7 @@ import ru.sovzond.mgis2.capital_constructs.constructive_elements.ConstructiveEle
 import ru.sovzond.mgis2.capital_constructs.rights.ConstructionRights;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.CadastralRecordStatus;
 import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  *
  */
 @Entity
-@Table(name = "occ_capital_construction")
+@Table(name = "occ_capital_construction", indexes = @Index(name = "oks_cadastral_number_ind", unique = true, columnList = "cadastralnumber"))
 public class CapitalConstruction implements Cloneable {
 	@Id
 	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_seq", allocationSize = 1)
@@ -40,7 +41,7 @@ public class CapitalConstruction implements Cloneable {
 	@Column
 	private String objectPurpose;
 
-	/*
+	/**
 	 * Общие сведения
 	 */
 
@@ -115,17 +116,20 @@ public class CapitalConstruction implements Cloneable {
 	@Column
 	private Integer buildCompletionYear;
 
-	/*
+	/**
 	 * Дата последней реконструкции
 	 */
 	@Column
 	private Date lastReconstructionDate;
 
-	/*
+	/**
 	 * Год последнего кап.ремонта
 	 */
 	@Column
 	private Integer rebuildingLastYear;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private CadastralRecordStatus cadastralRecordStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private LandEncumbrance encumbrance;
@@ -361,6 +365,14 @@ public class CapitalConstruction implements Cloneable {
 		return geometry;
 	}
 
+	public CadastralRecordStatus getCadastralRecordStatus() {
+		return cadastralRecordStatus;
+	}
+
+	public void setCadastralRecordStatus(CadastralRecordStatus cadastralRecordStatus) {
+		this.cadastralRecordStatus = cadastralRecordStatus;
+	}
+
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public CapitalConstruction clone() {
 		CapitalConstruction construct = new CapitalConstruction();
@@ -388,6 +400,7 @@ public class CapitalConstruction implements Cloneable {
 		construct.setLandIncludedObjects(landIncludedObjects != null ? landIncludedObjects.clone() : null);
 		construct.setSpatialData(spatialData != null ? spatialData.clone() : null);
 		construct.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
+		construct.setCadastralRecordStatus(getCadastralRecordStatus() != null ? getCadastralRecordStatus().clone() : null);
 		return construct;
 	}
 

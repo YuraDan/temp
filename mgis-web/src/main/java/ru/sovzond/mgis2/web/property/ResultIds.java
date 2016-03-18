@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.lands;
+package ru.sovzond.mgis2.web.property;
 
 import java.util.List;
 

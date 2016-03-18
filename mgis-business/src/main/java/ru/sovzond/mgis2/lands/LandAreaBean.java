@@ -8,6 +8,8 @@ import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 
 /**
  * Created by Alexander Arakelyan on 03.08.15.
+ *
+ *
  */
 @Service
 public class LandAreaBean extends CRUDBeanBase<LandArea> {

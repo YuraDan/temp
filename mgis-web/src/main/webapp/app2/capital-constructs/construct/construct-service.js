@@ -34,7 +34,7 @@ angular.module("mgis.capital-constructs.construct.service", ["ngResource",
 
 
 
-				p.rights = MGISPropertyRightsService.buildRights(item.rights)
+				p.rights = MGISPropertyRightsService.buildRights(item.rights);
 
 
 
