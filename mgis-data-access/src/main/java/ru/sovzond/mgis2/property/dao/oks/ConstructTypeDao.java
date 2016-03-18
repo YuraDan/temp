@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.capital_construct;
+package ru.sovzond.mgis2.property.dao.oks;
 
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

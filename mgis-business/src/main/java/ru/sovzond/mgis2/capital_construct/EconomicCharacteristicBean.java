@@ -3,6 +3,7 @@ package ru.sovzond.mgis2.capital_construct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
+import ru.sovzond.mgis2.property.dao.oks.EconomicCharacteristicDao;
 import ru.sovzond.mgis2.property.model.oks.characteristics.economical.EconomicCharacteristic;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;

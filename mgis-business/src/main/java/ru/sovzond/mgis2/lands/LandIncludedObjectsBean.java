@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
+import ru.sovzond.mgis2.property.dao.lands.LandIncludedObjectsDao;
 import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.lands;
+package ru.sovzond.mgis2.property.dao.lands;
 
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
