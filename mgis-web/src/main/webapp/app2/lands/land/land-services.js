@@ -132,7 +132,7 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 					},
 					includedObjects: includedObjects2,
 					encumbrance: item.encumbrance,
-					landCadastralStatus: item.landCadastralStatus ? item.landCadastralStatus.name : null,
+					landCadastralStatus: item.landCadastralStatus ? item.landCadastralStatus : null,
 					cadastralRecordStatus: item.cadastralRecordStatus ? item.cadastralRecordStatus : null,
 					spatialData: item.spatialData
 				};
@@ -381,9 +381,9 @@ angular.module("mgis.lands.services", ["ui.router", 'ngResource',
 	.factory("LandCadastralStatusService", function ($q, $resource, MGISErrorService) {
 		var res = $resource('rest/lands/land-cadastral-status.json');
 		return {
-			get: function () {
+			query: function () {
 				var deferred = $q.defer();
-				res.get({}, {}, function (data) {
+				res.query({}, {}, function (data) {
 					deferred.resolve(data);
 				}, function (error) {
 					MGISErrorService.handleError(error);

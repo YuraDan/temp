@@ -1,26 +1,35 @@
 package ru.sovzond.mgis2.property;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Map;
 
 /**
  * Created by Sergey Lvov on 16.03.16.
  *
  * Status of cadastral record for property object
  */
-@Entity
-@Table(name = "mgis2_cadastral_record_status", indexes = @Index(name = "cadastral_record_status_code_ind", unique = true, columnList = "code"))
-public class CadastralRecordStatus implements Cloneable {
-	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "cadastral_record_status_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
-	@Column
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+public enum CadastralRecordStatus {
+
+	EARLIE_REGISTERED("CadastralRecordStatus.EarlieRegistered", 1L, "01"),
+	TEMPORARY("CadastralRecordStatus.Temporary", 2L, "05"),
+	NOW_REGISTERED("CadastralRecordStatus.NowRegistered", 3L, "06"),
+	REMOVED("CadastralRecordStatus.Removed", 4L, "07"),
+	ANNULLED("CadastralRecordStatus.Annulled", 5L, "08");
+
 	private Long id;
-
-	@Column(length = 2, name = "code")
 	private String code;
-
-	@Column(length = 50)
 	private String name;
+	private String translateTemplate;
+
+	CadastralRecordStatus(String translateTemplateVal, Long idVal, String codeVal) {
+		setTranslateTemplate(translateTemplateVal);
+		setId(idVal);
+		setCode(codeVal);
+		setName(name());
+	}
 
 	public Long getId() {
 		return id;
@@ -46,12 +55,18 @@ public class CadastralRecordStatus implements Cloneable {
 		this.name = name;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
-	public CadastralRecordStatus clone() {
-		CadastralRecordStatus cadastralRecordStatus = new CadastralRecordStatus();
-		cadastralRecordStatus.setId(getId());
-		cadastralRecordStatus.setCode(getCode());
-		cadastralRecordStatus.setName(getName());
-		return cadastralRecordStatus;
+	@SuppressWarnings("unused")
+	public String getTranslateTemplate() {
+		return translateTemplate;
+	}
+
+	public void setTranslateTemplate(String translateTemplate) {
+		this.translateTemplate = translateTemplate;
+	}
+
+	@JsonCreator
+	public static CadastralRecordStatus create(Map record) {
+		if(record.containsKey("name")) return CadastralRecordStatus.valueOf((String) record.get("name"));
+		return null;
 	}
 }

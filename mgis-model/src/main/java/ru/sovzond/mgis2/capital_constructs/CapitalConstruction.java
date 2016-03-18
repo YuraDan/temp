@@ -128,7 +128,8 @@ public class CapitalConstruction implements Cloneable {
 	@Column
 	private Integer rebuildingLastYear;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@Enumerated(EnumType.STRING)
+	@Column
 	private CadastralRecordStatus cadastralRecordStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -400,7 +401,7 @@ public class CapitalConstruction implements Cloneable {
 		construct.setLandIncludedObjects(landIncludedObjects != null ? landIncludedObjects.clone() : null);
 		construct.setSpatialData(spatialData != null ? spatialData.clone() : null);
 		construct.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
-		construct.setCadastralRecordStatus(getCadastralRecordStatus() != null ? getCadastralRecordStatus().clone() : null);
+		construct.setCadastralRecordStatus(getCadastralRecordStatus());
 		return construct;
 	}
 

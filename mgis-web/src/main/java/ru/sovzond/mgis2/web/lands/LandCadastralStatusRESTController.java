@@ -1,9 +1,9 @@
 package ru.sovzond.mgis2.web.lands;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import ru.sovzond.mgis2.lands.LandCadastralStatus;
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * REST controller for land cadastral status
  */
-@Service
+@RestController
 @RequestMapping("/lands/land-cadastral-status")
 @Scope("session")
 public class LandCadastralStatusRESTController implements Serializable {

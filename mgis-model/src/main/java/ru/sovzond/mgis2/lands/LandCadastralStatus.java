@@ -1,6 +1,10 @@
 package ru.sovzond.mgis2.lands;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import ru.sovzond.mgis2.property.CadastralRecordStatus;
+
+import java.util.Map;
 
 /**
  * Created by Sergey Lvov on 16.03.16.
@@ -48,6 +52,12 @@ public enum LandCadastralStatus {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@JsonCreator
+	public static LandCadastralStatus create(Map record) {
+		if(record.containsKey("name")) return LandCadastralStatus.valueOf((String) record.get("name"));
+		return null;
 	}
 
 }

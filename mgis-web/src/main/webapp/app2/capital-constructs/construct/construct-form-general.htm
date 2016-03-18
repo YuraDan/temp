@@ -16,7 +16,9 @@
 							name="conditionalNumber"></commons-forms-text>
 		<commons-forms-text title="InventoryNumber" property="item.inventoryNumber" form="constructForm" name="inventoryNumber"></commons-forms-text>
 		<commons-forms-drop-down form="constructForm" name="cadastralRecordStatus" property="item.cadastralRecordStatus"
-								 title="CapitalConstructs.Construct.CadastralRecordStatus" available-elements="availableCadastralRecordStatus"></commons-forms-drop-down>
+								 title="CapitalConstructs.Construct.CadastralRecordStatus" available-elements="availableCadastralRecordStatus"
+								 element-label-expression="element.translateTemplate|translate">
+		</commons-forms-drop-down>
 		<commons-forms-text title="OverallArea" property="item.overallArea" form="constructForm" name="overalArea"></commons-forms-text>
 		<commons-forms-drop-down-ajax title="MunicipalEntity" property="item.municipalEntity"
 									  form="constructForm" name="municipalEntity"

@@ -94,7 +94,8 @@ public class Land implements Cloneable {
 	@Column(length = 10)
 	private LandCadastralStatus landCadastralStatus;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
 	private CadastralRecordStatus cadastralRecordStatus;
 
 	public Long getId() {
@@ -297,7 +298,7 @@ public class Land implements Cloneable {
 		land.setSpatialData(spatialData != null ? spatialData.clone() : null);
 		land.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
 		land.setLandCadastralStatus(getLandCadastralStatus());
-		land.setCadastralRecordStatus(getCadastralRecordStatus() != null ? getCadastralRecordStatus().clone() : null);
+		land.setCadastralRecordStatus(getCadastralRecordStatus());
 		return land;
 	}
 

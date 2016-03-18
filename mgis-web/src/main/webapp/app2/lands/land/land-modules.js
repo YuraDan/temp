@@ -102,10 +102,8 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 											});
 											// LandCadastralStatus
 											modalScope.availableLandCadastralStatus = [];
-											LandCadastralStatusService.get().then(function (statuses) {
-												//noinspection JSUnresolvedVariable
-												if(statuses != null)
-													modalScope.availableLandCadastralStatus = statuses.landCadastralStatusList;
+											LandCadastralStatusService.query().then(function (statuses) {
+												modalScope.availableLandCadastralStatus = statuses;
 											});
 
 											modalScope.areas = modalScope.land.landAreas;
