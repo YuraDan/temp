@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.capital_constructs.rights;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.sovzond.mgis2.isogd.document.Document;
-import ru.sovzond.mgis2.rights.PropertyRights;
+import ru.sovzond.mgis2.property.rights.PropertyRights;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,7 +29,6 @@ public class ConstructionRight extends PropertyRights {
 		rights.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setOtherDocuments(getOtherDocuments() != null ? getOtherDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setComment(getComment());
-		rights.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
 		rights.setObligations(isObligations());
 		rights.setAnnualTax(getAnnualTax());
 		rights.setTotalArea(getTotalArea());

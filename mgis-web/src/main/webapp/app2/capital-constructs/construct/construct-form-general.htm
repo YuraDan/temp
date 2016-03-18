@@ -3,7 +3,6 @@
 		<h3 translate>GeneralInfo</h3>
 	</div>
 	<div class="panel-body">
-
 		<commons-forms-drop-down title="CapitalConstructs.Construct.Type" property="item.type"
 								 available-elements="availableTypes" form="constructForm" name="constructType"
 								 required="true"></commons-forms-drop-down>
@@ -16,12 +15,16 @@
 		<commons-forms-text title="ConditionalNumber" property="item.conditionalNumber" form="constructForm"
 							name="conditionalNumber"></commons-forms-text>
 		<commons-forms-text title="InventoryNumber" property="item.inventoryNumber" form="constructForm" name="inventoryNumber"></commons-forms-text>
+		<commons-forms-drop-down form="constructForm" name="cadastralRecordStatus" property="item.cadastralRecordStatus"
+								 title="CapitalConstructs.Construct.CadastralRecordStatus" available-elements="availableCadastralRecordStatus"
+								 element-label-expression="element.translateTemplate|translate">
+		</commons-forms-drop-down>
 		<commons-forms-text title="OverallArea" property="item.overallArea" form="constructForm" name="overalArea"></commons-forms-text>
 		<commons-forms-drop-down-ajax title="MunicipalEntity" property="item.municipalEntity"
 									  form="constructForm" name="municipalEntity"
 									  available-elements="availableMunicipalEntities"
-									  available-elements-loader="refreshAvailableMunicipalEntities(search)"
-				></commons-forms-drop-down-ajax>
+									  available-elements-loader="refreshAvailableMunicipalEntities(search)">
+		</commons-forms-drop-down-ajax>
 		<forms-address-selector address="item.address" form="constructForm" name="address" required="true"></forms-address-selector>
 		<!--<div class="form-group row">-->
 		<!--<div class="col-sm-4"><label translate>Address</label></div>-->

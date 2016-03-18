@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.capital_constructs;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/oks/amortization-groups")
 @Scope("session")
-public class AmortizationGroupsRESTService {
+public class AmortizationGroupsRESTController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional

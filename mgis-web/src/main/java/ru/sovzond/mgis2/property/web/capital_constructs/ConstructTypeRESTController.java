@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.capital_constructs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,11 +14,12 @@ import javax.transaction.Transactional;
 
 /**
  * Created by Alexander Arakelyan on 11.11.15.
+ *
  */
 @RestController
 @RequestMapping("/oks/construct-types")
 @Scope("session")
-public class ConstructTypeRESTService {
+public class ConstructTypeRESTController {
 
 	@Autowired
 	private ConstructTypeBean constructTypeBean;

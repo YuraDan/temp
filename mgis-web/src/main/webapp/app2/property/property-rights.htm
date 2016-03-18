@@ -4,6 +4,9 @@
 	</div>
 	<div class="panel-body">
 
+
+
+
 		<div ng-repeat="right in rights.rights" ng-if="rights.rights.length">
 
 			<div class="form-group row">
@@ -35,25 +38,29 @@
 			<div class="form-group row">
 				<div class="col-sm-4"><label translate>Lands.Land.Rights.RegistrationDocument</label></div>
 				<div class="col-sm-8">
-					<isogd-document-selector documents="right.registrationDocuments" multiple-documents="true"/>
+					<isogd-document-selector documents="right.registrationDocuments" multiple-documents="true"></isogd-document-selector>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<div class="col-sm-4"><label translate>Lands.Land.Rights.DocumentCertifyingRights</label></div>
 				<div class="col-sm-8">
-					<isogd-document-selector documents="right.documentsCertifyingRights" multiple-documents="true"/>
+					<isogd-document-selector documents="right.documentsCertifyingRights" multiple-documents="true"></isogd-document-selector>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<div class="col-sm-4"><label translate>Lands.Land.Rights.OtherDocuments</label></div>
 				<div class="col-sm-8">
-					<isogd-document-selector documents="right.otherDocuments" multiple-documents="true"/>
+					<isogd-document-selector documents="right.otherDocuments" multiple-documents="true"></isogd-document-selector>
 				</div>
 			</div>
 
 		</div>
+
+		<commons-forms-drop-down form="form" name="encumbrance" property="encumbrance"
+								 title="Lands.Land.Rights.Encumbrance" available-elements="availableLandEncumbrances">
+		</commons-forms-drop-down>
 
 	</div>
 </div>

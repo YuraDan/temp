@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * Created by Alexander Arakelyan on 28.07.15.
+ *
  */
 @Entity
 @Table(name = "nc_land_category")
@@ -46,6 +47,7 @@ public class LandCategory implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandCategory clone() {
 		LandCategory category = new LandCategory();
 		category.setId(id);

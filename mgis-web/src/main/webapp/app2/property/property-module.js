@@ -7,17 +7,22 @@ angular.module("mgis.property", ["ui.router", "ui.bootstrap", "ui.select",
 			restrict: "E",
 			scope: {
 				rights: "=",
-				form: "="
+				form: "=",
+				encumbrance: "="
 			},
 			templateUrl: "app2/property/property-rights.htm",
 			controller: function ($scope,
 								  NcLandRightKindService,
+								  NcLandEncumbranceService,
 								  NcOKFSService) {
 				NcLandRightKindService.get().then(function (landRightKinds) {
 					$scope.availableLandRightKinds = landRightKinds.list;
 				});
 				NcOKFSService.get().then(function (landOwnershipForms) {
 					$scope.availableLandOwnershipForms = landOwnershipForms.list;
+				});
+				NcLandEncumbranceService.get().then(function (landEncumbrances) {
+					$scope.availableLandEncumbrances = landEncumbrances.list;
 				});
 			}
 		}
@@ -30,12 +35,7 @@ angular.module("mgis.property", ["ui.router", "ui.bootstrap", "ui.select",
 				form: "="
 			},
 			templateUrl: "app2/property/property-payments.htm",
-			controller: function ($scope,
-								  NcLandEncumbranceService) {
-				NcLandEncumbranceService.get().then(function (landEncumbrances) {
-					$scope.availableLandEncumbrances = landEncumbrances.list;
-				});
-			}
+			controller: function ($scope) {	}
 		}
 	})
 ;

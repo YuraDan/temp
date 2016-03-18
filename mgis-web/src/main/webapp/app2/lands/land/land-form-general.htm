@@ -13,6 +13,15 @@
 		<commons-forms-date form="landForm" name="docDate" property="land.stateRealEstateCadastreaStaging" required="true"
 							title="Lands.Land.StateRealEstateCadastralStaging"></commons-forms-date>
 
+		<commons-forms-drop-down form="landForm" name="cadastralRecordStatus" property="land.cadastralRecordStatus"
+								 title="Lands.CadastralRecordStatus" available-elements="availableCadastralRecordStatus"
+								 element-label-expression="element.translateTemplate|translate">
+		</commons-forms-drop-down>
+
+		<commons-forms-drop-down form="landForm" name="landCadastralStatus" property="land.landCadastralStatus"
+								 title="Lands.LandCadastralStatus" available-elements="availableLandCadastralStatus"
+								 element-label-expression="element.translateTemplate|translate">
+		</commons-forms-drop-down>
 	</div>
 </div>
 

@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.lands;
+package ru.sovzond.mgis2.property.web.lands;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 /**
  * Created by Alexander Arakelyan on 31.07.15.
+ *
  */
 @RestController
 @RequestMapping("/lands/inspection_types")

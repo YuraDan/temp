@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.lands;
+package ru.sovzond.mgis2.property.web.lands;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import ru.sovzond.mgis2.lands.rights.LandRights;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.ExecutivePersonBean;
 import ru.sovzond.mgis2.persons.PersonBean;
+import ru.sovzond.mgis2.property.web.ResultIds;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -141,31 +142,43 @@ public class LandRESTController implements Serializable {
 		Land land2;
 		if (id == 0) {
 			land2 = new Land();
-			landBean.save(land2);
 		} else {
 			land2 = landBean.load(id);
 		}
-		land2.setCadastralNumber(land.getCadastralNumber());
-		land2.setStateRealEstateCadastreaStaging(land.getStateRealEstateCadastreaStaging());
+		BeanUtils.copyProperties(land, land2,
+				"id",
+				"landCategory",
+				"encumbrance",
+				"allowedUsageByDictionary",
+				"allowedUsageByTerritorialZone",
+				"addressOfMunicipalEntity",
+				"address",
+				"landAreas",
+				"rights",
+				"characteristics",
+				"control",
+				"includedObjects",
+				"spatialData"
+		);
 		if (land.getLandCategory() != null) {
 			land2.setLandCategory(landCategoryBean.load(land.getLandCategory().getId()));
+		}
+		if (land.getEncumbrance() != null) {
+			land2.setEncumbrance(landEncumbranceBean.load(land.getEncumbrance().getId()));
 		}
 		//		land2.setLandAreas();
 		if (land.getAllowedUsageByDictionary() != null) {
 			land2.setAllowedUsageByDictionary(allowedUsageByDocumentBean.load(land.getAllowedUsageByDictionary().getId()));
 		}
-		land2.setAllowedUsageByDocument(land.getAllowedUsageByDocument());
 		if (land.getAllowedUsageByTerritorialZone() != null) {
 			land2.setAllowedUsageByTerritorialZone(allowedUsageByTerritorialZoneBean.load(land.getAllowedUsageByTerritorialZone().getId()));
 		}
 		if (land.getAddressOfMunicipalEntity() != null) {
 			land2.setAddressOfMunicipalEntity(oktmoBean.load(land.getAddressOfMunicipalEntity().getId()));
 		}
-		land2.setAddressPlacement(land.getAddressPlacement());
 		if (land.getAddress() != null) {
 			land2.setAddress(addressBean.load(land.getAddress().getId()));
 		}
-		land2.setAddress(land.getAddress());
 
 		// Land area
 		land2.getLandAreas().clear();
@@ -389,7 +402,6 @@ public class LandRESTController implements Serializable {
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? landOwnershipFormBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);
 			persistent.setRightOwner(right.getRightOwner() != null ? personBean.load(right.getRightOwner().getId()) : null);
-			persistent.setEncumbrance(right.getEncumbrance() != null ? landEncumbranceBean.load(right.getEncumbrance().getId()) : null);
 			landRightBean.save(persistent);
 		}
 		List<LandRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.capital_constructs;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import ru.sovzond.mgis2.lands.LandIncludedObjectsBean;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
-import ru.sovzond.mgis2.web.lands.ResultIds;
+import ru.sovzond.mgis2.property.web.ResultIds;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/oks/constructs")
 @Scope("session")
-public class CapitalConstructRESTService {
+public class CapitalConstructRESTController {
 
 	@Autowired
 	private CapitalConstructBean capitalConstructBean;
@@ -105,6 +105,9 @@ public class CapitalConstructRESTService {
 	@Autowired
 	private LandIncludedObjectsBean landIncludedObjectsBean;
 
+	@Autowired
+	private LandEncumbranceBean landEncumbranceBean;
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<CapitalConstruction> list(@RequestParam(value = "orderBy", defaultValue = "id DESC") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max,
@@ -132,11 +135,13 @@ public class CapitalConstructRESTService {
 				"characteristics",
 				"constructiveElements",
 				"landIncludedObjects",
+				"encumbrance",
 				"spatialData"
 		);
 		capitalConstruct2.setType(capitalConstruct.getType() != null ? constructTypeBean.load(capitalConstruct.getType().getId()) : null);
 		capitalConstruct2.setMunicipalEntity(capitalConstruct.getMunicipalEntity() != null ? oktmoBean.load(capitalConstruct.getMunicipalEntity().getId()) : null);
 		capitalConstruct2.setAddress(capitalConstruct.getAddress() != null ? addressBean.load(capitalConstruct.getAddress().getId()) : null);
+		capitalConstruct2.setEncumbrance(capitalConstruct.getEncumbrance() != null ? landEncumbranceBean.load(capitalConstruct.getEncumbrance().getId()) : null);
 
 		// Rights
 		ConstructionRights rights = capitalConstruct.getRights();

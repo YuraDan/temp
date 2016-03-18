@@ -9,8 +9,10 @@ import ru.sovzond.mgis2.lands.control.LandControl;
 import ru.sovzond.mgis2.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.lands.rights.LandRights;
 import ru.sovzond.mgis2.lands.works.LandWorks;
+import ru.sovzond.mgis2.property.CadastralRecordStatus;
 import ru.sovzond.mgis2.registers.national_classifiers.LandAllowedUsage;
 import ru.sovzond.mgis2.registers.national_classifiers.LandCategory;
+import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import javax.persistence.*;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "lands_land")
+@Table(name = "lands_land", indexes = @Index(name = "lands_cadastral_number_ind", unique = true, columnList = "cadastralnumber"))
 public class Land implements Cloneable {
 
 	@Id
@@ -84,6 +86,17 @@ public class Land implements Cloneable {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "spatial_data_id")
 	private SpatialGroup spatialData;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private LandEncumbrance encumbrance;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 10)
+	private LandCadastralStatus landCadastralStatus;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private CadastralRecordStatus cadastralRecordStatus;
 
 	public Long getId() {
 		return id;
@@ -156,7 +169,6 @@ public class Land implements Cloneable {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
 
 	@SuppressWarnings("unused")
 	public Land getPreviousVersion() {
@@ -240,6 +252,30 @@ public class Land implements Cloneable {
 		this.spatialData = spatialData;
 	}
 
+	public LandEncumbrance getEncumbrance() {
+		return encumbrance;
+	}
+
+	public void setEncumbrance(LandEncumbrance encumbrance) {
+		this.encumbrance = encumbrance;
+	}
+
+	public LandCadastralStatus getLandCadastralStatus() {
+		return landCadastralStatus;
+	}
+
+	public void setLandCadastralStatus(LandCadastralStatus landCadastralStatus) {
+		this.landCadastralStatus = landCadastralStatus;
+	}
+
+	public CadastralRecordStatus getCadastralRecordStatus() {
+		return cadastralRecordStatus;
+	}
+
+	public void setCadastralRecordStatus(CadastralRecordStatus cadastralRecordStatus) {
+		this.cadastralRecordStatus = cadastralRecordStatus;
+	}
+
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	@Override
 	public Land clone() {
@@ -248,11 +284,11 @@ public class Land implements Cloneable {
 		land.setCadastralNumber(cadastralNumber);
 		land.setStateRealEstateCadastreaStaging(stateRealEstateCadastreaStaging);
 		land.setAllowedUsageByDictionary(allowedUsageByDictionary != null ? allowedUsageByDictionary.clone() : null);
-		land.setAllowedUsageByDocument(allowedUsageByDocument);
+		land.setAllowedUsageByDocument(getAllowedUsageByDocument());
 		land.setAllowedUsageByTerritorialZone(allowedUsageByTerritorialZone != null ? allowedUsageByTerritorialZone.clone() : null);
 		land.setLandCategory(landCategory != null ? landCategory.clone() : null);
 		land.setAddressOfMunicipalEntity(addressOfMunicipalEntity != null ? addressOfMunicipalEntity.clone() : null);
-		land.setAddressPlacement(addressPlacement);
+		land.setAddressPlacement(getAddressPlacement());
 		land.setAddress(address != null ? address.clone() : null);
 		land.setRights(rights != null ? rights.clone() : null);
 		land.setCharacteristics(characteristics != null ? characteristics.clone() : null);
@@ -260,6 +296,9 @@ public class Land implements Cloneable {
 		land.setIncludedObjects(includedObjects != null ? includedObjects.clone() : null);
 		land.getLandAreas().addAll(landAreas.stream().map(LandArea::clone).collect(Collectors.toList()));
 		land.setSpatialData(spatialData != null ? spatialData.clone() : null);
+		land.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
+		land.setLandCadastralStatus(getLandCadastralStatus());
+		land.setCadastralRecordStatus(getCadastralRecordStatus());
 		return land;
 	}
 

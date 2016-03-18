@@ -9,6 +9,7 @@ import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 
 /**
  * Created by Alexander Arakelyan on 31.07.15.
+ *
  */
 @Service
 public class LandEncumbranceBean extends CRUDBeanBase<LandEncumbrance> {

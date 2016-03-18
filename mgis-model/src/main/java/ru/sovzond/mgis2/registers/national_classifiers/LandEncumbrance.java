@@ -56,11 +56,12 @@ public class LandEncumbrance implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandEncumbrance clone() {
 		LandEncumbrance enc = new LandEncumbrance();
 		enc.setId(id);
 		enc.setCode(code);
-		enc.setClassificationCode(classificationCode);
+		enc.setClassificationCode(getClassificationCode());
 		enc.setName(name);
 		return enc;
 	}

@@ -1,7 +1,6 @@
-package ru.sovzond.mgis2.rights;
+package ru.sovzond.mgis2.property.rights;
 
 import ru.sovzond.mgis2.isogd.document.Document;
-import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 import ru.sovzond.mgis2.registers.national_classifiers.LandRightKind;
 import ru.sovzond.mgis2.registers.national_classifiers.OKFS;
 import ru.sovzond.mgis2.registers.persons.Person;
@@ -64,9 +63,6 @@ public class PropertyRights implements Cloneable {
 
 	@Column
 	private float annualTax;
-
-	@ManyToOne
-	private LandEncumbrance encumbrance;
 
 	@Column
 	private boolean obligations;
@@ -179,14 +175,6 @@ public class PropertyRights implements Cloneable {
 		this.annualTax = annualTax;
 	}
 
-	public LandEncumbrance getEncumbrance() {
-		return encumbrance;
-	}
-
-	public void setEncumbrance(LandEncumbrance encumbrance) {
-		this.encumbrance = encumbrance;
-	}
-
 	public boolean isObligations() {
 		return obligations;
 	}
@@ -218,7 +206,6 @@ public class PropertyRights implements Cloneable {
 		rights.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setOtherDocuments(getOtherDocuments() != null ? getOtherDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
 		rights.setComment(comment);
-		rights.setEncumbrance(encumbrance != null ? encumbrance.clone() : null);
 		rights.setObligations(obligations);
 		rights.setAnnualTax(annualTax);
 		rights.setTotalArea(totalArea);
