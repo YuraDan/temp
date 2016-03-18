@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.lands;
+package ru.sovzond.mgis2.property.services.lands;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPolygon;

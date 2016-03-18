@@ -11,7 +11,6 @@ import ru.sovzond.mgis2.integration.data_exchange.imp.dto.LandDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.dto.LandRightDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandSourceDecorator;
 import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandTargetDecorator;
-import ru.sovzond.mgis2.lands.*;
 import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
 import ru.sovzond.mgis2.property.model.lands.rights.LandRight;
 import ru.sovzond.mgis2.property.model.lands.rights.LandRights;
@@ -22,6 +21,7 @@ import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
 import ru.sovzond.mgis2.property.model.lands.Land;
 import ru.sovzond.mgis2.property.model.lands.LandArea;
 import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
+import ru.sovzond.mgis2.property.services.lands.*;
 import ru.sovzond.mgis2.registers.national_classifiers.*;
 
 import java.util.List;

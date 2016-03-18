@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sovzond.mgis2.capital_construct.ConstructTypeBean;
+import ru.sovzond.mgis2.property.services.oks.ConstructTypeBean;
 import ru.sovzond.mgis2.property.model.oks.ConstructionType;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 
