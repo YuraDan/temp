@@ -13,10 +13,12 @@ angular.module("mgis.reports.report", [
 			angular.copy(item, modalScope.item);
 			var landFilter = {id: "Lands", name: "Lands"};
 			var occFilter = {id: "CapitalConstructs", name: "CapitalConstructs"};
+			var addressFilter = {id: "Address", name: "Address"};
 			modalScope.itemId = modalScope.item.id;
 			modalScope.availableFilters = new Array();
 			modalScope.availableFilters.push(landFilter);
 			modalScope.availableFilters.push(occFilter);
+			modalScope.availableFilters.push(addressFilter);
 			modalScope.currentFilter = undefined;
 			modalScope.addFilter = function (filters, filter) {
 				if (filter) {
@@ -139,13 +141,19 @@ angular.module("mgis.reports.report", [
 						var startDate = new Date();
 						var data = $scope.generateHandler({reportId: reportId, format: format});
 						doGenerateReport(data.bytes, data.filename);
-						$scope.reportStatus[reportId] = {status: REPORT_GENERATION_COMPLETE, time: new Date() - startDate};
+						$scope.reportStatus[reportId] = {
+							status: REPORT_GENERATION_COMPLETE,
+							time: new Date() - startDate
+						};
 					} else {
 						$scope.reportStatus[reportId] = {status: REPORT_GENERATION_IN_PROGRESS};
 						var startDate = new Date();
 						ReportsReportService.generate(json, reportId, format).then(function (data) {
 							doGenerateReport(data.bytes, data.filename);
-							$scope.reportStatus[reportId] = {status: REPORT_GENERATION_COMPLETE, time: new Date() - startDate};
+							$scope.reportStatus[reportId] = {
+								status: REPORT_GENERATION_COMPLETE,
+								time: new Date() - startDate
+							};
 						});
 					}
 				}
