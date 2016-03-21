@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.property.services.oks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
-import ru.sovzond.mgis2.property.dao.oks.ConstructiveElementDao;
+import ru.sovzond.mgis2.property.dao.oks.impl.ConstructiveElementDao;
 import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElement;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;

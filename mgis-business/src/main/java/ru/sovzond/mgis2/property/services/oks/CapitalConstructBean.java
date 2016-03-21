@@ -6,7 +6,7 @@ import com.vividsolutions.jts.geom.Polygon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
-import ru.sovzond.mgis2.property.dao.oks.CapitalConstructDao;
+import ru.sovzond.mgis2.property.dao.oks.impl.CapitalConstructDao;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;

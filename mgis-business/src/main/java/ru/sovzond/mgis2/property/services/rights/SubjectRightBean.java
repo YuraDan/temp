@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.property.dao.SubjectRightDao;
+import ru.sovzond.mgis2.property.dao.rights.impl.IPropertyBaseDao;
 import ru.sovzond.mgis2.property.model.rights.SubjectRight;
 
 /**
@@ -16,7 +16,7 @@ import ru.sovzond.mgis2.property.model.rights.SubjectRight;
 public class SubjectRightBean extends CRUDBeanBase<SubjectRight> {
 
 	@Autowired
-	private SubjectRightDao dao;
+	private IPropertyBaseDao dao;
 
 	@Override
 	protected IPageableDAOBase<SubjectRight> getPageableDao() {

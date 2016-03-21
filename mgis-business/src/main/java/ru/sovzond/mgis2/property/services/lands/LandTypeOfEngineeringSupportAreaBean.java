@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.property.dao.lands.LandTypeOfEngineeringSupportAreaDao;
+import ru.sovzond.mgis2.property.dao.lands.impl.LandTypeOfEngineeringSupportAreaDao;
 import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristicsEngineeringSupportArea;
 
 /**

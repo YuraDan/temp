@@ -11,7 +11,7 @@ import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
 import ru.sovzond.mgis2.geo.GeometryParser;
-import ru.sovzond.mgis2.property.dao.lands.LandDao;
+import ru.sovzond.mgis2.property.dao.lands.impl.LandDao;
 import ru.sovzond.mgis2.property.model.IncludedObjects;
 import ru.sovzond.mgis2.property.model.lands.Land;
 

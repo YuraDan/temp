@@ -5,17 +5,18 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.property.dao.lands.LandControlInspectionResonDao;
+import ru.sovzond.mgis2.property.dao.lands.ILandControlInspectionReasonDao;
 import ru.sovzond.mgis2.property.model.lands.control.LandControlInspectionReason;
 
 /**
  * Created by Alexander Arakelyan on 31.07.15.
+ *
  */
 @Service
 public class LandControlInspectionResonBean extends CRUDBeanBase<LandControlInspectionReason> {
 
 	@Autowired
-	private LandControlInspectionResonDao dao;
+	private ILandControlInspectionReasonDao dao;
 
 	@Override
 	protected IPageableDAOBase<LandControlInspectionReason> getPageableDao() {
