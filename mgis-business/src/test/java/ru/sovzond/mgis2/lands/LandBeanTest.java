@@ -9,9 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sovzond.mgis2.business.base.HibernateConfiguration;
-import ru.sovzond.mgis2.capital_construct.CapitalConstructBean;
+import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.services.lands.LandBean;
+import ru.sovzond.mgis2.property.services.lands.LandIncludedObjectsBean;
 
 import java.util.List;
 

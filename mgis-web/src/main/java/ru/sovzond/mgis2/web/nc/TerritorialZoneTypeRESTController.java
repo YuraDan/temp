@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.lands.TerritorialZoneTypeBean;
+import ru.sovzond.mgis2.property.services.lands.TerritorialZoneTypeBean;
 import ru.sovzond.mgis2.registers.national_classifiers.TerritorialZoneType;
 
 import javax.transaction.Transactional;
