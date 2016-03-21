@@ -12,7 +12,7 @@ import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
 import ru.sovzond.mgis2.geo.GeometryParser;
 import ru.sovzond.mgis2.property.dao.lands.LandDao;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.IncludedObjects;
 import ru.sovzond.mgis2.property.model.lands.Land;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class LandBean extends CRUDBeanBase<Land> {
 		return dao.find(cadastralNumber);
 	}
 
-	public List<Land> getByIncludedObjects(List<LandIncludedObjects> includedObjects) {
+	public List<Land> getByIncludedObjects(List<IncludedObjects> includedObjects) {
 		return dao.getByIncludedObjects(includedObjects);
 	}
 }

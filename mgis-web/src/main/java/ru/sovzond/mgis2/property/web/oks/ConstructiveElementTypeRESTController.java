@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.property.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.oks;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 /**
  * Created by Alexander Arakelyan on 05.11.15.
+ *
  */
 @RestController
 @RequestMapping("/oks/constructive-element-types")
@@ -36,7 +37,7 @@ public class ConstructiveElementTypeRESTController {
 		} else {
 			constructiveElementType2 = constructiveElementTypeBean.load(id);
 		}
-		BeanUtils.copyProperties(constructiveElementType, constructiveElementType2, new String[]{"id"});
+		BeanUtils.copyProperties(constructiveElementType, constructiveElementType2, "id");
 		constructiveElementTypeBean.save(constructiveElementType2);
 		return constructiveElementType2.clone();
 	}

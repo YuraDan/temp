@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.property.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.oks;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 /**
  * Created by Alexander Arakelyan on 10.11.15.
+ *
  */
 @RestController
 @RequestMapping("/oks/amortization-groups")

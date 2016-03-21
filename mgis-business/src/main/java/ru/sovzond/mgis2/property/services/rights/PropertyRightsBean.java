@@ -1,30 +1,30 @@
-package ru.sovzond.mgis2.property.services.lands;
+package ru.sovzond.mgis2.property.services.rights;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.property.dao.lands.LandRightDao;
-import ru.sovzond.mgis2.property.model.lands.rights.LandRight;
+import ru.sovzond.mgis2.property.dao.PropertyRightsDao;
+import ru.sovzond.mgis2.property.model.rights.PropertyRights;
 
 /**
  * Created by Alexander Arakelyan on 30.07.15.
  *
  */
 @Service
-public class LandRightBean extends CRUDBeanBase<LandRight> {
+public class PropertyRightsBean extends CRUDBeanBase<PropertyRights> {
 
 	@Autowired
-	private LandRightDao dao;
+	private PropertyRightsDao dao;
 
 	@Override
-	protected IPageableDAOBase<LandRight> getPageableDao() {
+	protected IPageableDAOBase<PropertyRights> getPageableDao() {
 		return dao;
 	}
 
 	@Override
-	protected IIdentifiableDao<LandRight> getIIdentifiableDao() {
+	protected IIdentifiableDao<PropertyRights> getIIdentifiableDao() {
 		return dao;
 	}
 }

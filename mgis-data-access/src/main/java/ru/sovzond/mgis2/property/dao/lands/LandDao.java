@@ -5,7 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderQuery;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.IncludedObjects;
 import ru.sovzond.mgis2.property.model.lands.Land;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class LandDao extends CRUDDaoBase<Land> {
 		return getSession().createCriteria(persistentClass).add(Restrictions.eq("cadastralNumber", cadastralNumber)).list();
 	}
 
-	public List<Land> getByIncludedObjects(List<LandIncludedObjects> landIncludedObjects) {
+	public List<Land> getByIncludedObjects(List<IncludedObjects> landIncludedObjects) {
 		return getSession().createCriteria(persistentClass).add(Restrictions.in("includedObjects", landIncludedObjects)).list();
 	}
 

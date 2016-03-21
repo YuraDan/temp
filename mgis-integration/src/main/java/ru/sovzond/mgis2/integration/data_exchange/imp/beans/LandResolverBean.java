@@ -11,9 +11,6 @@ import ru.sovzond.mgis2.integration.data_exchange.imp.dto.LandDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.dto.LandRightDTO;
 import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandSourceDecorator;
 import ru.sovzond.mgis2.integration.data_exchange.imp.resolvers.LandTargetDecorator;
-import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
-import ru.sovzond.mgis2.property.model.lands.rights.LandRight;
-import ru.sovzond.mgis2.property.model.lands.rights.LandRights;
 import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
 import ru.sovzond.mgis2.national_classifiers.LandCategoryBean;
 import ru.sovzond.mgis2.national_classifiers.LandRightKindBean;
@@ -21,7 +18,11 @@ import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
 import ru.sovzond.mgis2.property.model.lands.Land;
 import ru.sovzond.mgis2.property.model.lands.LandArea;
 import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
+import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
+import ru.sovzond.mgis2.property.model.rights.PropertyRights;
+import ru.sovzond.mgis2.property.model.rights.SubjectRight;
 import ru.sovzond.mgis2.property.services.lands.*;
+import ru.sovzond.mgis2.property.services.rights.PropertyRightsBean;
 import ru.sovzond.mgis2.registers.national_classifiers.*;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class LandResolverBean {
 	private SpatialGroupBean spatialGroupBean;
 
 	@Autowired
-	private LandRightsBean landRightsBean;
+	private PropertyRightsBean landRightsBean;
 
 	@Autowired
 	private AddressResolverBean addressResolverBean;
@@ -119,7 +120,7 @@ public class LandResolverBean {
 	private Land createLand(LandDTO landDTO) {
 		Land land = new Land();
 		land.setCharacteristics(new LandCharacteristics());
-		land.setRights(new LandRights());
+		land.setRights(new PropertyRights());
 		landBean.save(land);
 
 		updateLand0(landDTO, land);
@@ -168,13 +169,13 @@ public class LandResolverBean {
 				land.setLandAreas(landAreas);
 			}
 
-			LandRights rights = land.getRights();
+			PropertyRights rights = land.getRights();
 			if (rights == null) {
-				rights = new LandRights();
+				rights = new PropertyRights();
 				landRightsBean.save(rights);
 				land.setRights(rights);
 			}
-			for(LandRight right: rights.getRights()) {
+			for(SubjectRight right: rights.getRights()) {
 				right.setTotalArea(landDTO.getArea().floatValue());
 				if (landDTO.getRights() != null) {
 					switch (landDTO.getRights().size()) {

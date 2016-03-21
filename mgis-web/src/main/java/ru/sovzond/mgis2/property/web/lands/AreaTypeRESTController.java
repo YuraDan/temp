@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 /**
  * Created by Alexander Arakelyan on 03.08.15.
+ *
  */
 @RestController
 @RequestMapping("/lands/area_types")

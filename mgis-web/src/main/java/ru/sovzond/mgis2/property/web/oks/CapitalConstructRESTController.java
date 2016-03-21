@@ -1,17 +1,10 @@
-package ru.sovzond.mgis2.property.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.oks;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
-import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
-import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacteristics;
-import ru.sovzond.mgis2.property.model.oks.characteristics.economical.EconomicCharacteristic;
-import ru.sovzond.mgis2.property.model.oks.characteristics.technical.TechnicalCharacteristic;
-import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElement;
-import ru.sovzond.mgis2.property.model.oks.rights.ConstructionRight;
-import ru.sovzond.mgis2.property.model.oks.rights.ConstructionRights;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
@@ -19,13 +12,22 @@ import ru.sovzond.mgis2.indicators.PriceIndicatorBean;
 import ru.sovzond.mgis2.indicators.TechnicalIndicatorBean;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
 import ru.sovzond.mgis2.isogd.document.Document;
-import ru.sovzond.mgis2.property.model.lands.Land;
-import ru.sovzond.mgis2.property.services.lands.LandBean;
-import ru.sovzond.mgis2.property.services.lands.LandIncludedObjectsBean;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
+import ru.sovzond.mgis2.property.model.IncludedObjects;
+import ru.sovzond.mgis2.property.model.lands.Land;
+import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
+import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacteristics;
+import ru.sovzond.mgis2.property.model.oks.characteristics.economical.EconomicCharacteristic;
+import ru.sovzond.mgis2.property.model.oks.characteristics.technical.TechnicalCharacteristic;
+import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElement;
+import ru.sovzond.mgis2.property.model.rights.PropertyRights;
+import ru.sovzond.mgis2.property.model.rights.SubjectRight;
+import ru.sovzond.mgis2.property.services.IncludedObjectsBean;
+import ru.sovzond.mgis2.property.services.lands.LandBean;
 import ru.sovzond.mgis2.property.services.oks.*;
+import ru.sovzond.mgis2.property.services.rights.PropertyRightsBean;
+import ru.sovzond.mgis2.property.services.rights.SubjectRightBean;
 import ru.sovzond.mgis2.property.web.ResultIds;
 
 import javax.transaction.Transactional;
@@ -55,10 +57,10 @@ public class CapitalConstructRESTController {
 	private AddressBean addressBean;
 
 	@Autowired
-	private ConstructionRightsBean constructionRightsBean;
+	private PropertyRightsBean propertyRightsBean;
 
 	@Autowired
-	private ConstructionRightBean constructionRightBean;
+	private SubjectRightBean subjectRightBean;
 
 	@Autowired
 	private DocumentBean documentBean;
@@ -103,7 +105,7 @@ public class CapitalConstructRESTController {
 	private LandBean landBean;
 
 	@Autowired
-	private LandIncludedObjectsBean landIncludedObjectsBean;
+	private IncludedObjectsBean landIncludedObjectsBean;
 
 	@Autowired
 	private LandEncumbranceBean landEncumbranceBean;
@@ -134,8 +136,9 @@ public class CapitalConstructRESTController {
 				"rights",
 				"characteristics",
 				"constructiveElements",
-				"landIncludedObjects",
+				"includedObjects",
 				"encumbrance",
+				"documents",
 				"spatialData"
 		);
 		capitalConstruct2.setType(capitalConstruct.getType() != null ? constructTypeBean.load(capitalConstruct.getType().getId()) : null);
@@ -143,22 +146,24 @@ public class CapitalConstructRESTController {
 		capitalConstruct2.setAddress(capitalConstruct.getAddress() != null ? addressBean.load(capitalConstruct.getAddress().getId()) : null);
 		capitalConstruct2.setEncumbrance(capitalConstruct.getEncumbrance() != null ? landEncumbranceBean.load(capitalConstruct.getEncumbrance().getId()) : null);
 
+		//TODO Сделать сохранение коллекции Documents
+
 		// Rights
-		ConstructionRights rights = capitalConstruct.getRights();
-		ConstructionRights rights2;
+		PropertyRights rights = capitalConstruct.getRights();
+		PropertyRights rights2;
 		if (rights == null || rights.getId() == null || rights.getId() == 0) {
-			rights2 = new ConstructionRights();
+			rights2 = new PropertyRights();
 		} else {
-			rights2 = constructionRightsBean.load(rights.getId());
+			rights2 = propertyRightsBean.load(rights.getId());
 		}
 		if (rights != null) {
 			if(syncConstructionRights(rights2.getRights(), rights.getRights())) {
-				constructionRightsBean.save(rights2);
+				propertyRightsBean.save(rights2);
 				capitalConstruct2.setRights(rights2);
 			}
 		} else {
 			if(rights2.getId() != null && rights2.getId() != 0) {
-				constructionRightsBean.remove(rights2);
+				propertyRightsBean.remove(rights2);
 			}
 		}
 
@@ -194,12 +199,12 @@ public class CapitalConstructRESTController {
 		syncConstructiveElements(capitalConstruct2.getConstructiveElements(), capitalConstruct.getConstructiveElements());
 
 		// Included Objects
-		LandIncludedObjects landIncludedObjects = capitalConstruct.getLandIncludedObjects();
+		IncludedObjects landIncludedObjects = capitalConstruct.getIncludedObjects();
 		if (landIncludedObjects != null) {
-			LandIncludedObjects landIncludedObjects2 = capitalConstruct2.getLandIncludedObjects();
+			IncludedObjects landIncludedObjects2 = capitalConstruct2.getIncludedObjects();
 			if (landIncludedObjects2 == null) {
-				landIncludedObjects2 = new LandIncludedObjects();
-				capitalConstruct2.setLandIncludedObjects(landIncludedObjects2);
+				landIncludedObjects2 = new IncludedObjects();
+				capitalConstruct2.setIncludedObjects(landIncludedObjects2);
 				landIncludedObjectsBean.save(landIncludedObjects2);
 			}
 			landIncludedObjects2.setLandDealDocument(landIncludedObjects.getLandDealDocument() != null ? documentBean.load(landIncludedObjects.getLandDealDocument().getId()) : null);
@@ -221,9 +226,9 @@ public class CapitalConstructRESTController {
 			}
 			capitalConstructBean.save(capitalConstruct2);
 		} else {
-			if (capitalConstruct2.getLandIncludedObjects() == null) {
-				landIncludedObjects = new LandIncludedObjects();
-				capitalConstruct2.setLandIncludedObjects(landIncludedObjects);
+			if (capitalConstruct2.getIncludedObjects() == null) {
+				landIncludedObjects = new IncludedObjects();
+				capitalConstruct2.setIncludedObjects(landIncludedObjects);
 				landIncludedObjectsBean.save(landIncludedObjects);
 			}
 			capitalConstructBean.save(capitalConstruct2);
@@ -330,17 +335,17 @@ public class CapitalConstructRESTController {
 		}
 	}
 
-	private boolean syncConstructionRights(List<ConstructionRight> persistentList, List<ConstructionRight> newList) {
+	private boolean syncConstructionRights(List<SubjectRight> persistentList, List<SubjectRight> newList) {
 		int oldPersistentListSize = persistentList.size();
-		Map<Long, ConstructionRight> persistentMap = new HashMap<>();
-		for (ConstructionRight right : persistentList) {
+		Map<Long, SubjectRight> persistentMap = new HashMap<>();
+		for (SubjectRight right : persistentList) {
 			persistentMap.put(right.getId(), right);
 		}
 		Set<Long> newIds = new HashSet<>();
-		for (ConstructionRight right : newList) {
-			ConstructionRight persistent;
+		for (SubjectRight right : newList) {
+			SubjectRight persistent;
 			if (right.getId() == null || right.getId() == 0) {
-				persistent = new ConstructionRight();
+				persistent = new SubjectRight();
 				persistentList.add(persistent);
 			} else {
 				persistent = persistentMap.get(right.getId());
@@ -365,19 +370,14 @@ public class CapitalConstructRESTController {
 			} else {
 				persistent.setRegistrationDocuments(documentBean.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
 			}
-			if (right.getOtherDocuments() == null || right.getOtherDocuments().size() == 0) {
-				persistent.getOtherDocuments().clear();
-			} else {
-				persistent.setOtherDocuments(documentBean.load(right.getOtherDocuments().stream().map(Document::getId).collect(Collectors.toList())));
-			}
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? okfsBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);
 			persistent.setRightOwner(right.getRightOwner() != null ? personBean.load(right.getRightOwner().getId()) : null);
-			constructionRightBean.save(persistent);
+			subjectRightBean.save(persistent);
 		}
-		List<ConstructionRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
-		for (ConstructionRight entity : toBeRemoved) {
-			constructionRightBean.remove(entity);
+		List<SubjectRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
+		for (SubjectRight entity : toBeRemoved) {
+			subjectRightBean.remove(entity);
 			persistentList.remove(entity);
 		}
 		return !toBeRemoved.isEmpty() || oldPersistentListSize != persistentList.size();
@@ -414,7 +414,7 @@ public class CapitalConstructRESTController {
 	@RequestMapping(value = "/parent-lands/{id}", method = RequestMethod.GET)
 	@Transactional
 	public List<Land> getParentLands(@PathVariable("id") Long id) {
-		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		List<IncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
 		if(includedObjects.size() == 0) return null;
 		return landBean.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
 	}
@@ -422,7 +422,7 @@ public class CapitalConstructRESTController {
 	@RequestMapping(value = "/parent-oks/{id}", method = RequestMethod.GET)
 	@Transactional
 	public List<CapitalConstruction> getParentCapitalConstructs(@PathVariable("id") Long id) {
-		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		List<IncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
 		if(includedObjects.size() == 0) return null;
 		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
 	}

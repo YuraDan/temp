@@ -10,9 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sovzond.mgis2.business.base.HibernateConfiguration;
 import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.IncludedObjects;
 import ru.sovzond.mgis2.property.services.lands.LandBean;
-import ru.sovzond.mgis2.property.services.lands.LandIncludedObjectsBean;
+import ru.sovzond.mgis2.property.services.IncludedObjectsBean;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class LandIncludedObjectsBeanTest {
 
 	@Autowired
-	LandIncludedObjectsBean landIncludedObjectsBean;
+	IncludedObjectsBean landIncludedObjectsBean;
 
 	@Autowired
 	LandBean landBean;
@@ -34,8 +34,8 @@ public class LandIncludedObjectsBeanTest {
 	@Transactional
 	public void getIncludedObjectsByCapitalConstructTest() {
 
-		List<LandIncludedObjects> list = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(590L);
-		for(LandIncludedObjects item: list) {
+		List<IncludedObjects> list = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(590L);
+		for(IncludedObjects item: list) {
 			System.out.println(item.getId());
 		}
 		Assert.assertTrue("1", list.size() > 0);
@@ -46,8 +46,8 @@ public class LandIncludedObjectsBeanTest {
 	@Transactional
 	public void getIncludedObjectsByLandTest() {
 
-		List<LandIncludedObjects> list = landIncludedObjectsBean.getIncludedObjectsByLand(7848L);
-		for(LandIncludedObjects item: list) {
+		List<IncludedObjects> list = landIncludedObjectsBean.getIncludedObjectsByLand(7848L);
+		for(IncludedObjects item: list) {
 			System.out.println(item.getId());
 		}
 		Assert.assertTrue("2", list.size() > 0);

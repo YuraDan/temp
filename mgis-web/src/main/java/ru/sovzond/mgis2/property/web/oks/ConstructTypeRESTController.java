@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.property.web.capital_constructs;
+package ru.sovzond.mgis2.property.web.oks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

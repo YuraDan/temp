@@ -4,12 +4,13 @@ import javax.persistence.*;
 
 /**
  * Created by Alexander Arakelyan on 13.11.15.
+ *
  */
 @Entity
 @Table(name = "occ_constructive_element_type")
 public class ConstructiveElementType implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_oks_constr_el_type_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -33,6 +34,7 @@ public class ConstructiveElementType implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public ConstructiveElementType clone() {
 		ConstructiveElementType type = new ConstructiveElementType();
 		type.setId(id);

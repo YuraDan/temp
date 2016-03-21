@@ -1,18 +1,11 @@
 package ru.sovzond.mgis2.property.model.lands;
 
-import com.vividsolutions.jts.geom.MultiPolygon;
-import org.hibernate.annotations.Type;
-import ru.sovzond.mgis2.address.Address;
-import ru.sovzond.mgis2.geo.SpatialGroup;
+import ru.sovzond.mgis2.property.model.Property;
 import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
 import ru.sovzond.mgis2.property.model.lands.control.LandControl;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
-import ru.sovzond.mgis2.property.model.lands.rights.LandRights;
 import ru.sovzond.mgis2.property.model.lands.works.LandWorks;
-import ru.sovzond.mgis2.property.model.CadastralRecordStatus;
 import ru.sovzond.mgis2.registers.national_classifiers.LandAllowedUsage;
 import ru.sovzond.mgis2.registers.national_classifiers.LandCategory;
-import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import javax.persistence.*;
@@ -23,16 +16,13 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "lands_land", indexes = @Index(name = "lands_cadastral_number_ind", unique = true, columnList = "cadastralnumber"))
-public class Land implements Cloneable {
+public class Land extends Property implements Cloneable {
 
 	@Id
 	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
-
-	@Column
-	private String cadastralNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private LandCategory landCategory;
@@ -58,17 +48,8 @@ public class Land implements Cloneable {
 	@Column
 	private String addressPlacement;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Address address;
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-	private LandRights rights;
-
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private LandCharacteristics characteristics;
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-	private LandIncludedObjects includedObjects;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private LandWorks works;
@@ -79,24 +60,9 @@ public class Land implements Cloneable {
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private Land previousVersion;
 
-	@Type(type = "org.hibernate.spatial.GeometryType")
-	@Column(name = "geometry")
-	private MultiPolygon geometry;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name = "spatial_data_id")
-	private SpatialGroup spatialData;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	private LandEncumbrance encumbrance;
-
 	@Enumerated(EnumType.STRING)
 	@Column(length = 10)
 	private LandCadastralStatus landCadastralStatus;
-
-	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
-	private CadastralRecordStatus cadastralRecordStatus;
 
 	public Long getId() {
 		return id;
@@ -104,14 +70,6 @@ public class Land implements Cloneable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getCadastralNumber() {
-		return cadastralNumber;
-	}
-
-	public void setCadastralNumber(String cadastralNumber) {
-		this.cadastralNumber = cadastralNumber;
 	}
 
 	public Date getStateRealEstateCadastreaStaging() {
@@ -162,14 +120,6 @@ public class Land implements Cloneable {
 		this.addressPlacement = addressPlacement;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
 	@SuppressWarnings("unused")
 	public Land getPreviousVersion() {
 		return previousVersion;
@@ -196,28 +146,12 @@ public class Land implements Cloneable {
 		this.landCategory = landCategory;
 	}
 
-	public LandRights getRights() {
-		return rights;
-	}
-
-	public void setRights(LandRights rights) {
-		this.rights = rights;
-	}
-
 	public LandCharacteristics getCharacteristics() {
 		return characteristics;
 	}
 
 	public void setCharacteristics(LandCharacteristics characteristics) {
 		this.characteristics = characteristics;
-	}
-
-	public LandIncludedObjects getIncludedObjects() {
-		return includedObjects;
-	}
-
-	public void setIncludedObjects(LandIncludedObjects includedObjects) {
-		this.includedObjects = includedObjects;
 	}
 
 	public LandWorks getWorks() {
@@ -236,30 +170,6 @@ public class Land implements Cloneable {
 		this.control = control;
 	}
 
-	public MultiPolygon getGeometry() {
-		return geometry;
-	}
-
-	public void setGeometry(MultiPolygon geometry) {
-		this.geometry = geometry;
-	}
-
-	public SpatialGroup getSpatialData() {
-		return spatialData;
-	}
-
-	public void setSpatialData(SpatialGroup spatialData) {
-		this.spatialData = spatialData;
-	}
-
-	public LandEncumbrance getEncumbrance() {
-		return encumbrance;
-	}
-
-	public void setEncumbrance(LandEncumbrance encumbrance) {
-		this.encumbrance = encumbrance;
-	}
-
 	public LandCadastralStatus getLandCadastralStatus() {
 		return landCadastralStatus;
 	}
@@ -268,20 +178,11 @@ public class Land implements Cloneable {
 		this.landCadastralStatus = landCadastralStatus;
 	}
 
-	public CadastralRecordStatus getCadastralRecordStatus() {
-		return cadastralRecordStatus;
-	}
-
-	public void setCadastralRecordStatus(CadastralRecordStatus cadastralRecordStatus) {
-		this.cadastralRecordStatus = cadastralRecordStatus;
-	}
-
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	@Override
 	public Land clone() {
-		Land land = new Land();
+		Land land = (Land) super.clone();
+		if(land == null) return null;
 		land.setId(id);
-		land.setCadastralNumber(cadastralNumber);
 		land.setStateRealEstateCadastreaStaging(stateRealEstateCadastreaStaging);
 		land.setAllowedUsageByDictionary(allowedUsageByDictionary != null ? allowedUsageByDictionary.clone() : null);
 		land.setAllowedUsageByDocument(getAllowedUsageByDocument());
@@ -289,16 +190,10 @@ public class Land implements Cloneable {
 		land.setLandCategory(landCategory != null ? landCategory.clone() : null);
 		land.setAddressOfMunicipalEntity(addressOfMunicipalEntity != null ? addressOfMunicipalEntity.clone() : null);
 		land.setAddressPlacement(getAddressPlacement());
-		land.setAddress(address != null ? address.clone() : null);
-		land.setRights(rights != null ? rights.clone() : null);
 		land.setCharacteristics(characteristics != null ? characteristics.clone() : null);
 		land.setControl(control != null ? control.clone() : null);
-		land.setIncludedObjects(includedObjects != null ? includedObjects.clone() : null);
 		land.getLandAreas().addAll(landAreas.stream().map(LandArea::clone).collect(Collectors.toList()));
-		land.setSpatialData(spatialData != null ? spatialData.clone() : null);
-		land.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
 		land.setLandCadastralStatus(getLandCadastralStatus());
-		land.setCadastralRecordStatus(getCadastralRecordStatus());
 		return land;
 	}
 

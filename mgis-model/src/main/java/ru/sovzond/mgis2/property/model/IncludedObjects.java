@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.property.model.lands.includes;
+package ru.sovzond.mgis2.property.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
  *
  */
 @Entity
-@Table(name = "lands_included_objects")
+@Table(name = "mgis2_property_included_objects")
 @OnDelete(action = OnDeleteAction.CASCADE)
-public class LandIncludedObjects implements Cloneable {
+public class IncludedObjects implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_included_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "property_included_objects_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -94,8 +94,8 @@ public class LandIncludedObjects implements Cloneable {
 	}
 
 	@SuppressWarnings("CloneDoesntCallSuperClone")
-	public LandIncludedObjects clone() {
-		LandIncludedObjects ic = new LandIncludedObjects();
+	public IncludedObjects clone() {
+		IncludedObjects ic = new IncludedObjects();
 		ic.setId(id);
 		ic.getIncludedLands().addAll(includedLands.stream().map(land -> {
 			Land landClone = new Land();

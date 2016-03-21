@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.sovzond.mgis2.business.base.HibernateConfiguration;
 import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.IncludedObjects;
 import ru.sovzond.mgis2.property.services.lands.LandBean;
-import ru.sovzond.mgis2.property.services.lands.LandIncludedObjectsBean;
+import ru.sovzond.mgis2.property.services.IncludedObjectsBean;
 
 import java.util.List;
 
@@ -32,13 +32,13 @@ public class LandBeanTest {
 	CapitalConstructBean capitalConstructBean;
 
 	@Autowired
-	LandIncludedObjectsBean landIncludedObjectsBean;
+	IncludedObjectsBean landIncludedObjectsBean;
 
 	@Test
 	@Ignore
 	@Transactional
 	public void getByIncludedObjectsTest() {
-		List<LandIncludedObjects> listIO = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(590L);
+		List<IncludedObjects> listIO = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(590L);
 		List<CapitalConstruction> list = capitalConstructBean.getByIncludedObjects(listIO);
 		for(CapitalConstruction item: list) {
 			System.out.println(item.getName());

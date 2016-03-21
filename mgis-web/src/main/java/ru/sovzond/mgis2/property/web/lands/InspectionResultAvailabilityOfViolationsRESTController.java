@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 /**
  * Created by Alexander Arakelyan on 31.07.15.
+ *
  */
 @RestController
 @RequestMapping("/lands/availability_of_violations")

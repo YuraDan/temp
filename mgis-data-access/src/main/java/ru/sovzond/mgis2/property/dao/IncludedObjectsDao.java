@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.property.dao.lands;
+package ru.sovzond.mgis2.property.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -6,14 +6,14 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
+import ru.sovzond.mgis2.property.model.IncludedObjects;
 
 import java.util.List;
 
 @Repository
-public class LandIncludedObjectsDao extends CRUDDaoBase<LandIncludedObjects> {
+public class IncludedObjectsDao extends CRUDDaoBase<IncludedObjects> {
 
-	public List<LandIncludedObjects> findByNestedObject(Long landId, Long capitalConstructId) {
+	public List<IncludedObjects> findByNestedObject(Long landId, Long capitalConstructId) {
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(persistentClass);
 		if (landId != null && landId != 0) {
