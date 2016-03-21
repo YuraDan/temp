@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.property.web.lands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
-import ru.sovzond.mgis2.lands.LandControlInspectionSubjectBean;
+import ru.sovzond.mgis2.property.services.lands.LandControlInspectionSubjectBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.property.model.lands.control.LandControlInspectionSubject;
 

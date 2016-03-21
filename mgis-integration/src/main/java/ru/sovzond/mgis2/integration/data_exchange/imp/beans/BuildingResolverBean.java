@@ -2,10 +2,10 @@ package ru.sovzond.mgis2.integration.data_exchange.imp.beans;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sovzond.mgis2.capital_construct.CapitalConstructBean;
-import ru.sovzond.mgis2.capital_construct.ConstructTypeBean;
-import ru.sovzond.mgis2.capital_construct.EconomicCharacteristicBean;
-import ru.sovzond.mgis2.capital_construct.TechnicalCharacteristicBean;
+import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
+import ru.sovzond.mgis2.property.services.oks.ConstructTypeBean;
+import ru.sovzond.mgis2.property.services.oks.EconomicCharacteristicBean;
+import ru.sovzond.mgis2.property.services.oks.TechnicalCharacteristicBean;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.property.model.oks.ConstructionType;
 import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacteristics;
