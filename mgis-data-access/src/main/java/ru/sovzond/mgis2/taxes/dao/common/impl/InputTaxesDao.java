@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
 import ru.sovzond.mgis2.taxes.dao.common.IInputTaxesDao;
-import ru.sovzond.mgis2.taxes.model.InputTaxes;
+import ru.sovzond.mgis2.taxes.model.common.InputTaxes;
 
 /**
  * Created by donchenko-y on 3/22/16.
+ *
  */
 
 @Repository

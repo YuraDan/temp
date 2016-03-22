@@ -175,7 +175,6 @@ public class LandResolverBean {
 				land.setRights(rights);
 			}
 			for(SubjectRight right: rights.getRights()) {
-				right.setTotalArea(landDTO.getArea().floatValue());
 				if (landDTO.getRights() != null) {
 					switch (landDTO.getRights().size()) {
 						case 0:

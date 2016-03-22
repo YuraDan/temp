@@ -6,6 +6,7 @@ import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 
 /**
  * Created by donchenko-y on 3/22/16.
+ *
  */
 public interface ITaxesBaseDao<T> extends IPageableDAOBase<T>, IIdentifiableDao<T>, IDAOBase<T> {
 }

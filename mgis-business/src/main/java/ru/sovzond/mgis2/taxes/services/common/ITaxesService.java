@@ -6,8 +6,9 @@ import java.util.List;
 
 /**
  * Created by donchenko-y on 3/22/16.
+ *
  */
-public interface ITaxes<T> {
+public interface ITaxesService<T> {
 
 	PageableContainer<T> list(int first, int max);
 

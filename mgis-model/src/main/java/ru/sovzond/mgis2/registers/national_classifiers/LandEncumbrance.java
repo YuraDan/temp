@@ -59,10 +59,10 @@ public class LandEncumbrance implements Cloneable {
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandEncumbrance clone() {
 		LandEncumbrance enc = new LandEncumbrance();
-		enc.setId(id);
-		enc.setCode(code);
+		enc.setId(getId());
+		enc.setCode(getCode());
 		enc.setClassificationCode(getClassificationCode());
-		enc.setName(name);
+		enc.setName(getName());
 		return enc;
 	}
 

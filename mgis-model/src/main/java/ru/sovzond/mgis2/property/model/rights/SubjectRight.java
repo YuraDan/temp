@@ -28,12 +28,6 @@ public class SubjectRight implements Cloneable {
 	@ManyToOne
 	private LandRightKind rightKind;
 
-	@ManyToOne
-	private Person rightOwner;
-
-	@ManyToOne
-	private OKFS ownershipForm;
-
 	@Column
 	private Date ownershipDate;
 
@@ -41,31 +35,27 @@ public class SubjectRight implements Cloneable {
 	private Date terminationDate;
 
 	@Column
-	private int shareNumerator;
-
-	@Column
 	private int shareDenominator;
 
-	@ManyToMany
-	@JoinTable(name = "mgis2_property_rights_reg_docs", joinColumns = @JoinColumn(name = "mgis2_property_rights_id"), inverseJoinColumns = @JoinColumn(name = "registration_doc_id"))
-	private List<Document> registrationDocuments = new ArrayList<>();
+	@Column
+	private String registrationNumber;
 
 	@ManyToMany
 	@JoinTable(name = "mgis2_property_rights_cert_docs", joinColumns = @JoinColumn(name = "mgis2_property_rights_id"), inverseJoinColumns = @JoinColumn(name = "cert_doc_id"))
 	private List<Document> documentsCertifyingRights = new ArrayList<>();
 
-	@Column
-	private float totalArea;
+	@ManyToMany
+	@JoinTable(name = "mgis2_property_rights_reg_docs", joinColumns = @JoinColumn(name = "mgis2_property_rights_id"), inverseJoinColumns = @JoinColumn(name = "registration_doc_id"))
+	private List<Document> registrationDocuments = new ArrayList<>();
+
+	@ManyToOne
+	private Person rightOwner;
+
+	@ManyToOne
+	private OKFS ownershipForm;
 
 	@Column
-	private float annualTax;
-
-	@Column
-	private boolean obligations;
-
-	@Column
-	private String comment;
-
+	private int shareNumerator;
 
 	public Long getId() {
 		return id;
@@ -147,55 +137,28 @@ public class SubjectRight implements Cloneable {
 		this.documentsCertifyingRights = documentsCertifyingRights;
 	}
 
-	public float getTotalArea() {
-		return totalArea;
+	public String getRegistrationNumber() {
+		return registrationNumber;
 	}
 
-	public void setTotalArea(float totalArea) {
-		this.totalArea = totalArea;
-	}
-
-	public float getAnnualTax() {
-		return annualTax;
-	}
-
-	public void setAnnualTax(float annualTax) {
-		this.annualTax = annualTax;
-	}
-
-	public boolean isObligations() {
-		return obligations;
-	}
-
-	public void setObligations(boolean obligations) {
-		this.obligations = obligations;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber = registrationNumber;
 	}
 
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public SubjectRight clone() {
-		SubjectRight rights = new SubjectRight();
-		rights.setId(id);
-		rights.setOwnershipDate(ownershipDate);
-		rights.setTerminationDate(terminationDate);
-		rights.setRightOwner(rightOwner != null ? rightOwner.clone() : null);
-		rights.setRightKind(rightKind != null ? rightKind.clone() : null);
-		rights.setOwnershipForm(ownershipForm != null ? ownershipForm.clone() : null);
-		rights.setShareNumerator(getShareNumerator());
-		rights.setShareDenominator(getShareDenominator());
-		rights.setRegistrationDocuments(getRegistrationDocuments() != null ? getRegistrationDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		rights.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		rights.setComment(comment);
-		rights.setObligations(obligations);
-		rights.setAnnualTax(annualTax);
-		rights.setTotalArea(totalArea);
-		return rights;
+		SubjectRight right = new SubjectRight();
+		right.setId(getId());
+		right.setOwnershipDate(getOwnershipDate());
+		right.setTerminationDate(getTerminationDate());
+		right.setRightOwner(getRightOwner() != null ? getRightOwner().clone() : null);
+		right.setRightKind(getRightKind() != null ? getRightKind().clone() : null);
+		right.setOwnershipForm(getOwnershipForm() != null ? getOwnershipForm().clone() : null);
+		right.setShareNumerator(getShareNumerator());
+		right.setShareDenominator(getShareDenominator());
+		right.setRegistrationDocuments(getRegistrationDocuments() != null ? getRegistrationDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
+		right.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
+		right.setRegistrationNumber(getRegistrationNumber());
+		return right;
 	}
 }

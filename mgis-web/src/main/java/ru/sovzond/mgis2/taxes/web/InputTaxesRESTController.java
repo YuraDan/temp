@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.taxes.model.InputTaxes;
-import ru.sovzond.mgis2.taxes.services.common.impl.InputTaxesService;
+import ru.sovzond.mgis2.taxes.model.common.InputTaxes;
+import ru.sovzond.mgis2.taxes.services.common.IInputTaxesService;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
  * Created by donchenko-y on 3/22/16.
+ *
  */
 
 @RestController
@@ -20,7 +21,7 @@ import java.io.Serializable;
 public class InputTaxesRESTController implements Serializable {
 
 	@Autowired
-	private InputTaxesService inputTaxesService;
+	private IInputTaxesService inputTaxesService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional

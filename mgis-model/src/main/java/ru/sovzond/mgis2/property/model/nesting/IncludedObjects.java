@@ -63,7 +63,6 @@ public class IncludedObjects implements Cloneable {
 		return includedLands;
 	}
 
-	@SuppressWarnings("unused")
 	public void setIncludedLands(List<Land> includedLands) {
 		this.includedLands = includedLands;
 	}
@@ -80,7 +79,6 @@ public class IncludedObjects implements Cloneable {
 		return includedCapitalConstructions;
 	}
 
-	@SuppressWarnings("unused")
 	public void setIncludedCapitalConstructions(List<CapitalConstruction> includedCapitalConstructions) {
 		this.includedCapitalConstructions = includedCapitalConstructions;
 	}
@@ -96,8 +94,8 @@ public class IncludedObjects implements Cloneable {
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public IncludedObjects clone() {
 		IncludedObjects ic = new IncludedObjects();
-		ic.setId(id);
-		ic.getIncludedLands().addAll(includedLands.stream().map(land -> {
+		ic.setId(getId());
+		ic.getIncludedLands().addAll(getIncludedLands().stream().map(land -> {
 			Land landClone = new Land();
 			landClone.setId(land.getId());
 			landClone.setCadastralNumber(land.getCadastralNumber());
@@ -107,7 +105,7 @@ public class IncludedObjects implements Cloneable {
 			landClone.setRights(land.getRights() != null ? land.getRights().clone() : null);
 			return landClone;
 		}).collect(Collectors.toList()));
-		ic.getIncludedCapitalConstructions().addAll(includedCapitalConstructions.stream().map(capitalConstruction -> {
+		ic.getIncludedCapitalConstructions().addAll(getIncludedCapitalConstructions().stream().map(capitalConstruction -> {
 			CapitalConstruction ccClone = new CapitalConstruction();
 			ccClone.setId(capitalConstruction.getId());
 			ccClone.setCadastralNumber(capitalConstruction.getCadastralNumber());
@@ -116,9 +114,9 @@ public class IncludedObjects implements Cloneable {
 			ccClone.setAddress(capitalConstruction.getAddress() != null ? capitalConstruction.getAddress().clone() : null);
 			return ccClone;
 		}).collect(Collectors.toList()));
-		ic.setInventoryDealDocument(inventoryDealDocument != null ? inventoryDealDocument.clone() : null);
-		ic.setLandDealDocument(landDealDocument != null ? landDealDocument.clone() : null);
-		ic.setUrbanPlanningDocuments(urbanPlanningDocuments.stream().map(Document::clone).collect(Collectors.toList()));
+		ic.setInventoryDealDocument(getInventoryDealDocument() != null ? getInventoryDealDocument().clone() : null);
+		ic.setLandDealDocument(getLandDealDocument() != null ? getLandDealDocument().clone() : null);
+		ic.setUrbanPlanningDocuments(getUrbanPlanningDocuments().stream().map(Document::clone).collect(Collectors.toList()));
 		return ic;
 	}
 }

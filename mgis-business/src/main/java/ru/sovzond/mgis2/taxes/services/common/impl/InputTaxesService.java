@@ -7,8 +7,8 @@ import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
-import ru.sovzond.mgis2.taxes.dao.common.impl.InputTaxesDao;
-import ru.sovzond.mgis2.taxes.model.InputTaxes;
+import ru.sovzond.mgis2.taxes.dao.common.IInputTaxesDao;
+import ru.sovzond.mgis2.taxes.model.common.InputTaxes;
 import ru.sovzond.mgis2.taxes.services.common.IInputTaxesService;
 
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class InputTaxesService extends CRUDBeanBase<InputTaxes> implements IInputTaxesService {
 
 	@Autowired
-	private InputTaxesDao dao;
+	private IInputTaxesDao dao;
 
 
 	@Override
