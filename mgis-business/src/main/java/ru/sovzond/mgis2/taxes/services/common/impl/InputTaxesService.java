@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.taxes;
+package ru.sovzond.mgis2.taxes.services.common.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,16 +7,19 @@ import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
-import ru.sovzond.mgis2.indicators.PriceIndicator;
+import ru.sovzond.mgis2.taxes.dao.common.impl.InputTaxesDao;
+import ru.sovzond.mgis2.taxes.model.InputTaxes;
+import ru.sovzond.mgis2.taxes.services.common.IInputTaxesService;
 
 import java.util.stream.Collectors;
 
 /**
  * Created by donchenko-y on 3/22/16.
+ *
  */
 
 @Service
-public class InputTaxesBean extends CRUDBeanBase<InputTaxes> {
+public class InputTaxesService extends CRUDBeanBase<InputTaxes> implements IInputTaxesService {
 
 	@Autowired
 	private InputTaxesDao dao;
@@ -32,6 +35,7 @@ public class InputTaxesBean extends CRUDBeanBase<InputTaxes> {
 		return null;
 	}
 
+	@Override
 	public PageableContainer<InputTaxes> list(String orderBy, int first, int max, String cadastralNumber) {
 		Pageable<InputTaxes> pager = dao.pager(dao.createFilter(cadastralNumber, orderBy, first, max));
 		return new PageableContainer<>(pager.list().stream().map(InputTaxes::clone).collect(Collectors.toList()), pager.count(), first, max);

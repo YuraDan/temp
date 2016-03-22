@@ -1,11 +1,11 @@
-package ru.sovzond.mgis2.web.taxes;
+package ru.sovzond.mgis2.taxes.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.taxes.InputTaxes;
-import ru.sovzond.mgis2.taxes.InputTaxesBean;
+import ru.sovzond.mgis2.taxes.model.InputTaxes;
+import ru.sovzond.mgis2.taxes.services.common.impl.InputTaxesService;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -20,18 +20,18 @@ import java.io.Serializable;
 public class InputTaxesRESTController implements Serializable {
 
 	@Autowired
-	private InputTaxesBean inputTaxesBean;
+	private InputTaxesService inputTaxesService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<InputTaxes> list(@RequestParam(value = "orderBy", defaultValue = "") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max, @RequestParam(defaultValue = "") String cadastralNumber) {
-		return inputTaxesBean.list(orderBy, first, max, cadastralNumber);
+		return inputTaxesService.list(orderBy, first, max, cadastralNumber);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Transactional
 	public InputTaxes read(@PathVariable("id") Long id) {
-		return inputTaxesBean.load(id).clone();
+		return inputTaxesService.load(id).clone();
 	}
 
 

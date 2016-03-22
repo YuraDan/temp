@@ -1,4 +1,4 @@
-package ru.sovzond.mgis2.taxes;
+package ru.sovzond.mgis2.taxes.model;
 
 import javax.persistence.*;
 import java.util.Date;
