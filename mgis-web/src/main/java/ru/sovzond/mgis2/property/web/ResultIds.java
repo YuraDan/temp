@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 15/12/15.
+ *
  */
 public class ResultIds {
 	private List<Long> ids;

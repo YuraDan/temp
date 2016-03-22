@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "occ_construction_type")
 public class ConstructionType implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_oks_constr_type_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;

@@ -9,6 +9,7 @@ import ru.sovzond.mgis2.registers.national_classifiers.LandRightKind;
 
 /**
  * Created by Alexander Arakelyan on 30.07.15.
+ *
  */
 @Service
 public class LandRightKindBean extends CRUDBeanBase<LandRightKind> {

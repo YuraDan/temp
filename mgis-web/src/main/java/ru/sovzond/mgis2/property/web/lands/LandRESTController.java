@@ -5,24 +5,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
-import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
-import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
 import ru.sovzond.mgis2.isogd.document.Document;
-import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
-import ru.sovzond.mgis2.property.model.lands.control.LandControl;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
-import ru.sovzond.mgis2.property.model.lands.rights.LandRight;
-import ru.sovzond.mgis2.property.model.lands.rights.LandRights;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.ExecutivePersonBean;
 import ru.sovzond.mgis2.persons.PersonBean;
 import ru.sovzond.mgis2.property.model.lands.Land;
 import ru.sovzond.mgis2.property.model.lands.LandArea;
+import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
+import ru.sovzond.mgis2.property.model.lands.control.LandControl;
+import ru.sovzond.mgis2.property.model.nesting.IncludedObjects;
+import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
+import ru.sovzond.mgis2.property.model.rights.PropertyRights;
+import ru.sovzond.mgis2.property.model.rights.SubjectRight;
 import ru.sovzond.mgis2.property.services.lands.*;
+import ru.sovzond.mgis2.property.services.nesting.IIncludedObjectsService;
+import ru.sovzond.mgis2.property.services.oks.ICapitalConstructService;
+import ru.sovzond.mgis2.property.services.rights.IPropertyRightsService;
+import ru.sovzond.mgis2.property.services.rights.ISubjectRightService;
 import ru.sovzond.mgis2.property.web.ResultIds;
 
 import javax.transaction.Transactional;
@@ -38,7 +41,7 @@ public class LandRESTController implements Serializable {
 	private static final long serialVersionUID = -1259104464434967077L;
 
 	@Autowired
-	private LandBean landBean;
+	private ILandService landService;
 
 	@Autowired
 	private PersonBean personBean;
@@ -50,7 +53,7 @@ public class LandRESTController implements Serializable {
 	private OKTMOBean oktmoBean;
 
 	@Autowired
-	private TerritorialZoneBean allowedUsageByTerritorialZoneBean;
+	private ITerritorialZoneService allowedUsageByTerritorialZoneService;
 
 	@Autowired
 	private AddressBean addressBean;
@@ -65,49 +68,49 @@ public class LandRESTController implements Serializable {
 	private LandRightKindBean landRightKindBean;
 
 	@Autowired
-	private LandRightsBean landRightsBean;
+	private IPropertyRightsService propertyRightsService;
 
 	@Autowired
-	private LandRightBean landRightBean;
+	private ISubjectRightService subjectRightService;
 
 	@Autowired
-	private LandCharacteristicsBean landCharacteristicsBean;
+	private ILandCharacteristicsService landCharacteristicsService;
 
 	@Autowired
 	private OKATOBean okatoBean;
 
 	@Autowired
-	private LandTypeOfEngineeringSupportAreaBean typeOfEngineeringSupportAreaBean;
+	private ILandTypeOfEngineeringSupportAreaService typeOfEngineeringSupportAreaService;
 
 	@Autowired
 	private LandEncumbranceBean landEncumbranceBean;
 
 	@Autowired
-	private LandControlBean landControlBean;
+	private ILandControlService landControlService;
 
 	@Autowired
-	private LandControlInspectionKindBean landControlInspectionKindBean;
+	private ILandControlInspectionKindService landControlInspectionKindService;
 
 	@Autowired
-	private LandControlInspectionResonBean landControlInspectionReasonBean;
+	private ILandControlInspectionReasonService landControlInspectionReasonService;
 
 	@Autowired
-	private LandControlInspectionResultAvailabilityOfViolationsBean landControlInspectionResultAvailabilityOfViolationsBean;
+	private ILandControlInspectionResultAvailabilityOfViolationsService landControlInspectionResultAvailabilityOfViolationsService;
 
 	@Autowired
-	private LandControlInspectionSubjectBean landControlInspectionSubjectBean;
+	private ILandControlInspectionSubjectService landControlInspectionSubjectService;
 
 	@Autowired
-	private LandControlInspectionTypeBean landControlInspectionTypeBean;
+	private ILandControlInspectionTypeService landControlInspectionTypeService;
 
 	@Autowired
 	private ExecutivePersonBean executivePersonBean;
 
 	@Autowired
-	private LandAreaBean landAreaBean;
+	private ILandAreaService landAreaService;
 
 	@Autowired
-	private LandAreaTypeBean landAreaTypeBean;
+	private ILandAreaTypeService landAreaTypeService;
 
 	@Autowired
 	private DocumentBean documentBean;
@@ -116,10 +119,10 @@ public class LandRESTController implements Serializable {
 	private SpatialDataBean spatialDataBean;
 
 	@Autowired
-	private LandIncludedObjectsBean landIncludedObjectsBean;
+	private IIncludedObjectsService landIncludedObjectsService;
 
 	@Autowired
-	private CapitalConstructBean capitalConstructBean;
+	private ICapitalConstructService capitalConstructService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
@@ -135,7 +138,7 @@ public class LandRESTController implements Serializable {
 				}
 			}
 		}
-		return landBean.list(cadastralNumber, idsAsLong, orderBy, first, max);
+		return landService.list(cadastralNumber, idsAsLong, orderBy, first, max);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -145,7 +148,7 @@ public class LandRESTController implements Serializable {
 		if (id == 0) {
 			land2 = new Land();
 		} else {
-			land2 = landBean.load(id);
+			land2 = landService.load(id);
 		}
 		BeanUtils.copyProperties(land, land2,
 				"id",
@@ -160,6 +163,7 @@ public class LandRESTController implements Serializable {
 				"characteristics",
 				"control",
 				"includedObjects",
+				"documents",
 				"spatialData"
 		);
 		if (land.getLandCategory() != null) {
@@ -173,7 +177,7 @@ public class LandRESTController implements Serializable {
 			land2.setAllowedUsageByDictionary(allowedUsageByDocumentBean.load(land.getAllowedUsageByDictionary().getId()));
 		}
 		if (land.getAllowedUsageByTerritorialZone() != null) {
-			land2.setAllowedUsageByTerritorialZone(allowedUsageByTerritorialZoneBean.load(land.getAllowedUsageByTerritorialZone().getId()));
+			land2.setAllowedUsageByTerritorialZone(allowedUsageByTerritorialZoneService.load(land.getAllowedUsageByTerritorialZone().getId()));
 		}
 		if (land.getAddressOfMunicipalEntity() != null) {
 			land2.setAddressOfMunicipalEntity(oktmoBean.load(land.getAddressOfMunicipalEntity().getId()));
@@ -189,31 +193,33 @@ public class LandRESTController implements Serializable {
 			if (landArea.getId() == 0) {
 				landArea2 = new LandArea();
 			} else {
-				landArea2 = landAreaBean.load(landArea.getId());
-				landAreaBean.save(landArea2);
+				landArea2 = landAreaService.load(landArea.getId());
+				landAreaService.save(landArea2);
 			}
 			landArea2.setValue(landArea.getValue());
-			landArea2.setLandAreaType(landAreaTypeBean.load(landArea.getLandAreaType().getId()));
-			landAreaBean.save(landArea2);
+			landArea2.setLandAreaType(landAreaTypeService.load(landArea.getLandAreaType().getId()));
+			landAreaService.save(landArea2);
 			land2.getLandAreas().add(landArea2);
 		}
 
+		//TODO: Добавить сохранение коллекции documents
+
 		// Rights
-		LandRights rights = land.getRights();
-		LandRights rights2;
+		PropertyRights rights = land.getRights();
+		PropertyRights rights2;
 		if (rights == null || rights.getId() == null || rights.getId() == 0) {
-			rights2 = new LandRights();
+			rights2 = new PropertyRights();
 		} else {
-			rights2 = landRightsBean.load(rights.getId());
+			rights2 = propertyRightsService.load(rights.getId());
 		}
 		if (rights != null) {
 			if(syncLandRights(rights2.getRights(), rights.getRights())) {
-				landRightsBean.save(rights2);
+				propertyRightsService.save(rights2);
 				land2.setRights(rights2);
 			}
 		} else {
 			if(rights2.getId() != null && rights2.getId() != 0) {
-				landRightsBean.remove(rights2);
+				propertyRightsService.remove(rights2);
 			}
 		}
 
@@ -223,7 +229,7 @@ public class LandRESTController implements Serializable {
 			if (chars2 == null) {
 				chars2 = new LandCharacteristics();
 				land2.setCharacteristics(chars2);
-				landCharacteristicsBean.save(chars2);
+				landCharacteristicsService.save(chars2);
 			}
 			chars2.setCadastralCost(chars.getCadastralCost());
 			chars2.setSpecificIndexOfCadastralCost(chars.getSpecificIndexOfCadastralCost());
@@ -232,7 +238,7 @@ public class LandRESTController implements Serializable {
 			chars2.setCadastralCostImplementationDate(chars.getCadastralCostImplementationDate());
 			chars2.setMarketCostImplementationDate(chars.getMarketCostImplementationDate());
 			chars2.setStandardCost(chars.getStandardCost());
-			chars2.setTypeOfEngineeringSupportArea(chars.getTypeOfEngineeringSupportArea() != null ? typeOfEngineeringSupportAreaBean.load(chars.getTypeOfEngineeringSupportArea().getId()) : null);
+			chars2.setTypeOfEngineeringSupportArea(chars.getTypeOfEngineeringSupportArea() != null ? typeOfEngineeringSupportAreaService.load(chars.getTypeOfEngineeringSupportArea().getId()) : null);
 			chars2.setDistanceToTheConnectionPoint(chars.getDistanceToTheConnectionPoint());
 			chars2.setDistanceToTheConnectionPointLength(chars.getDistanceToTheConnectionPointLength());
 			chars2.setDistanceToTheObjectsOfTransportInfrastructure(chars.getDistanceToTheObjectsOfTransportInfrastructure());
@@ -248,15 +254,15 @@ public class LandRESTController implements Serializable {
 			if (control2 == null) {
 				control2 = new LandControl();
 				land2.setControl(control2);
-				landControlBean.save(control2);
+				landControlService.save(control2);
 			}
 			control2.setExecutivePerson(control.getExecutivePerson() != null ? executivePersonBean.load(control.getExecutivePerson().getId()) : null);
 			control2.setInspectedPerson(control.getInspectedPerson() != null ? personBean.load(control.getInspectedPerson().getId()) : null);
 			control2.setInspectionDate(control.getInspectionDate());
-			control2.setInspectionKind(control.getInspectionKind() != null ? landControlInspectionKindBean.load(control.getInspectionKind().getId()) : null);
-			control2.setInspectionReason(control.getInspectionReason() != null ? landControlInspectionReasonBean.load(control.getInspectionReason().getId()) : null);
+			control2.setInspectionKind(control.getInspectionKind() != null ? landControlInspectionKindService.load(control.getInspectionKind().getId()) : null);
+			control2.setInspectionReason(control.getInspectionReason() != null ? landControlInspectionReasonService.load(control.getInspectionReason().getId()) : null);
 			control2.setInspectionReasonDescription(control.getInspectionReasonDescription());
-			control2.setInspectionResultAvailabilityOfViolations(control.getInspectionResultAvailabilityOfViolations() != null ? landControlInspectionResultAvailabilityOfViolationsBean.load(control.getInspectionResultAvailabilityOfViolations().getId()) : null);
+			control2.setInspectionResultAvailabilityOfViolations(control.getInspectionResultAvailabilityOfViolations() != null ? landControlInspectionResultAvailabilityOfViolationsService.load(control.getInspectionResultAvailabilityOfViolations().getId()) : null);
 			control2.setInspectionResultDescription(control.getInspectionResultDescription());
 			// Inspection result Documents
 			control2.getInspectionResultDocuments().clear();
@@ -265,18 +271,18 @@ public class LandRESTController implements Serializable {
 				control2.getInspectionResultDocuments().addAll(load);
 			}
 
-			control2.setInspectionSubject(control.getInspectionSubject() != null ? landControlInspectionSubjectBean.load(control.getInspectionSubject().getId()) : null);
-			control2.setInspectionType(control.getInspectionType() != null ? landControlInspectionTypeBean.load(control.getInspectionType().getId()) : null);
+			control2.setInspectionSubject(control.getInspectionSubject() != null ? landControlInspectionSubjectService.load(control.getInspectionSubject().getId()) : null);
+			control2.setInspectionType(control.getInspectionType() != null ? landControlInspectionTypeService.load(control.getInspectionType().getId()) : null);
 			control2.setPenaltyAmount(control.getPenaltyAmount());
 			control2.setTimelineForViolations(control.getTimelineForViolations());
 		}
-		LandIncludedObjects includedObjects = land.getIncludedObjects();
+		IncludedObjects includedObjects = land.getIncludedObjects();
 		if (includedObjects != null) {
-			LandIncludedObjects includedObjects2 = land2.getIncludedObjects();
+			IncludedObjects includedObjects2 = land2.getIncludedObjects();
 			if (includedObjects2 == null) {
-				includedObjects2 = new LandIncludedObjects();
+				includedObjects2 = new IncludedObjects();
 				land2.setIncludedObjects(includedObjects2);
-				landIncludedObjectsBean.save(includedObjects2);
+				landIncludedObjectsService.save(includedObjects2);
 			}
 			includedObjects2.setInventoryDealDocument(includedObjects.getInventoryDealDocument() != null ? documentBean.load(includedObjects.getInventoryDealDocument().getId()) : null);
 			includedObjects2.setLandDealDocument(includedObjects.getLandDealDocument() != null ? documentBean.load(includedObjects.getLandDealDocument().getId()) : null);
@@ -284,13 +290,13 @@ public class LandRESTController implements Serializable {
 			List<Land> includedLands = includedObjects.getIncludedLands();
 			includedObjects2.getIncludedLands().clear();
 			if (includedLands != null && includedLands.size() > 0) {
-				includedObjects2.getIncludedLands().addAll(landBean.load(includedLands.stream().map(Land::getId).collect(Collectors.toList())));
+				includedObjects2.getIncludedLands().addAll(landService.load(includedLands.stream().map(Land::getId).collect(Collectors.toList())));
 			}
 
 			List<CapitalConstruction> includedConstructs = includedObjects.getIncludedCapitalConstructions();
 			includedObjects2.getIncludedCapitalConstructions().clear();
 			if (includedConstructs != null && includedConstructs.size() > 0) {
-				includedObjects2.getIncludedCapitalConstructions().addAll(capitalConstructBean.load(includedConstructs.stream().map(CapitalConstruction::getId).collect(Collectors.toList())));
+				includedObjects2.getIncludedCapitalConstructions().addAll(capitalConstructService.load(includedConstructs.stream().map(CapitalConstruction::getId).collect(Collectors.toList())));
 			}
 		}
 
@@ -305,27 +311,27 @@ public class LandRESTController implements Serializable {
 			land2.setGeometry(spatialDataBean.buildGeometry(spatialGroup2));
 		}
 
-		landBean.save(land2);
+		landService.save(land2);
 		return land2.clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Transactional
 	public Land read(@PathVariable("id") Long id) {
-		return landBean.load(id).clone();
+		return landService.load(id).clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@Transactional
 	public void delete(@PathVariable Long id) {
-		landBean.remove(landBean.load(id));
+		landService.remove(landService.load(id));
 	}
 
 	@RequestMapping(value = "/remove-selected", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@Transactional
 	public ResultIds delete(@RequestBody Long[] ids) {
 		List<Long> list = Arrays.asList(ids);
-		landBean.load(list).forEach(landBean::remove);
+		landService.load(list).forEach(landService::remove);
 		ResultIds resultIds = new ResultIds();
 		resultIds.setIds(list);
 		return resultIds;
@@ -334,36 +340,36 @@ public class LandRESTController implements Serializable {
 	@RequestMapping(value = "/{id}/spatial-attribute", method = RequestMethod.POST)
 	@Transactional
 	public boolean saveGeospatialAttribute(@PathVariable("id") Long id, @RequestBody(required = true) String wktString) {
-		return landBean.saveGeospatialAttribute(id, wktString);
+		return landService.saveGeospatialAttribute(id, wktString);
 	}
 
 	@RequestMapping(value = "/parent-lands/{id}", method = RequestMethod.GET)
 	@Transactional
 	public List<Land> getParentLands(@PathVariable("id") Long id) {
-		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByLand(id);
+		List<IncludedObjects> includedObjects = landIncludedObjectsService.getIncludedObjectsByLand(id);
 		if(includedObjects.size() == 0) return null;
-		return landBean.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
+		return landService.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
 	}
 
 	@RequestMapping(value = "/parent-oks/{id}", method = RequestMethod.GET)
 	@Transactional
 	public List<CapitalConstruction> getParentCapitalConstructs(@PathVariable("id") Long id) {
-		List<LandIncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByLand(id);
+		List<IncludedObjects> includedObjects = landIncludedObjectsService.getIncludedObjectsByLand(id);
 		if(includedObjects.size() == 0) return null;
-		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
+		return capitalConstructService.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
 	}
 
-	private boolean syncLandRights(List<LandRight> persistentList, List<LandRight> newList) {
+	private boolean syncLandRights(List<SubjectRight> persistentList, List<SubjectRight> newList) {
 		int oldPersistentListSize = persistentList.size();
-		Map<Long, LandRight> persistentMap = new HashMap<>();
-		for (LandRight right : persistentList) {
+		Map<Long, SubjectRight> persistentMap = new HashMap<>();
+		for (SubjectRight right : persistentList) {
 			persistentMap.put(right.getId(), right);
 		}
 		Set<Long> newIds = new HashSet<>();
-		for (LandRight right : newList) {
-			LandRight persistent;
+		for (SubjectRight right : newList) {
+			SubjectRight persistent;
 			if (right.getId() == null || right.getId() == 0) {
-				persistent = new LandRight();
+				persistent = new SubjectRight();
 				persistentList.add(persistent);
 			} else {
 				persistent = persistentMap.get(right.getId());
@@ -383,8 +389,7 @@ public class LandRESTController implements Serializable {
 					"annualTax",
 					"totalArea",
 					"registrationDocuments",
-					"documentsCertifyingRights",
-					"otherDocuments"
+					"documentsCertifyingRights"
 			);
 			if (right.getDocumentsCertifyingRights() == null || right.getDocumentsCertifyingRights().size() == 0) {
 				persistent.getDocumentsCertifyingRights().clear();
@@ -396,19 +401,14 @@ public class LandRESTController implements Serializable {
 			} else {
 				persistent.setRegistrationDocuments(documentBean.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
 			}
-			if (right.getOtherDocuments() == null || right.getOtherDocuments().size() == 0) {
-				persistent.getOtherDocuments().clear();
-			} else {
-				persistent.setOtherDocuments(documentBean.load(right.getOtherDocuments().stream().map(Document::getId).collect(Collectors.toList())));
-			}
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? landOwnershipFormBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);
 			persistent.setRightOwner(right.getRightOwner() != null ? personBean.load(right.getRightOwner().getId()) : null);
-			landRightBean.save(persistent);
+			subjectRightService.save(persistent);
 		}
-		List<LandRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
-		for (LandRight entity : toBeRemoved) {
-			landRightBean.remove(entity);
+		List<SubjectRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
+		for (SubjectRight entity : toBeRemoved) {
+			subjectRightService.remove(entity);
 			persistentList.remove(entity);
 		}
 		return !toBeRemoved.isEmpty() || oldPersistentListSize != persistentList.size();

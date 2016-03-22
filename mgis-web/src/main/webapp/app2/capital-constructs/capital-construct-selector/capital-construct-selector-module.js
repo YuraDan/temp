@@ -19,7 +19,7 @@ angular.module("mgis.capital-constructs.construct-selector", ["ui.bootstrap",
 				$scope.select = function () {
 					var modalScope = $rootScope.$new();
 
-					modalScope.selectedItems = new Array();
+					modalScope.selectedItems = [];
 					for (var i in $scope.constructs) {
 						var construct = $scope.constructs[i];
 						modalScope.selectedItems.push(construct);

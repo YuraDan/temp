@@ -18,6 +18,7 @@ public abstract class CRUDBeanBase<T> {
 	protected final Class<T> persistentClass;
 
 	public CRUDBeanBase() {
+		//noinspection unchecked
 		persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
