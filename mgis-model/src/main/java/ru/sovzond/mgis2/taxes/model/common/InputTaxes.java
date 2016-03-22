@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * Created by donchenko-y on 3/22/16.
+ *
  */
 
 @Entity
