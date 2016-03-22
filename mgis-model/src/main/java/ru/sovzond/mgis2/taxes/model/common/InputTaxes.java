@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.taxes.model.common;
 
-import com.sun.istack.internal.NotNull;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,8 +23,8 @@ public class InputTaxes implements Cloneable {
 	/**
 	 * Кадастровый номер ЗУ
 	 */
-	@NotNull
-	@Column
+//	@NotNull
+	@Column(nullable = false)
 	private String cadastralNumber;
 
 	/**
