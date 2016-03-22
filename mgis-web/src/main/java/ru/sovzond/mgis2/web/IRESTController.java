@@ -5,6 +5,7 @@ import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 
 /**
  * Created by asd on 20/06/15.
+ *
  */
 public interface IRESTController<T> {
 	PageableContainer<T> list(int first, int max);

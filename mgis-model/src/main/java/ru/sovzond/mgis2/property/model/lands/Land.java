@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.property.model.lands;
 
-import ru.sovzond.mgis2.property.model.Property;
+import ru.sovzond.mgis2.property.model.common.Property;
 import ru.sovzond.mgis2.property.model.lands.characteristics.LandCharacteristics;
 import ru.sovzond.mgis2.property.model.lands.control.LandControl;
 import ru.sovzond.mgis2.property.model.lands.works.LandWorks;

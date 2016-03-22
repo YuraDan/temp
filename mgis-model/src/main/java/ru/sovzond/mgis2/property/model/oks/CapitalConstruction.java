@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.property.model.oks;
 
-import ru.sovzond.mgis2.property.model.Property;
+import ru.sovzond.mgis2.property.model.common.Property;
 import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacteristics;
 import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElement;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;

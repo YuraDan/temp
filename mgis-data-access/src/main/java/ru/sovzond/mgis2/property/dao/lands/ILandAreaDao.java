@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.property.dao.lands;
 
-import ru.sovzond.mgis2.property.dao.IPropertyBaseDao;
+import ru.sovzond.mgis2.property.dao.common.IPropertyBaseDao;
 import ru.sovzond.mgis2.property.model.lands.LandArea;
 
 /**

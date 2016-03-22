@@ -25,10 +25,10 @@ import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacter
 import ru.sovzond.mgis2.property.model.oks.characteristics.economical.EconomicCharacteristic;
 import ru.sovzond.mgis2.property.model.oks.characteristics.technical.TechnicalCharacteristic;
 import ru.sovzond.mgis2.property.model.rights.PropertyRights;
-import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
-import ru.sovzond.mgis2.property.services.oks.ConstructTypeBean;
-import ru.sovzond.mgis2.property.services.oks.EconomicCharacteristicBean;
-import ru.sovzond.mgis2.property.services.oks.TechnicalCharacteristicBean;
+import ru.sovzond.mgis2.property.services.oks.ICapitalConstructService;
+import ru.sovzond.mgis2.property.services.oks.IConstructTypeService;
+import ru.sovzond.mgis2.property.services.oks.IEconomicCharacteristicService;
+import ru.sovzond.mgis2.property.services.oks.ITechnicalCharacteristicService;
 import ru.sovzond.mgis2.registers.national_classifiers.OKEI;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
@@ -57,13 +57,13 @@ public class BuildingResolverBean {
 	private static Integer METER2 = 55;
 
 	@Autowired
-	private CapitalConstructBean capitalConstructBean;
+	private ICapitalConstructService capitalConstructService;
 
 	@Autowired
 	private AddressResolverBean addressResolverBean;
 
 	@Autowired
-	private ConstructTypeBean constructTypeBean;
+	private IConstructTypeService constructTypeService;
 
 	@Autowired
 	private SpatialGroupBean spatialGroupBean;
@@ -90,21 +90,21 @@ public class BuildingResolverBean {
 	private OKEIBean okeiBean;
 
 	@Autowired
-	private EconomicCharacteristicBean economicCharacteristicBean;
+	private IEconomicCharacteristicService economicCharacteristicService;
 
 	@Autowired
-	private TechnicalCharacteristicBean technicalCharacteristicBean;
+	private ITechnicalCharacteristicService technicalCharacteristicService;
 
 	public CapitalConstruction resolve(ConstructDTO obj) {
 		String cadastralNumber = obj.getCadastralNumber();
-		CapitalConstruction capitalConstruction = capitalConstructBean.findByCadastralNumber(cadastralNumber);
+		CapitalConstruction capitalConstruction = capitalConstructService.findByCadastralNumber(cadastralNumber);
 		if (capitalConstruction == null) {
 			capitalConstruction = new CapitalConstruction();
 			updateConstruct(capitalConstruction, obj);
-			capitalConstructBean.save(capitalConstruction);
+			capitalConstructService.save(capitalConstruction);
 		} else {
 			updateConstruct(capitalConstruction, obj);
-			capitalConstructBean.save(capitalConstruction);
+			capitalConstructService.save(capitalConstruction);
 		}
 		return capitalConstruction;
 	}
@@ -218,7 +218,7 @@ public class BuildingResolverBean {
 			priceIndicator.setUnitOfMeasure(okei);
 			economicCharacteristic.setPriceIndicator(priceIndicatorBean.save(priceIndicator));
 		}
-		return economicCharacteristicBean.save(economicCharacteristic);
+		return economicCharacteristicService.save(economicCharacteristic);
 	}
 
 	private TechnicalCharacteristic resolveTechnic(ConstructDTO constructDTO) {
@@ -245,7 +245,7 @@ public class BuildingResolverBean {
 				setTechnicalIndicator(technicalCharacteristic, METER, DEPTH_OF_OCC);
 				break;
 		}
-		return technicalCharacteristicBean.save(technicalCharacteristic);
+		return technicalCharacteristicService.save(technicalCharacteristic);
 	}
 
 	private void setTechnicalIndicator(TechnicalCharacteristic technicalCharacteristic, Integer code_Okei, String characteristicType) {
@@ -358,18 +358,18 @@ public class BuildingResolverBean {
 	}
 
 	private ConstructionType resolveType(String code) {
-		return constructTypeBean.findByCode(code);
+		return constructTypeService.findByCode(code);
 	}
 
 	public void updateCoordinateSystem(Long id, CoordinateSystemDTO coordinateSystemDTO) {
-		CapitalConstruction construct = capitalConstructBean.load(id);
+		CapitalConstruction construct = capitalConstructService.load(id);
 		SpatialGroup spatialData = construct.getSpatialData();
 		if (spatialData != null) {
 			CoordinateSystem coordinateSystem = spatialDataResolverBean.resolveCoordinateSystem(coordinateSystemDTO.getName(), null);
 			spatialData.setCoordinateSystem(coordinateSystem);
 			spatialGroupBean.save(spatialData);
 			construct.setGeometry(spatialDataBean.buildGeometry(spatialData));
-			capitalConstructBean.save(construct);
+			capitalConstructService.save(construct);
 		}
 	}
 }

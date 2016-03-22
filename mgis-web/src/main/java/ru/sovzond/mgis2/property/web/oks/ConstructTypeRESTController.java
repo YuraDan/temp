@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sovzond.mgis2.property.services.oks.ConstructTypeBean;
-import ru.sovzond.mgis2.property.model.oks.ConstructionType;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
+import ru.sovzond.mgis2.property.model.oks.ConstructionType;
+import ru.sovzond.mgis2.property.services.oks.IConstructTypeService;
 
 import javax.transaction.Transactional;
 
@@ -22,11 +22,11 @@ import javax.transaction.Transactional;
 public class ConstructTypeRESTController {
 
 	@Autowired
-	private ConstructTypeBean constructTypeBean;
+	private IConstructTypeService constructTypeService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<ConstructionType> list(@RequestParam(defaultValue = "name") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max) {
-		return constructTypeBean.list(orderBy, first, max);
+		return constructTypeService.list(orderBy, first, max);
 	}
 }

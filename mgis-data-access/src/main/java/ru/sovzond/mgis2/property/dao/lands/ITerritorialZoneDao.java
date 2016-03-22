@@ -1,7 +1,7 @@
 package ru.sovzond.mgis2.property.dao.lands;
 
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
-import ru.sovzond.mgis2.property.dao.IPropertyBaseDao;
+import ru.sovzond.mgis2.property.dao.common.IPropertyBaseDao;
 import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
 import ru.sovzond.mgis2.registers.national_classifiers.TerritorialZoneType;
 

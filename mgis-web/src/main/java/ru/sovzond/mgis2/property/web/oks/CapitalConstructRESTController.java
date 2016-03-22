@@ -14,8 +14,8 @@ import ru.sovzond.mgis2.isogd.business.DocumentBean;
 import ru.sovzond.mgis2.isogd.document.Document;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
-import ru.sovzond.mgis2.property.model.IncludedObjects;
 import ru.sovzond.mgis2.property.model.lands.Land;
+import ru.sovzond.mgis2.property.model.nesting.IncludedObjects;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacteristics;
 import ru.sovzond.mgis2.property.model.oks.characteristics.economical.EconomicCharacteristic;
@@ -23,11 +23,11 @@ import ru.sovzond.mgis2.property.model.oks.characteristics.technical.TechnicalCh
 import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElement;
 import ru.sovzond.mgis2.property.model.rights.PropertyRights;
 import ru.sovzond.mgis2.property.model.rights.SubjectRight;
-import ru.sovzond.mgis2.property.services.IncludedObjectsBean;
-import ru.sovzond.mgis2.property.services.lands.LandBean;
+import ru.sovzond.mgis2.property.services.lands.ILandService;
+import ru.sovzond.mgis2.property.services.nesting.IIncludedObjectsService;
 import ru.sovzond.mgis2.property.services.oks.*;
-import ru.sovzond.mgis2.property.services.rights.PropertyRightsBean;
-import ru.sovzond.mgis2.property.services.rights.SubjectRightBean;
+import ru.sovzond.mgis2.property.services.rights.IPropertyRightsService;
+import ru.sovzond.mgis2.property.services.rights.ISubjectRightService;
 import ru.sovzond.mgis2.property.web.ResultIds;
 
 import javax.transaction.Transactional;
@@ -45,10 +45,10 @@ import java.util.stream.Collectors;
 public class CapitalConstructRESTController {
 
 	@Autowired
-	private CapitalConstructBean capitalConstructBean;
+	private ICapitalConstructService capitalConstructService;
 
 	@Autowired
-	private ConstructTypeBean constructTypeBean;
+	private IConstructTypeService constructTypeService;
 
 	@Autowired
 	private OKTMOBean oktmoBean;
@@ -57,10 +57,10 @@ public class CapitalConstructRESTController {
 	private AddressBean addressBean;
 
 	@Autowired
-	private PropertyRightsBean propertyRightsBean;
+	private IPropertyRightsService propertyRightsService;
 
 	@Autowired
-	private SubjectRightBean subjectRightBean;
+	private ISubjectRightService subjectRightService;
 
 	@Autowired
 	private DocumentBean documentBean;
@@ -78,10 +78,10 @@ public class CapitalConstructRESTController {
 	private PersonBean personBean;
 
 	@Autowired
-	private EconomicCharacteristicBean economicCharacteristicBean;
+	private IEconomicCharacteristicService economicCharacteristicService;
 
 	@Autowired
-	private TechnicalCharacteristicBean technicalCharacteristicBean;
+	private ITechnicalCharacteristicService technicalCharacteristicService;
 
 	@Autowired
 	private PriceIndicatorBean priceIndicatorBean;
@@ -90,10 +90,10 @@ public class CapitalConstructRESTController {
 	private TechnicalIndicatorBean technicalIndicatorBean;
 
 	@Autowired
-	private ConstructiveElementBean constructiveElementBean;
+	private IConstructiveElementService constructiveElementService;
 
 	@Autowired
-	private ConstructiveElementTypeBean constructiveElementTypeBean;
+	private IConstructiveElementTypeService constructiveElementTypeService;
 
 	@Autowired
 	private OKEIBean okeiBean;
@@ -102,10 +102,10 @@ public class CapitalConstructRESTController {
 	private SpatialDataBean spatialDataBean;
 
 	@Autowired
-	private LandBean landBean;
+	private ILandService landService;
 
 	@Autowired
-	private IncludedObjectsBean landIncludedObjectsBean;
+	private IIncludedObjectsService landIncludedObjectsService;
 
 	@Autowired
 	private LandEncumbranceBean landEncumbranceBean;
@@ -116,7 +116,7 @@ public class CapitalConstructRESTController {
 													   @RequestParam(value = "cadastralNumber", defaultValue = "") String cadastralNumber,
 													   @RequestParam(value = "name", defaultValue = "") String name
 	) {
-		return capitalConstructBean.list(cadastralNumber, name, orderBy, first, max);
+		return capitalConstructService.list(cadastralNumber, name, orderBy, first, max);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -126,7 +126,7 @@ public class CapitalConstructRESTController {
 		if (id == 0) {
 			capitalConstruct2 = new CapitalConstruction();
 		} else {
-			capitalConstruct2 = capitalConstructBean.load(id);
+			capitalConstruct2 = capitalConstructService.load(id);
 		}
 		BeanUtils.copyProperties(capitalConstruct, capitalConstruct2,
 				"id",
@@ -141,7 +141,7 @@ public class CapitalConstructRESTController {
 				"documents",
 				"spatialData"
 		);
-		capitalConstruct2.setType(capitalConstruct.getType() != null ? constructTypeBean.load(capitalConstruct.getType().getId()) : null);
+		capitalConstruct2.setType(capitalConstruct.getType() != null ? constructTypeService.load(capitalConstruct.getType().getId()) : null);
 		capitalConstruct2.setMunicipalEntity(capitalConstruct.getMunicipalEntity() != null ? oktmoBean.load(capitalConstruct.getMunicipalEntity().getId()) : null);
 		capitalConstruct2.setAddress(capitalConstruct.getAddress() != null ? addressBean.load(capitalConstruct.getAddress().getId()) : null);
 		capitalConstruct2.setEncumbrance(capitalConstruct.getEncumbrance() != null ? landEncumbranceBean.load(capitalConstruct.getEncumbrance().getId()) : null);
@@ -154,16 +154,16 @@ public class CapitalConstructRESTController {
 		if (rights == null || rights.getId() == null || rights.getId() == 0) {
 			rights2 = new PropertyRights();
 		} else {
-			rights2 = propertyRightsBean.load(rights.getId());
+			rights2 = propertyRightsService.load(rights.getId());
 		}
 		if (rights != null) {
 			if(syncConstructionRights(rights2.getRights(), rights.getRights())) {
-				propertyRightsBean.save(rights2);
+				propertyRightsService.save(rights2);
 				capitalConstruct2.setRights(rights2);
 			}
 		} else {
 			if(rights2.getId() != null && rights2.getId() != 0) {
-				propertyRightsBean.remove(rights2);
+				propertyRightsService.remove(rights2);
 			}
 		}
 
@@ -182,7 +182,7 @@ public class CapitalConstructRESTController {
 			if (characteristics.getEconomicCharacteristics() != null && characteristics.getEconomicCharacteristics().size() > 0) {
 				syncEconomicCharacteristics(characteristics2.getEconomicCharacteristics(), characteristics.getEconomicCharacteristics());
 			} else {
-				characteristics2.getEconomicCharacteristics().forEach(economicCharacteristicBean::remove);
+				characteristics2.getEconomicCharacteristics().forEach(economicCharacteristicService::remove);
 				characteristics2.getEconomicCharacteristics().clear();
 			}
 //			constructCharacteristicsBean.save(characteristics2);
@@ -190,7 +190,7 @@ public class CapitalConstructRESTController {
 			if (characteristics.getTechnicalCharacteristics() != null && characteristics.getTechnicalCharacteristics().size() > 0) {
 				syncTechnicalCharacteristics(characteristics2.getTechnicalCharacteristics(), characteristics.getTechnicalCharacteristics());
 			} else {
-				characteristics2.getTechnicalCharacteristics().forEach(technicalCharacteristicBean::remove);
+				characteristics2.getTechnicalCharacteristics().forEach(technicalCharacteristicService::remove);
 				characteristics2.getTechnicalCharacteristics().clear();
 			}
 //			constructCharacteristicsBean.save(characteristics2);
@@ -205,7 +205,7 @@ public class CapitalConstructRESTController {
 			if (landIncludedObjects2 == null) {
 				landIncludedObjects2 = new IncludedObjects();
 				capitalConstruct2.setIncludedObjects(landIncludedObjects2);
-				landIncludedObjectsBean.save(landIncludedObjects2);
+				landIncludedObjectsService.save(landIncludedObjects2);
 			}
 			landIncludedObjects2.setLandDealDocument(landIncludedObjects.getLandDealDocument() != null ? documentBean.load(landIncludedObjects.getLandDealDocument().getId()) : null);
 			landIncludedObjects2.setInventoryDealDocument(landIncludedObjects.getInventoryDealDocument() != null ? documentBean.load(landIncludedObjects.getInventoryDealDocument().getId()) : null);
@@ -217,21 +217,21 @@ public class CapitalConstructRESTController {
 			// Included lands
 			landIncludedObjects2.getIncludedLands().clear();
 			if (landIncludedObjects.getIncludedLands().size() > 0) {
-				landIncludedObjects2.getIncludedLands().addAll(landBean.load(landIncludedObjects.getIncludedLands().stream().map(Land::getId).collect(Collectors.toList())));
+				landIncludedObjects2.getIncludedLands().addAll(landService.load(landIncludedObjects.getIncludedLands().stream().map(Land::getId).collect(Collectors.toList())));
 			}
 			// Included constructs
 			landIncludedObjects2.getIncludedCapitalConstructions().clear();
 			if (landIncludedObjects.getIncludedCapitalConstructions().size() > 0) {
-				landIncludedObjects2.getIncludedCapitalConstructions().addAll(capitalConstructBean.load(landIncludedObjects.getIncludedCapitalConstructions().stream().map(CapitalConstruction::getId).collect(Collectors.toList())));
+				landIncludedObjects2.getIncludedCapitalConstructions().addAll(capitalConstructService.load(landIncludedObjects.getIncludedCapitalConstructions().stream().map(CapitalConstruction::getId).collect(Collectors.toList())));
 			}
-			capitalConstructBean.save(capitalConstruct2);
+			capitalConstructService.save(capitalConstruct2);
 		} else {
 			if (capitalConstruct2.getIncludedObjects() == null) {
 				landIncludedObjects = new IncludedObjects();
 				capitalConstruct2.setIncludedObjects(landIncludedObjects);
-				landIncludedObjectsBean.save(landIncludedObjects);
+				landIncludedObjectsService.save(landIncludedObjects);
 			}
-			capitalConstructBean.save(capitalConstruct2);
+			capitalConstructService.save(capitalConstruct2);
 		}
 
 		// Spatial Data
@@ -246,7 +246,7 @@ public class CapitalConstructRESTController {
 			capitalConstruct2.setGeometry(spatialDataBean.buildGeometry(spatialGroup2));
 		}
 
-		capitalConstructBean.save(capitalConstruct2);
+		capitalConstructService.save(capitalConstruct2);
 		return capitalConstruct2.clone();
 	}
 
@@ -268,11 +268,11 @@ public class CapitalConstructRESTController {
 			BeanUtils.copyProperties(characteristic, persistent, "id", "priceIndicator", "okof");
 			persistent.setPriceIndicator(characteristic.getPriceIndicator() != null ? priceIndicatorBean.load(characteristic.getPriceIndicator().getId()) : null);
 			persistent.setOkof(characteristic.getOkof() != null ? okofBean.load(characteristic.getOkof().getId()) : null);
-			economicCharacteristicBean.save(persistent);
+			economicCharacteristicService.save(persistent);
 		}
 		List<EconomicCharacteristic> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
 		for (EconomicCharacteristic entity : toBeRemoved) {
-			economicCharacteristicBean.remove(entity);
+			economicCharacteristicService.remove(entity);
 			persistentList.remove(entity);
 		}
 	}
@@ -293,14 +293,14 @@ public class CapitalConstructRESTController {
 				newIds.add(persistent.getId());
 			}
 			BeanUtils.copyProperties(characteristic, persistent, "id", "constructType", "technicalIndicator", "unitOfMeasure");
-			persistent.setConstructType(characteristic.getConstructType() != null ? constructTypeBean.load(characteristic.getConstructType().getId()) : null);
+			persistent.setConstructType(characteristic.getConstructType() != null ? constructTypeService.load(characteristic.getConstructType().getId()) : null);
 			persistent.setTechnicalIndicator(characteristic.getTechnicalIndicator() != null ? technicalIndicatorBean.load(characteristic.getTechnicalIndicator().getId()) : null);
 			persistent.setUnitOfMeasure(characteristic.getUnitOfMeasure() != null ? okeiBean.load(characteristic.getUnitOfMeasure().getId()) : null);
-			technicalCharacteristicBean.save(persistent);
+			technicalCharacteristicService.save(persistent);
 		}
 		List<TechnicalCharacteristic> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
 		for (TechnicalCharacteristic entity : toBeRemoved) {
-			technicalCharacteristicBean.remove(entity);
+			technicalCharacteristicService.remove(entity);
 			persistentList.remove(entity);
 		}
 	}
@@ -324,12 +324,12 @@ public class CapitalConstructRESTController {
 					newIds.add(persistent.getId());
 				}
 				BeanUtils.copyProperties(element, persistent, "id", "type");
-				persistent.setType(element.getType() != null ? constructiveElementTypeBean.load(element.getType().getId()) : null);
-				constructiveElementBean.save(persistent);
+				persistent.setType(element.getType() != null ? constructiveElementTypeService.load(element.getType().getId()) : null);
+				constructiveElementService.save(persistent);
 			}
 			List<ConstructiveElement> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
 			for (ConstructiveElement entity : toBeRemoved) {
-				constructiveElementBean.remove(entity);
+				constructiveElementService.remove(entity);
 				persistentList.remove(entity);
 			}
 		}
@@ -373,11 +373,11 @@ public class CapitalConstructRESTController {
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? okfsBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);
 			persistent.setRightOwner(right.getRightOwner() != null ? personBean.load(right.getRightOwner().getId()) : null);
-			subjectRightBean.save(persistent);
+			subjectRightService.save(persistent);
 		}
 		List<SubjectRight> toBeRemoved = persistentMap.entrySet().stream().filter(entry -> !newIds.contains(entry.getKey())).map(Map.Entry::getValue).collect(Collectors.toList());
 		for (SubjectRight entity : toBeRemoved) {
-			subjectRightBean.remove(entity);
+			subjectRightService.remove(entity);
 			persistentList.remove(entity);
 		}
 		return !toBeRemoved.isEmpty() || oldPersistentListSize != persistentList.size();
@@ -386,20 +386,20 @@ public class CapitalConstructRESTController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
 	@Transactional
 	public CapitalConstruction read(@PathVariable Long id) {
-		return capitalConstructBean.load(id).clone();
+		return capitalConstructService.load(id).clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@Transactional
 	public void delete(@PathVariable Long id) {
-		capitalConstructBean.remove(capitalConstructBean.load(id));
+		capitalConstructService.remove(capitalConstructService.load(id));
 	}
 
 	@RequestMapping(value = "/remove-selected", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@Transactional
 	public ResultIds delete(@RequestBody Long[] ids) {
 		List<Long> list = Arrays.asList(ids);
-		capitalConstructBean.load(list).forEach(capitalConstructBean::remove);
+		capitalConstructService.load(list).forEach(capitalConstructService::remove);
 		ResultIds resultIds = new ResultIds();
 		resultIds.setIds(list);
 		return resultIds;
@@ -408,23 +408,23 @@ public class CapitalConstructRESTController {
 	@RequestMapping(value = "/{id}/spatial-attribute", method = RequestMethod.POST)
 	@Transactional
 	public boolean saveGeospatialAttribute(@PathVariable("id") Long id, @RequestBody(required = true) String wktString) {
-		return capitalConstructBean.saveGeospatialAttribute(id, wktString);
+		return capitalConstructService.saveGeospatialAttribute(id, wktString);
 	}
 
 	@RequestMapping(value = "/parent-lands/{id}", method = RequestMethod.GET)
 	@Transactional
 	public List<Land> getParentLands(@PathVariable("id") Long id) {
-		List<IncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		List<IncludedObjects> includedObjects = landIncludedObjectsService.getIncludedObjectsByCapitalConstruct(id);
 		if(includedObjects.size() == 0) return null;
-		return landBean.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
+		return landService.getByIncludedObjects(includedObjects).stream().map(Land::clone).collect(Collectors.toList());
 	}
 
 	@RequestMapping(value = "/parent-oks/{id}", method = RequestMethod.GET)
 	@Transactional
 	public List<CapitalConstruction> getParentCapitalConstructs(@PathVariable("id") Long id) {
-		List<IncludedObjects> includedObjects = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(id);
+		List<IncludedObjects> includedObjects = landIncludedObjectsService.getIncludedObjectsByCapitalConstruct(id);
 		if(includedObjects.size() == 0) return null;
-		return capitalConstructBean.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
+		return capitalConstructService.getByIncludedObjects(includedObjects).stream().map(CapitalConstruction::clone).collect(Collectors.toList());
 	}
 
 }

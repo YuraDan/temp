@@ -9,10 +9,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sovzond.mgis2.business.base.HibernateConfiguration;
-import ru.sovzond.mgis2.property.services.oks.CapitalConstructBean;
-import ru.sovzond.mgis2.property.model.IncludedObjects;
-import ru.sovzond.mgis2.property.services.lands.LandBean;
-import ru.sovzond.mgis2.property.services.IncludedObjectsBean;
+import ru.sovzond.mgis2.property.model.nesting.IncludedObjects;
+import ru.sovzond.mgis2.property.services.lands.ILandService;
+import ru.sovzond.mgis2.property.services.nesting.IIncludedObjectsService;
+import ru.sovzond.mgis2.property.services.oks.ICapitalConstructService;
 
 import java.util.List;
 
@@ -21,20 +21,20 @@ import java.util.List;
 public class LandIncludedObjectsBeanTest {
 
 	@Autowired
-	IncludedObjectsBean landIncludedObjectsBean;
+	IIncludedObjectsService landIncludedObjectsService;
 
 	@Autowired
-	LandBean landBean;
+	ILandService landService;
 
 	@Autowired
-	CapitalConstructBean capitalConstructBean;
+	ICapitalConstructService capitalConstructService;
 
 	@Test
 	@Ignore
 	@Transactional
 	public void getIncludedObjectsByCapitalConstructTest() {
 
-		List<IncludedObjects> list = landIncludedObjectsBean.getIncludedObjectsByCapitalConstruct(590L);
+		List<IncludedObjects> list = landIncludedObjectsService.getIncludedObjectsByCapitalConstruct(590L);
 		for(IncludedObjects item: list) {
 			System.out.println(item.getId());
 		}
@@ -46,7 +46,7 @@ public class LandIncludedObjectsBeanTest {
 	@Transactional
 	public void getIncludedObjectsByLandTest() {
 
-		List<IncludedObjects> list = landIncludedObjectsBean.getIncludedObjectsByLand(7848L);
+		List<IncludedObjects> list = landIncludedObjectsService.getIncludedObjectsByLand(7848L);
 		for(IncludedObjects item: list) {
 			System.out.println(item.getId());
 		}

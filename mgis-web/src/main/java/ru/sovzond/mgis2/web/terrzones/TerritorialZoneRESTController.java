@@ -5,27 +5,28 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.isogd.business.DocumentBean;
-import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
-import ru.sovzond.mgis2.property.services.lands.TerritorialZoneBean;
-import ru.sovzond.mgis2.property.services.lands.TerritorialZoneTypeBean;
 import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
 import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
+import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
+import ru.sovzond.mgis2.property.services.lands.ITerritorialZoneService;
+import ru.sovzond.mgis2.property.services.lands.ITerritorialZoneTypeService;
 import ru.sovzond.mgis2.registers.national_classifiers.TerritorialZoneType;
 
 import javax.transaction.Transactional;
 
 /**
  * Created by Alexander Arakelyan on 29.07.15.
+ *
  */
 @RestController
 @RequestMapping("/terr-zones/zones")
 @Scope("session")
 public class TerritorialZoneRESTController {
 	@Autowired
-	private TerritorialZoneBean territorialZoneBean;
+	private ITerritorialZoneService territorialZoneService;
 
 	@Autowired
-	private TerritorialZoneTypeBean territorialZoneTypeBean;
+	private ITerritorialZoneTypeService territorialZoneTypeService;
 
 	@Autowired
 	private OKTMOBean oktmoBean;
@@ -39,13 +40,13 @@ public class TerritorialZoneRESTController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<TerritorialZone> list(@RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max, @RequestParam(defaultValue = "name") String orderBy, @RequestParam(defaultValue = "") String name) {
-		return territorialZoneBean.list(orderBy, first, max, name);
+		return territorialZoneService.list(orderBy, first, max, name);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Transactional
 	public TerritorialZone read(@PathVariable Long id) {
-		return territorialZoneBean.load(id).clone();
+		return territorialZoneService.load(id).clone();
 	}
 
 
@@ -56,7 +57,7 @@ public class TerritorialZoneRESTController {
 		if (id == 0) {
 			zone2 = new TerritorialZone();
 		} else {
-			zone2 = territorialZoneBean.load(id);
+			zone2 = territorialZoneService.load(id);
 		}
 		zone2.setAdditionalDescription(zone.getAdditionalDescription());
 		zone2.setAdministrativeTerritorialEntity(zone.getAdministrativeTerritorialEntity() != null ? oktmoBean.load(zone.getAdministrativeTerritorialEntity().getId()) : null);
@@ -68,21 +69,21 @@ public class TerritorialZoneRESTController {
 		zone2.setNumber(zone.getNumber());
 		zone2.setPlacement(zone.getPlacement());
 		TerritorialZoneType zoneType = zone.getZoneType();
-		zone2.setZoneType(zoneType != null ? territorialZoneTypeBean.load(zoneType.getId()) : null);
+		zone2.setZoneType(zoneType != null ? territorialZoneTypeService.load(zoneType.getId()) : null);
 		zone2.setAccountNumber(zone.getAccountNumber());
 		zone2.setAllowedUsageKind(zone.getAllowedUsageKind() != null ? landAllowedUsageBean.load(zone.getAllowedUsageKind().getId()) : null);
 		zone2.setAllowedUsageKindAsText(zone.getAllowedUsageKindAsText());
 		zone2.setAllowedUsageByDocument(zone.getAllowedUsageByDocument());
 		zone2.setBasisDocument(zone.getBasisDocument() != null ? documentBean.load(zone.getBasisDocument().getId()) : null);
 		zone2.setStateOnTheDate(zone.getStateOnTheDate());
-		territorialZoneBean.save(zone2);
+		territorialZoneService.save(zone2);
 		return zone2.clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@Transactional
 	public void delete(@PathVariable Long id) {
-		territorialZoneBean.remove(territorialZoneBean.load(id));
+		territorialZoneService.remove(territorialZoneService.load(id));
 	}
 
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
 import ru.sovzond.mgis2.property.dao.oks.ICapitalConstructDao;
-import ru.sovzond.mgis2.property.model.IncludedObjects;
+import ru.sovzond.mgis2.property.model.nesting.IncludedObjects;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 
 import java.util.List;
