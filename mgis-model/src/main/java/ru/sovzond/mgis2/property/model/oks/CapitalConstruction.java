@@ -1,15 +1,8 @@
 package ru.sovzond.mgis2.property.model.oks;
 
-import com.vividsolutions.jts.geom.MultiPolygon;
-import org.hibernate.annotations.Type;
-import ru.sovzond.mgis2.address.Address;
+import ru.sovzond.mgis2.property.model.common.Property;
 import ru.sovzond.mgis2.property.model.oks.characteristics.ConstructionCharacteristics;
 import ru.sovzond.mgis2.property.model.oks.constructive_elements.ConstructiveElement;
-import ru.sovzond.mgis2.property.model.oks.rights.ConstructionRights;
-import ru.sovzond.mgis2.geo.SpatialGroup;
-import ru.sovzond.mgis2.property.model.lands.includes.LandIncludedObjects;
-import ru.sovzond.mgis2.property.model.CadastralRecordStatus;
-import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import javax.persistence.*;
@@ -24,7 +17,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "occ_capital_construction", indexes = @Index(name = "oks_cadastral_number_ind", unique = true, columnList = "cadastralnumber"))
-public class CapitalConstruction implements Cloneable {
+public class CapitalConstruction extends Property implements Cloneable {
 	@Id
 	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
@@ -40,13 +33,6 @@ public class CapitalConstruction implements Cloneable {
 
 	@Column
 	private String objectPurpose;
-
-	/**
-	 * Общие сведения
-	 */
-
-	@Column
-	private String cadastralNumber;
 
 	/**
 	 * Условный номер
@@ -72,13 +58,6 @@ public class CapitalConstruction implements Cloneable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "municipal_entity_id")
 	private OKTMO municipalEntity;
-
-	/**
-	 * Адрес
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "address_id")
-	private Address address;
 
 	/**
 	 * Местоположение
@@ -128,32 +107,11 @@ public class CapitalConstruction implements Cloneable {
 	@Column
 	private Integer rebuildingLastYear;
 
-	@Enumerated(EnumType.STRING)
-	@Column
-	private CadastralRecordStatus cadastralRecordStatus;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	private LandEncumbrance encumbrance;
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-	private ConstructionRights rights;
-
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
 	private ConstructionCharacteristics characteristics;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
 	private List<ConstructiveElement> constructiveElements = new ArrayList<>();
-
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-	private LandIncludedObjects landIncludedObjects;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name = "spatial_data_id")
-	private SpatialGroup spatialData;
-
-	@Type(type = "org.hibernate.spatial.GeometryType")
-	@Column(name = "geometry")
-	private MultiPolygon geometry;
 
 	public Long getId() {
 		return id;
@@ -186,14 +144,6 @@ public class CapitalConstruction implements Cloneable {
 
 	public void setObjectPurpose(String objectPurpose) {
 		this.objectPurpose = objectPurpose;
-	}
-
-	public String getCadastralNumber() {
-		return cadastralNumber;
-	}
-
-	public void setCadastralNumber(String cadastralNumber) {
-		this.cadastralNumber = cadastralNumber;
 	}
 
 	@SuppressWarnings("unused")
@@ -229,14 +179,6 @@ public class CapitalConstruction implements Cloneable {
 
 	public void setMunicipalEntity(OKTMO municipalEntity) {
 		this.municipalEntity = municipalEntity;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 
 	public String getPlacement() {
@@ -309,14 +251,6 @@ public class CapitalConstruction implements Cloneable {
 		this.rebuildingLastYear = rebuildingLastYear;
 	}
 
-	public ConstructionRights getRights() {
-		return rights;
-	}
-
-	public void setRights(ConstructionRights rights) {
-		this.rights = rights;
-	}
-
 	public ConstructionCharacteristics getCharacteristics() {
 		return characteristics;
 	}
@@ -334,55 +268,14 @@ public class CapitalConstruction implements Cloneable {
 		this.constructiveElements = constructiveElements;
 	}
 
-	public LandIncludedObjects getLandIncludedObjects() {
-		return landIncludedObjects;
-	}
-
-	public void setLandIncludedObjects(LandIncludedObjects landIncludedObjects) {
-		this.landIncludedObjects = landIncludedObjects;
-	}
-
-	public SpatialGroup getSpatialData() {
-		return spatialData;
-	}
-
-	public void setSpatialData(SpatialGroup spatialData) {
-		this.spatialData = spatialData;
-	}
-
-	public LandEncumbrance getEncumbrance() {
-		return encumbrance;
-	}
-
-	public void setEncumbrance(LandEncumbrance encumbrance) {
-		this.encumbrance = encumbrance;
-	}
-
-	public void setGeometry(MultiPolygon geometry) {
-		this.geometry = geometry;
-	}
-
-	public MultiPolygon getGeometry() {
-		return geometry;
-	}
-
-	public CadastralRecordStatus getCadastralRecordStatus() {
-		return cadastralRecordStatus;
-	}
-
-	public void setCadastralRecordStatus(CadastralRecordStatus cadastralRecordStatus) {
-		this.cadastralRecordStatus = cadastralRecordStatus;
-	}
-
-	@SuppressWarnings("CloneDoesntCallSuperClone")
+	@Override
 	public CapitalConstruction clone() {
-		CapitalConstruction construct = new CapitalConstruction();
+		CapitalConstruction construct = (CapitalConstruction) super.clone();
+		if(construct == null) return null;
 		construct.setId(id);
 		construct.setName(name);
 		construct.setActualUsage(actualUsage);
-		construct.setAddress(address != null ? address.clone() : null);
 		construct.setBuildCompletionYear(buildCompletionYear);
-		construct.setCadastralNumber(cadastralNumber);
 		construct.setConditionalNumber(conditionalNumber);
 		construct.getConstructiveElements().addAll(constructiveElements.stream().map(ConstructiveElement::clone).collect(Collectors.toList()));
 		construct.setInventoryNumber(inventoryNumber);
@@ -394,14 +287,9 @@ public class CapitalConstruction implements Cloneable {
 		construct.setOverallArea(overallArea);
 		construct.setPlacement(placement);
 		construct.setRebuildingLastYear(rebuildingLastYear);
-		construct.setRights(rights != null ? rights.clone() : null);
 		construct.setTechnicalAccountingStatementDate(technicalAccountingStatementDate);
 		construct.setType(type != null ? type.clone() : null);
 		construct.setCharacteristics(characteristics != null ? characteristics.clone() : null);
-		construct.setLandIncludedObjects(landIncludedObjects != null ? landIncludedObjects.clone() : null);
-		construct.setSpatialData(spatialData != null ? spatialData.clone() : null);
-		construct.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
-		construct.setCadastralRecordStatus(getCadastralRecordStatus());
 		return construct;
 	}
 

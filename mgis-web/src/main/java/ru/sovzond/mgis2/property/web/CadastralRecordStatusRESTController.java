@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sovzond.mgis2.property.model.CadastralRecordStatus;
+import ru.sovzond.mgis2.property.model.common.CadastralRecordStatus;
 
 import java.io.Serializable;
 import java.util.Arrays;
