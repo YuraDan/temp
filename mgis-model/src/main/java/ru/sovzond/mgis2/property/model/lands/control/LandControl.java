@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class LandControl implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_land_control_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -57,7 +57,7 @@ public class LandControl implements Cloneable {
 	private float penaltyAmount;
 
 	@OneToMany
-	private List<Document> inspectionResultDocuments = new ArrayList<Document>();
+	private List<Document> inspectionResultDocuments = new ArrayList<>();
 
 	public LandControl() {
 	}
@@ -174,6 +174,7 @@ public class LandControl implements Cloneable {
 		this.inspectionResultDocuments = inspectionResultDocuments;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandControl clone() {
 		LandControl control = new LandControl();
 		control.setId(id);
@@ -185,7 +186,7 @@ public class LandControl implements Cloneable {
 		control.setInspectionReasonDescription(inspectionReasonDescription);
 		control.setInspectionResultAvailabilityOfViolations(inspectionResultAvailabilityOfViolations != null ? inspectionResultAvailabilityOfViolations.clone() : null);
 		control.setInspectionResultDescription(inspectionResultDescription);
-		control.setInspectionResultDocuments(inspectionResultDocuments.stream().map(document -> document.clone()).collect(Collectors.toList()));
+		control.setInspectionResultDocuments(inspectionResultDocuments.stream().map(Document::clone).collect(Collectors.toList()));
 		control.setInspectionSubject(inspectionSubject != null ? inspectionSubject.clone() : null);
 		control.setInspectionType(inspectionType != null ? inspectionType.clone() : null);
 		control.setPenaltyAmount(penaltyAmount);

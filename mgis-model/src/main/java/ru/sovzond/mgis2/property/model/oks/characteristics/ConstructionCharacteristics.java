@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Table(name = "occ_capital_construction_characteristics")
 public class ConstructionCharacteristics implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_t_characteristics_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_occ_characteristics_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;

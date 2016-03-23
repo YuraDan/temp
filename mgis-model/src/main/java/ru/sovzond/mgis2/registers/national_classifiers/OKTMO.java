@@ -89,6 +89,7 @@ public class OKTMO implements Cloneable {
 		this.other = other;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKTMO clone() {
 		OKTMO oktmo = new OKTMO();
 		oktmo.setId(id);

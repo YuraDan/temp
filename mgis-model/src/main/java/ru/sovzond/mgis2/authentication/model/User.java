@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class User implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_user_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -82,6 +82,7 @@ public class User implements Cloneable {
 		this.groups = groups;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public User clone() {
 		User user = new User();
 		user.setId(id);

@@ -57,12 +57,13 @@ public class ConstructiveElement implements Cloneable {
 		this.technicalCondition = technicalCondition;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public ConstructiveElement clone() {
 		ConstructiveElement element = new ConstructiveElement();
 		element.setType(type != null ? type.clone() : null);
 		element.setId(id);
 		element.setDescription(description);
-		element.setTechnicalCondition(technicalCondition);
+		element.setTechnicalCondition(getTechnicalCondition());
 		return element;
 	}
 }

@@ -9,6 +9,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "mgis2_price_indicator")
 public class PriceIndicator extends EconomicIndicator {
+
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public PriceIndicator clone() {
 		PriceIndicator priceIndicator = new PriceIndicator();
 		priceIndicator.setId(getId());

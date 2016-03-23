@@ -31,9 +31,11 @@ public class OKATO implements Cloneable {
 //	@Column
 //	private Integer nodeCount;
 
+	@SuppressWarnings("unused")
 	@Column(name = "parent_code")
 	private String parentCode;
 
+	@SuppressWarnings({"unused", "FieldCanBeLocal"})
 	@Column(name = "node_count")
 	private Integer node_count;
 
@@ -111,10 +113,12 @@ public class OKATO implements Cloneable {
 //		return node_count;
 //	}
 
+	@SuppressWarnings("unused")
 	public void setNode_count(Integer node_count) {
 		this.node_count = node_count;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKATO clone() {
 		OKATO okato = new OKATO();
 		okato.setId(id);
@@ -122,7 +126,7 @@ public class OKATO implements Cloneable {
 		okato.setName(name);
 		okato.setControlNumber(controlNumber);
 //		okato.setParent(okato.parent != null ? okato.parent.clone() : null);
-		okato.setAdditionalInfo(additionalInfo);
+		okato.setAdditionalInfo(getAdditionalInfo());
 		return okato;
 	}
 }

@@ -79,10 +79,12 @@ public class OKOF implements Cloneable {
 		this.parent = parent;
 	}
 
+	@SuppressWarnings("unused")
 	public String getParentCode() {
 		return parentCode;
 	}
 
+	@SuppressWarnings("unused")
 	public void setParentCode(String parentCode) {
 		this.parentCode = parentCode;
 	}
@@ -95,14 +97,15 @@ public class OKOF implements Cloneable {
 		this.nodeCount = nodeCount;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKOF clone() {
 		OKOF okof = new OKOF();
-		okof.setControlNumber(controlNumber);
+		okof.setControlNumber(getControlNumber());
 		okof.setId(id);
 		okof.setName(name);
-		okof.setNodeCount(nodeCount);
-		okof.setOriginalId(originalId);
-		if (parent != null) {
+		okof.setNodeCount(getNodeCount());
+		okof.setOriginalId(getOriginalId());
+		if (getParent() != null) {
 			OKOF parent2 = new OKOF();
 			parent2.setId(parent2.getId());
 			okof.setParent(parent2);

@@ -41,7 +41,7 @@ public class LandControlInspectionReason {
 		this.name = name;
 	}
 
-
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandControlInspectionReason clone() {
 		LandControlInspectionReason reason = new LandControlInspectionReason();
 		reason.setId(id);

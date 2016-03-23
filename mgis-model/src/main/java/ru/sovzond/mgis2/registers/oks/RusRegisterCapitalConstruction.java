@@ -5,12 +5,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_capital_construction")
 public class RusRegisterCapitalConstruction {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_capital_construction_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -19,7 +20,7 @@ public class RusRegisterCapitalConstruction {
 	 * Номер (номера) кадастрового квартала (кадастровых кварталов), в пределах которого (которых) расположен данный объект недвижимости
 	 */
 	@ElementCollection
-	private List<String> cadastralBocks = new ArrayList<String>();
+	private List<String> cadastralBocks = new ArrayList<>();
 
 	/**
 	 * Вид объекта недвижимости - Здание

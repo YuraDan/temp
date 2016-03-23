@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Table(name = "isogd_document_common_part")
 public class CommonPart implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_document_common_part_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -50,6 +50,7 @@ public class CommonPart implements Cloneable {
 		this.documentContents = documentContents;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public CommonPart clone() {
 		CommonPart part = new CommonPart();
 		part.setId(id);

@@ -204,16 +204,16 @@ public class InputTaxes implements Cloneable {
 		inputTaxes.setId(id);
 		inputTaxes.setCadastralNumber(cadastralNumber);
 		inputTaxes.setArea(area);
-		inputTaxes.setLandCategory(landCategory);
-		inputTaxes.setAllowedUsage(allowedUsage);
+		inputTaxes.setLandCategory(getLandCategory());
+		inputTaxes.setAllowedUsage(getAllowedUsage());
 		inputTaxes.setAddress(address);
-		inputTaxes.setCodeOkato(codeOkato);
+		inputTaxes.setCodeOkato(getCodeOkato());
 		inputTaxes.setCadastralCost(cadastralCost);
-		inputTaxes.setTaxRate(taxRate);
-		inputTaxes.setTaxPayment(taxPayment);
-		inputTaxes.setTaxPaid(taxPaid);
+		inputTaxes.setTaxRate(getTaxRate());
+		inputTaxes.setTaxPayment(getTaxPayment());
+		inputTaxes.setTaxPaid(getTaxPaid());
 		inputTaxes.setYear(year);
-		inputTaxes.setPayDateTax(payDateTax);
+		inputTaxes.setPayDateTax(getPayDateTax());
 		return inputTaxes;
 	}
 }

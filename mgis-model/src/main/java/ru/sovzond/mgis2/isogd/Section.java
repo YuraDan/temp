@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Section implements Cloneable, Sortable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_section_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -73,6 +73,7 @@ public class Section implements Cloneable, Sortable {
 		this.sortOrder = sortOrder;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Section clone() {
 		Section section = new Section();
 		section.setId(id);

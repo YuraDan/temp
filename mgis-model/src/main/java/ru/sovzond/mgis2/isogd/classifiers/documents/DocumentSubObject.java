@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class DocumentSubObject {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_cls_document_sub_obj_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -63,6 +63,7 @@ public class DocumentSubObject {
 		this.documentObject = documentObject;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public DocumentSubObject clone() {
 		DocumentSubObject documentSubObject = new DocumentSubObject();
 		documentSubObject.setId(id);

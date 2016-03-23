@@ -60,6 +60,7 @@ public class OkatoToOktmo implements Cloneable {
 		this.oktmo = oktmo;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OkatoToOktmo clone() {
 		OkatoToOktmo okatoToOktmo = new OkatoToOktmo();
 		okatoToOktmo.setId(id);

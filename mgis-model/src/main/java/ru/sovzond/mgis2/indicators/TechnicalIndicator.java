@@ -11,6 +11,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "mgis2_tech_indicator")
 public class TechnicalIndicator extends Indicator {
+
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public TechnicalIndicator clone() {
 		TechnicalIndicator technicalIndicator = new TechnicalIndicator();
 		technicalIndicator.setId(getId());

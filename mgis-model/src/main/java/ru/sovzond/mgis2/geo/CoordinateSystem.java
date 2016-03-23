@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "mgis2_geo_coord_system")
 public class CoordinateSystem implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_coordinate_system_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -44,6 +44,7 @@ public class CoordinateSystem implements Cloneable {
 		this.conversionRules = conversionRules;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public CoordinateSystem clone() {
 		CoordinateSystem coordinateSystem = new CoordinateSystem();
 		coordinateSystem.setId(id);

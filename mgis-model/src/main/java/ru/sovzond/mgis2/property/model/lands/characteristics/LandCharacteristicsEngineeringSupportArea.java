@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class LandCharacteristicsEngineeringSupportArea implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_land_characteristics_engineering_support_area_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -31,6 +31,7 @@ public class LandCharacteristicsEngineeringSupportArea implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandCharacteristicsEngineeringSupportArea clone() {
 		LandCharacteristicsEngineeringSupportArea area = new LandCharacteristicsEngineeringSupportArea();
 		area.setId(id);

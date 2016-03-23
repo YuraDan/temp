@@ -43,6 +43,7 @@ public class LandControlInspectionKind implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandControlInspectionKind clone() {
 		LandControlInspectionKind kind = new LandControlInspectionKind();
 		kind.setId(id);

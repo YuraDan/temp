@@ -20,7 +20,7 @@ import java.util.Date;
 public class Document implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_document_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -105,10 +105,12 @@ public class Document implements Cloneable {
 		this.docDate = docDate;
 	}
 
+	@SuppressWarnings("unused")
 	public RepresentationFormat getRepresentationFormat() {
 		return representationFormat;
 	}
 
+	@SuppressWarnings("unused")
 	public void setRepresentationFormat(RepresentationFormat representationFormat) {
 		this.representationFormat = representationFormat;
 	}

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "isogd_document_content")
 public class DocumentContent implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_document_content_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -57,6 +57,7 @@ public class DocumentContent implements Cloneable {
 		this.representationFormat = representationFormat;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public DocumentContent clone() {
 		DocumentContent documentContent = new DocumentContent();
 		documentContent.setId(id);

@@ -25,6 +25,7 @@ public class TechnicalCharacteristicObjectType implements Cloneable {
 		this.id = id;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public TechnicalCharacteristicObjectType clone() {
 		TechnicalCharacteristicObjectType objectType = new TechnicalCharacteristicObjectType();
 		objectType.setId(id);

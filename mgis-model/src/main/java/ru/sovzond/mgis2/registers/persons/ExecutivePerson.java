@@ -72,6 +72,7 @@ public class ExecutivePerson implements Cloneable {
 	}
 
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public ExecutivePerson clone() {
 		ExecutivePerson person = new ExecutivePerson();
 		person.setId(id);

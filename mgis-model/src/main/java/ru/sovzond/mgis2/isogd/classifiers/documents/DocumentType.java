@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class DocumentType {
 
     @Id
-    @SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+    @SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_cls_document_type_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Column
     private Long id;
@@ -59,6 +59,7 @@ public class DocumentType {
         this.name = name;
     }
 
+    @SuppressWarnings("CloneDoesntCallSuperClone")
     public DocumentType clone() {
         DocumentType documentType = new DocumentType();
         documentType.setId(id);

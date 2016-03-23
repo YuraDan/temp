@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @Table(name = "mgis2_geo_coord")
 public class Coordinate implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_coordinate_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -57,6 +57,7 @@ public class Coordinate implements Cloneable {
 		this.y = y;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Coordinate clone() {
 		Coordinate coordinate = new Coordinate();
 		coordinate.setId(id);

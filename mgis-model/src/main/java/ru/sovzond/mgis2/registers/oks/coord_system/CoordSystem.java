@@ -13,12 +13,13 @@ import javax.persistence.Table;
  *
  *         Перечень систем координат
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_coord_system")
 public class CoordSystem {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_coord_system_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;

@@ -78,14 +78,15 @@ public class LandRightKind implements Cloneable {
 		this.rusRegisterSchemaCode = rusRegisterSchemaCode;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandRightKind clone() {
 		LandRightKind kind = new LandRightKind();
 		kind.setId(id);
 		kind.setNumber(number);
-		kind.setClassificationCode(classificationCode);
+		kind.setClassificationCode(getClassificationCode());
 		kind.setName(name);
 		kind.setComment(comment);
-		kind.setRusRegisterSchemaCode(rusRegisterSchemaCode);
+		kind.setRusRegisterSchemaCode(getRusRegisterSchemaCode());
 		return kind;
 	}
 }

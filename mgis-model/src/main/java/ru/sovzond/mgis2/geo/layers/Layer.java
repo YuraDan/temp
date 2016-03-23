@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Table(name = "mgis2_geo_layer", indexes = {@Index(name = "mgis2_geo_layer_sort_order_ix", columnList = "sort_order")})
 public class Layer implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_layer_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -155,12 +155,13 @@ public class Layer implements Cloneable {
 		this.openByDefault = openByDefault;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Layer clone() {
 		Layer layer = new Layer();
 		layer.setId(id);
 		layer.setName(name);
 		layer.setActive(active);
-		layer.setChildLayers(childLayers.stream().map(Layer::clone).collect(Collectors.toList()));
+		layer.setChildLayers(getChildLayers().stream().map(Layer::clone).collect(Collectors.toList()));
 		layer.setCode(code);
 		layer.setParams(params.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 		Layer parent2;
@@ -171,11 +172,11 @@ public class Layer implements Cloneable {
 			parent2 = null;
 		}
 		layer.setParent(parent2);
-		layer.setSelectType(selectType);
-		layer.setServiceType(serviceType);
-		layer.setSortOrder(sortOrder);
-		layer.setSelectedByDefault(selectedByDefault);
-		layer.setOpenByDefault(openByDefault);
+		layer.setSelectType(getSelectType());
+		layer.setServiceType(getServiceType());
+		layer.setSortOrder(getSortOrder());
+		layer.setSelectedByDefault(isSelectedByDefault());
+		layer.setOpenByDefault(isOpenByDefault());
 		return layer;
 	}
 }

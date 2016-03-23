@@ -214,6 +214,7 @@ public class Address implements Cloneable {
 		this.subject = subject;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Address clone() {
 		Address address = new Address();
 		address.setId(id);

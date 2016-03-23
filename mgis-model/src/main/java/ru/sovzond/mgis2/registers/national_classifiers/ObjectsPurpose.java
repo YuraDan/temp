@@ -47,7 +47,7 @@ public class ObjectsPurpose implements Cloneable {
 		this.name = name;
 	}
 
-
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public ObjectsPurpose clone() {
 		ObjectsPurpose objectsPurpose = new ObjectsPurpose();
 		objectsPurpose.setCode(code);

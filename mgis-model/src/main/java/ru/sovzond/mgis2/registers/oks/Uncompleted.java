@@ -9,12 +9,13 @@ import java.util.List;
  *
  *         Объект незавершенного строительства
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_uncompleted")
 public class Uncompleted {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_uncompleted_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -24,7 +25,7 @@ public class Uncompleted {
 	 * которого (которых) расположен данный объект недвижимости
 	 */
 	@ElementCollection
-	private List<String> cadastralBlocks = new ArrayList<String>();
+	private List<String> cadastralBlocks = new ArrayList<>();
 
 	/**
 	 * Вид объекта недвижимости - Объект незавершенного строительства

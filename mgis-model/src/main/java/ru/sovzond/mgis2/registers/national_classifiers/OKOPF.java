@@ -54,6 +54,7 @@ public class OKOPF implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKOPF clone() {
 		OKOPF okopf = new OKOPF();
 		okopf.setId(id);

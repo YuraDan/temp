@@ -7,12 +7,13 @@ import ru.sovzond.mgis2.registers.persons.LegalPerson;
 import javax.persistence.*;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "lands_land_work")
 public class LandWork {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_land_work_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -34,7 +35,6 @@ public class LandWork {
 
 	@Column
 	private Date endDate;
-
 
 	public Long getId() {
 		return id;

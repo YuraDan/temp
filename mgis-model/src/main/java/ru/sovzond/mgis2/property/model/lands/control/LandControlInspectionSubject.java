@@ -42,6 +42,7 @@ public class LandControlInspectionSubject implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandControlInspectionSubject clone() {
 		LandControlInspectionSubject subject = new LandControlInspectionSubject();
 		subject.setId(id);

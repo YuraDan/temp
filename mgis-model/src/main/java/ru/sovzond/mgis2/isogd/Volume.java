@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Volume implements Cloneable, Sortable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_volume_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -32,7 +32,7 @@ public class Volume implements Cloneable, Sortable {
 	private Long sortOrder;
 
 	@OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
-	private List<Document> documents = new ArrayList<Document>();
+	private List<Document> documents = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -74,6 +74,7 @@ public class Volume implements Cloneable, Sortable {
 		this.documents = documents;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Volume clone() {
 		Volume volume = new Volume();
 		volume.setId(id);

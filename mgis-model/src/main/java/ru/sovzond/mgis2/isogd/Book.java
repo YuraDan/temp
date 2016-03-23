@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Book implements Cloneable, Sortable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_book_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -86,6 +86,7 @@ public class Book implements Cloneable, Sortable {
 		this.documentObject = documentObject;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Book clone() {
 		Book book2 = new Book();
 		book2.setId(id);

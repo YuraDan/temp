@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class SpecialPart implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_document_special_part_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -48,6 +48,7 @@ public class SpecialPart implements Cloneable {
 		this.documentContents = documentContents;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public SpecialPart clone() {
 		SpecialPart part = new SpecialPart();
 		part.setId(id);

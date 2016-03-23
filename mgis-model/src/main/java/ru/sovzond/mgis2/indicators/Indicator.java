@@ -51,6 +51,7 @@ public class Indicator {
 		this.unitOfMeasure = unitOfMeasure;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Indicator clone() {
 		Indicator indicator = new Indicator();
 		indicator.setId(id);

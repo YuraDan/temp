@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Group implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_user_group_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -20,17 +20,17 @@ public class Group implements Cloneable {
 
 	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "mgis2_group_privilege", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "privilege_id"))
-	private List<Privilege> privileges = new ArrayList<Privilege>();
+	private List<Privilege> privileges = new ArrayList<>();
 
 	@ManyToOne(targetEntity = Group.class, cascade = {CascadeType.PERSIST})
 	@JoinColumn(name = "parentgroup_id"/* , referencedColumnName = "id", table = "mgis2_group" */)
 	private Group parentGroup;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentGroup", cascade = {CascadeType.PERSIST})
-	private List<Group> childGroups = new ArrayList<Group>();
+	private List<Group> childGroups = new ArrayList<>();
 
 	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "groups")
-	private List<User> users = new ArrayList<User>();
+	private List<User> users = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -68,6 +68,7 @@ public class Group implements Cloneable {
 		return childGroups;
 	}
 
+	@SuppressWarnings("unused")
 	public void setChildGroups(List<Group> childGroups) {
 		this.childGroups = childGroups;
 	}
@@ -80,12 +81,13 @@ public class Group implements Cloneable {
 		this.users = users;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Group clone() {
 		Group group = new Group();
 		group.setId(id);
 		group.setGroupname(groupname);
 		group.setParentGroup(parentGroup != null ? parentGroup.clone() : null);
-		group.setPrivileges(privileges.stream().map(privilege -> privilege.clone()).collect(Collectors.toList()));
+		group.setPrivileges(privileges.stream().map(Privilege::clone).collect(Collectors.toList()));
 		group.setUsers(users.stream().map(user -> {
 			User user1 = new User();
 			user1.setId(user.getId());

@@ -33,6 +33,7 @@ public class LandAreaType implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandAreaType clone() {
 		LandAreaType type = new LandAreaType();
 		type.setId(id);

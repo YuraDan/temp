@@ -1,27 +1,21 @@
 package ru.sovzond.mgis2.registers.oks.coord_system;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 /**
  * @author Alexander Arakelyan
  *
  *         Координата
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_coord_ordinate")
 public class Ordinate {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_coord_ordinate_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;

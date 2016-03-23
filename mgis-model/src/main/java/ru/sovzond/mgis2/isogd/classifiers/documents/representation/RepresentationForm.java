@@ -14,7 +14,7 @@ import java.util.List;
 public class RepresentationForm implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_representation_form_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -65,6 +65,7 @@ public class RepresentationForm implements Cloneable {
 		this.representationFormats = representationFormats;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public RepresentationForm clone() {
 		RepresentationForm representationForm = new RepresentationForm();
 		representationForm.setId(id);

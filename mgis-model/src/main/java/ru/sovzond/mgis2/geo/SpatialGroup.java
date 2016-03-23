@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class SpatialGroup implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_spatial_group_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -49,6 +49,7 @@ public class SpatialGroup implements Cloneable {
 		this.spatialElements = spatialElements;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public SpatialGroup clone() {
 		SpatialGroup spatialGroup = new SpatialGroup();
 		spatialGroup.setId(id);

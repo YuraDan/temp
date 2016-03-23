@@ -7,11 +7,12 @@ import javax.persistence.*;
  * <p/>
  * http://www.ksoft.ru/opis_kladr.htm
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "kladr_kladr", indexes = {@Index(columnList = "code", name = "kladr_kladr_code_index"), @Index(columnList = "name", name = "kladr_kladr_name_index")})
 public class KLADRLocality implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "kladr_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "kladr_kladr_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -127,6 +128,7 @@ public class KLADRLocality implements Cloneable {
 		this.id = id;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public KLADRLocality clone() {
 		KLADRLocality locality = new KLADRLocality();
 		locality.setId(id);

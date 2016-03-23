@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class DocumentClass implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_document_class_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -90,6 +90,7 @@ public class DocumentClass implements Cloneable {
 		this.hasSpecialPart = hasSpecialPart;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public DocumentClass clone() {
 		DocumentClass documentClass = new DocumentClass();
 		documentClass.setId(id);
@@ -97,7 +98,7 @@ public class DocumentClass implements Cloneable {
 		documentClass.setName(name);
 		documentClass.setHasCommonPart(hasCommonPart);
 		documentClass.setHasSpecialPart(hasSpecialPart);
-		documentClass.setDocumentObjects(documentObjects.stream().map(documentObject -> documentObject.clone()).collect(Collectors.toList()));
+		documentClass.setDocumentObjects(documentObjects.stream().map(DocumentObject::clone).collect(Collectors.toList()));
 		return documentClass;
 	}
 

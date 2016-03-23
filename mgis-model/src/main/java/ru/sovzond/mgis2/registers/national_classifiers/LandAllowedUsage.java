@@ -65,11 +65,12 @@ public class LandAllowedUsage implements Cloneable {
 		this.parent = parent;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandAllowedUsage clone() {
 		LandAllowedUsage usage = new LandAllowedUsage();
 		usage.setId(id);
 		usage.setNumber(number);
-		usage.setClassificationCode(classificationCode);
+		usage.setClassificationCode(getClassificationCode());
 		usage.setName(name);
 		if (parent != null) {
 			usage.setParent(parent.clone());

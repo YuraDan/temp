@@ -11,7 +11,7 @@ import java.util.Date;
 public class LandCharacteristics implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "lands_land_characteristics_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -189,6 +189,7 @@ public class LandCharacteristics implements Cloneable {
 		this.marketCostImplementationDate = marketCostImplementationDate;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandCharacteristics clone() {
 		LandCharacteristics ch = new LandCharacteristics();
 		ch.setId(id);

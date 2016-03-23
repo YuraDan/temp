@@ -78,13 +78,14 @@ public class NaturalPersonCertificateType implements Cloneable {
 		this.note = note;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public NaturalPersonCertificateType clone() {
 		NaturalPersonCertificateType naturalPersonCertificateType = new NaturalPersonCertificateType();
 		naturalPersonCertificateType.setId(id);
 		naturalPersonCertificateType.setCode(code);
 		naturalPersonCertificateType.setName(name);
-		naturalPersonCertificateType.setAbbreviation(abbreviation);
-		naturalPersonCertificateType.setSeriesPattern(seriesPattern);
+		naturalPersonCertificateType.setAbbreviation(getAbbreviation());
+		naturalPersonCertificateType.setSeriesPattern(getSeriesPattern());
 		naturalPersonCertificateType.setNote(note);
 		return naturalPersonCertificateType;
 	}

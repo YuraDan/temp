@@ -1,38 +1,30 @@
 package ru.sovzond.mgis2.registers.oks.flats;
 
+import ru.sovzond.mgis2.registers.oks.OKSAddress;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import ru.sovzond.mgis2.registers.oks.OKSAddress;
 
 /**
  * @author Alexander Arakelyan
  *
  *         Помещение
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_flat")
 public class Flat {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_flat_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
 
 	@ElementCollection
-	private List<String> cadastralBlocks = new ArrayList<String>();
+	private List<String> cadastralBlocks = new ArrayList<>();
 
 	@Column
 	private String objectType;

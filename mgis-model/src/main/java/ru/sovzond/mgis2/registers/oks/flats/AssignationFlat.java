@@ -13,12 +13,13 @@ import javax.persistence.Table;
  *
  *         Назначение и вид помещения
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_flat_assignation")
 public class AssignationFlat {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_flat_assignation_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;

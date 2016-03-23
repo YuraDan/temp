@@ -5,11 +5,12 @@ import javax.persistence.*;
 /**
  * Created by Alexander Arakelyan on 08.09.15.
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "kladr_flat")
 public class KLADRFlat {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "kladr_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "kladr_flat_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;

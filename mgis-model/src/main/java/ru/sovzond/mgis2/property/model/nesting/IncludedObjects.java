@@ -63,6 +63,7 @@ public class IncludedObjects implements Cloneable {
 		return includedLands;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIncludedLands(List<Land> includedLands) {
 		this.includedLands = includedLands;
 	}
@@ -79,6 +80,7 @@ public class IncludedObjects implements Cloneable {
 		return includedCapitalConstructions;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIncludedCapitalConstructions(List<CapitalConstruction> includedCapitalConstructions) {
 		this.includedCapitalConstructions = includedCapitalConstructions;
 	}

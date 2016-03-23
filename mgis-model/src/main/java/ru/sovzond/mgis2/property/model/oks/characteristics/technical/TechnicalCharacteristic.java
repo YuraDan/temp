@@ -87,6 +87,7 @@ public class TechnicalCharacteristic implements Cloneable {
 		this.unitOfMeasure = unitOfMeasure;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public TechnicalCharacteristic clone() {
 		TechnicalCharacteristic characteristic = new TechnicalCharacteristic();
 		characteristic.setId(id);

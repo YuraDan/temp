@@ -42,6 +42,7 @@ public class LandControlAvailabilityOfViolations implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public LandControlAvailabilityOfViolations clone() {
 		LandControlAvailabilityOfViolations violations = new LandControlAvailabilityOfViolations();
 		violations.setId(id);
