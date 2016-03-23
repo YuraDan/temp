@@ -38,6 +38,6 @@
 	<!--<root>-->
 		<!--<priority value="debug"/>-->
 		<!--<appender-ref ref="STDOUT"/>-->
-	<!--</root>
+		<!--</root>-->
 
 </log4j:configuration>
