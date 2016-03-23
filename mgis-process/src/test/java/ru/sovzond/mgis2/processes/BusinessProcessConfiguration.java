@@ -1,11 +1,5 @@
 package ru.sovzond.mgis2.processes;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import org.camunda.bpm.engine.ManagementService;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
@@ -27,6 +21,11 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "ru.sovzond.mgis2" })
@@ -40,7 +39,7 @@ public class BusinessProcessConfiguration {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "ru.sovzond.mgis2" });
+		sessionFactory.setPackagesToScan("ru.sovzond.mgis2");
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
