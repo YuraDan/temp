@@ -8,19 +8,20 @@ import java.util.Map;
 /**
  * Created by Sergey Lvov on 23.03.16.
  *
- * Tax calculation type
+ * Payment period type
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum LandTaxCalculationType {
-	CADASTRAL_VALUE("LandTaxCalculationType.CadastralValue", 1L),
-	INVENTORY_VALUE("LandTaxCalculationType.InventoryValue", 2L),
-	BASE_RATE("LandTaxCalculationType.BaseRate", 3L);
+public enum PaymentPeriodType {
+	YEAR("PaymentPeriodType.Year", 1L),
+	HALF_YEAR("PaymentPeriodType.HalfYear", 2L),
+	QUARTER("PaymentPeriodType.Quarter", 3L),
+	MONTH("PaymentPeriodType.Month", 4L);
 
 	private Long id;
 	private String name;
 	private String translateTemplate;
 
-	LandTaxCalculationType(String translateTemplateVal, Long idVal) {
+	PaymentPeriodType(String translateTemplateVal, Long idVal) {
 		setTranslateTemplate(translateTemplateVal);
 		setId(idVal);
 		setName(name());
@@ -52,8 +53,8 @@ public enum LandTaxCalculationType {
 	}
 
 	@JsonCreator
-	public static LandTaxCalculationType create(Map record) {
-		if(record.containsKey("name")) return LandTaxCalculationType.valueOf((String) record.get("name"));
+	public static PaymentPeriodType create(Map record) {
+		if(record.containsKey("name")) return PaymentPeriodType.valueOf((String) record.get("name"));
 		return null;
 	}
 
