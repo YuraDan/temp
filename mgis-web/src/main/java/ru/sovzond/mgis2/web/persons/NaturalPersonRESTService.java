@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.isogd.business.IncludedDocumentsBean;
-import ru.sovzond.mgis2.isogd.document.IncludedDocuments;
+import ru.sovzond.mgis2.documents.services.isogd.business.IncludedDocumentsService;
+import ru.sovzond.mgis2.documents.model.isogd.document.IncludedDocuments;
 import ru.sovzond.mgis2.national_classifiers.OKVEDBean;
 import ru.sovzond.mgis2.persons.NaturalPersonBean;
 import ru.sovzond.mgis2.persons.NaturalPersonCertificateTypeBean;
@@ -37,7 +37,7 @@ public class NaturalPersonRESTService implements Serializable {
 	private NaturalPersonCertificateTypeBean naturalPersonCertificateTypeBean;
 
 	@Autowired
-	private IncludedDocumentsBean includedDocumentsBean;
+	private IncludedDocumentsService includedDocumentsBean;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional

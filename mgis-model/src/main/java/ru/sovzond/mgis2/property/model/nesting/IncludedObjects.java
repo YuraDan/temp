@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.property.model.nesting;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.property.model.lands.Land;
 
 import javax.persistence.*;

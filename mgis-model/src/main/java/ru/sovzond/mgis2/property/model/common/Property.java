@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import org.hibernate.annotations.Type;
 import ru.sovzond.mgis2.address.Address;
 import ru.sovzond.mgis2.geo.SpatialGroup;
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.property.model.nesting.IncludedObjects;
 import ru.sovzond.mgis2.property.model.rights.PropertyRights;
 import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;

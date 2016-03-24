@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.registers.persons;
 
-import ru.sovzond.mgis2.isogd.document.IncludedDocuments;
+import ru.sovzond.mgis2.documents.model.isogd.document.IncludedDocuments;
 
 import javax.persistence.*;
 

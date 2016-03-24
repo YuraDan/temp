@@ -10,8 +10,8 @@ import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.indicators.PriceIndicatorBean;
 import ru.sovzond.mgis2.indicators.TechnicalIndicatorBean;
-import ru.sovzond.mgis2.isogd.business.DocumentBean;
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
 import ru.sovzond.mgis2.property.model.lands.Land;
@@ -63,7 +63,7 @@ public class CapitalConstructRESTController {
 	private ISubjectRightService subjectRightService;
 
 	@Autowired
-	private DocumentBean documentBean;
+	private DocumentService documentBean;
 
 	@Autowired
 	private OKFSBean okfsBean;

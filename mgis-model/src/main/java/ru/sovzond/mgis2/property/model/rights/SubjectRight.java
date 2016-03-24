@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.property.model.rights;
 
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.registers.national_classifiers.LandRightKind;
 import ru.sovzond.mgis2.registers.national_classifiers.OKFS;
 import ru.sovzond.mgis2.registers.persons.Person;

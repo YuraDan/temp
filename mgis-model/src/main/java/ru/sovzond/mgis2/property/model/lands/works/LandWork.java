@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.property.model.lands.works;
 
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.registers.persons.Person;
 import ru.sovzond.mgis2.registers.persons.LegalPerson;
 

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.isogd.business.DocumentBean;
+import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
 import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
 import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
 import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
@@ -35,7 +35,7 @@ public class TerritorialZoneRESTController {
 	private LandAllowedUsageBean landAllowedUsageBean;
 
 	@Autowired
-	private DocumentBean documentBean;
+	private DocumentService documentBean;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional

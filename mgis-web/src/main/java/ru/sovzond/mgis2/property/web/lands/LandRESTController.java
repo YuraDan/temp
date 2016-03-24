@@ -8,8 +8,8 @@ import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
-import ru.sovzond.mgis2.isogd.business.DocumentBean;
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.ExecutivePersonBean;
 import ru.sovzond.mgis2.persons.PersonBean;
@@ -113,7 +113,7 @@ public class LandRESTController implements Serializable {
 	private ILandAreaTypeService landAreaTypeService;
 
 	@Autowired
-	private DocumentBean documentBean;
+	private DocumentService documentBean;
 
 	@Autowired
 	private SpatialDataBean spatialDataBean;

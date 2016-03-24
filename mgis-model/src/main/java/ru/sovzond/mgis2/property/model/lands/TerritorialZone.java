@@ -2,7 +2,7 @@ package ru.sovzond.mgis2.property.model.lands;
 
 import com.vividsolutions.jts.geom.MultiPolygon;
 import org.hibernate.annotations.Type;
-import ru.sovzond.mgis2.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.registers.national_classifiers.LandAllowedUsage;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 import ru.sovzond.mgis2.registers.national_classifiers.TerritorialZoneType;

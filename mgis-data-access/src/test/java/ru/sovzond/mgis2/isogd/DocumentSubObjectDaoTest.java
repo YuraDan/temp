@@ -7,8 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.sovzond.mgis2.dataaccess.base.HibernateConfiguration;
-import ru.sovzond.mgis2.isogd.classifiers.documents.DocumentSubObject;
-import ru.sovzond.mgis2.isogd.document.DocumentDao;
+import ru.sovzond.mgis2.documents.dao.isogd.BookDao;
+import ru.sovzond.mgis2.documents.dao.isogd.SectionDao;
+import ru.sovzond.mgis2.documents.dao.isogd.VolumeDao;
+import ru.sovzond.mgis2.documents.model.isogd.Book;
+import ru.sovzond.mgis2.documents.model.isogd.Section;
+import ru.sovzond.mgis2.documents.model.isogd.Volume;
+import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentSubObject;
+import ru.sovzond.mgis2.documents.dao.isogd.document.DocumentDao;
 
 import javax.transaction.Transactional;
 import java.util.List;
