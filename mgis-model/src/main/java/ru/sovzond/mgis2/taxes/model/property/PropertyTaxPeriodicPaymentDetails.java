@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * Property tax periodic payment details
  */
 @Entity
-@Table(name = "tax_property_periodic_payment_details")
+@Table(name = "mgis2_taxes_property_periodic_payment_details")
 public class PropertyTaxPeriodicPaymentDetails extends TaxPeriodicPaymentDetails {
 
 }

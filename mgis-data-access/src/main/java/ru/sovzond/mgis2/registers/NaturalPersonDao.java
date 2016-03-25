@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
-import ru.sovzond.mgis2.registers.persons.NaturalPerson;
+import ru.sovzond.mgis2.persons.model.NaturalPerson;
 
 /**
  * Created by Alexander Arakelyan on 30/08/15.

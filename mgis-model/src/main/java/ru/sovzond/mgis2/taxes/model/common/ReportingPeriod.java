@@ -8,11 +8,11 @@ import java.util.Date;
  * Created by Sergey Lvov on 23.03.16.
  */
 @Entity
-@Table(name = "mgis2_reporting_period")
+@Table(name = "mgis2_taxes_reporting_period")
 public class ReportingPeriod {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_reporting_period_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_reporting_period_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -69,10 +69,6 @@ public class ReportingPeriod {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		period.setId(getId());
-		period.setStartDate(getStartDate());
-		period.setEndDate(getEndDate());
-		period.setPaymentType(getPaymentType());
 		return period;
 	}
 }

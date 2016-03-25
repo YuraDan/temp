@@ -1,6 +1,7 @@
 package ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.representation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +23,8 @@ public class RepresentationFormat implements Cloneable {
 	/**
 	 * Код формата представления документа
 	 */
-	@Column(unique = true, nullable = false)
+	@NotNull
+	@Column(unique = true)
 	private String code;
 
 	@Column
@@ -81,10 +83,10 @@ public class RepresentationFormat implements Cloneable {
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public RepresentationFormat clone() {
 		RepresentationFormat representationFormat = new RepresentationFormat();
-		representationFormat.setId(id);
-		representationFormat.setCode(code);
-		representationFormat.setName(name);
-		representationFormat.getFormats().addAll(formats);
+		representationFormat.setId(getId());
+		representationFormat.setCode(getCode());
+		representationFormat.setName(getName());
+		representationFormat.getFormats().addAll(getFormats());
 		RepresentationForm representationForm = new RepresentationForm();
 		representationForm.setId(representationForm.getId());
 		representationFormat.setRepresentationForm(representationForm);

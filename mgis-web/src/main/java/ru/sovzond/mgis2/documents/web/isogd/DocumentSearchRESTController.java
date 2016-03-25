@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.documents.model.isogd.Section;
-import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
+import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
 import ru.sovzond.mgis2.documents.services.isogd.business.SectionService;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -28,11 +28,11 @@ public class DocumentSearchRESTController implements Serializable {
 	private SectionService sectionBean;
 
 	@Autowired
-	private DocumentService documentBean;
+	private IsogdDocumentService documentBean;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@Transactional
-	public PageableContainer<Document> list(@RequestParam(value = "sectionId", required = false) Long sectionId,
+	public PageableContainer<IsogdDocument> list(@RequestParam(value = "sectionId", required = false) Long sectionId,
 											@RequestParam(value = "docName", required = false) String documentName,
 											@RequestParam(value = "docDate", required = false) Date documentDate,
 											@RequestParam(value = "docDateFrom", required = false) Date documentDateFrom,

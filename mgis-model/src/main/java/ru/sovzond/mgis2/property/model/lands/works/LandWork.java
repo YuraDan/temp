@@ -1,8 +1,8 @@
 package ru.sovzond.mgis2.property.model.lands.works;
 
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
-import ru.sovzond.mgis2.registers.persons.Person;
-import ru.sovzond.mgis2.registers.persons.LegalPerson;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
+import ru.sovzond.mgis2.persons.model.Person;
+import ru.sovzond.mgis2.persons.model.LegalPerson;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,7 +28,7 @@ public class LandWork {
 	private Person cadastralEngineer;
 
 	@ManyToOne
-	private Document basisDocument;
+	private IsogdDocument basisDocument;
 
 	@Column
 	private Date startDate;
@@ -68,11 +68,11 @@ public class LandWork {
 		this.cadastralEngineer = cadastralEngineer;
 	}
 
-	public Document getBasisDocument() {
+	public IsogdDocument getBasisDocument() {
 		return basisDocument;
 	}
 
-	public void setBasisDocument(Document basisDocument) {
+	public void setBasisDocument(IsogdDocument basisDocument) {
 		this.basisDocument = basisDocument;
 	}
 

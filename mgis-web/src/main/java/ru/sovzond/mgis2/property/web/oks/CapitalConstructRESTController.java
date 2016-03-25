@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
+import ru.sovzond.mgis2.documents.model.common.Document;
+import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
+import ru.sovzond.mgis2.documents.services.property.CertifyingDocumentService;
+import ru.sovzond.mgis2.documents.services.property.ConstitutiveDocumentService;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.indicators.PriceIndicatorBean;
 import ru.sovzond.mgis2.indicators.TechnicalIndicatorBean;
-import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.PersonBean;
 import ru.sovzond.mgis2.property.model.lands.Land;
@@ -63,7 +65,13 @@ public class CapitalConstructRESTController {
 	private ISubjectRightService subjectRightService;
 
 	@Autowired
-	private DocumentService documentBean;
+	private IsogdDocumentService isogdDocumentService;
+
+	@Autowired
+	private CertifyingDocumentService certifyingDocumentService;
+
+	@Autowired
+	private ConstitutiveDocumentService constitutiveDocumentService;
 
 	@Autowired
 	private OKFSBean okfsBean;
@@ -207,12 +215,12 @@ public class CapitalConstructRESTController {
 				capitalConstruct2.setIncludedObjects(landIncludedObjects2);
 				landIncludedObjectsService.save(landIncludedObjects2);
 			}
-			landIncludedObjects2.setLandDealDocument(landIncludedObjects.getLandDealDocument() != null ? documentBean.load(landIncludedObjects.getLandDealDocument().getId()) : null);
-			landIncludedObjects2.setInventoryDealDocument(landIncludedObjects.getInventoryDealDocument() != null ? documentBean.load(landIncludedObjects.getInventoryDealDocument().getId()) : null);
+			landIncludedObjects2.setLandDealDocument(landIncludedObjects.getLandDealDocument() != null ? isogdDocumentService.load(landIncludedObjects.getLandDealDocument().getId()) : null);
+			landIncludedObjects2.setInventoryDealDocument(landIncludedObjects.getInventoryDealDocument() != null ? isogdDocumentService.load(landIncludedObjects.getInventoryDealDocument().getId()) : null);
 			// Urban planning documents
 			landIncludedObjects2.getUrbanPlanningDocuments().clear();
 			if (landIncludedObjects.getUrbanPlanningDocuments().size() > 0) {
-				landIncludedObjects2.getUrbanPlanningDocuments().addAll(documentBean.load(landIncludedObjects.getUrbanPlanningDocuments().stream().map(Document::getId).collect(Collectors.toList())));
+				landIncludedObjects2.getUrbanPlanningDocuments().addAll(isogdDocumentService.load(landIncludedObjects.getUrbanPlanningDocuments().stream().map(Document::getId).collect(Collectors.toList())));
 			}
 			// Included lands
 			landIncludedObjects2.getIncludedLands().clear();
@@ -355,7 +363,6 @@ public class CapitalConstructRESTController {
 					"id",
 					"documentsCertifyingRights",
 					"registrationDocuments",
-					"otherDocuments",
 					"ownershipForm",
 					"rightKind",
 					"rightOwner"
@@ -363,12 +370,12 @@ public class CapitalConstructRESTController {
 			if (right.getDocumentsCertifyingRights() == null || right.getDocumentsCertifyingRights().size() == 0) {
 				persistent.getDocumentsCertifyingRights().clear();
 			} else {
-				persistent.setDocumentsCertifyingRights(documentBean.load(right.getDocumentsCertifyingRights().stream().map(Document::getId).collect(Collectors.toList())));
+				persistent.setDocumentsCertifyingRights(certifyingDocumentService.load(right.getDocumentsCertifyingRights().stream().map(Document::getId).collect(Collectors.toList())));
 			}
 			if (right.getRegistrationDocuments() == null || right.getRegistrationDocuments().size() == 0) {
 				persistent.getRegistrationDocuments().clear();
 			} else {
-				persistent.setRegistrationDocuments(documentBean.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
+				persistent.setRegistrationDocuments(constitutiveDocumentService.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
 			}
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? okfsBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);

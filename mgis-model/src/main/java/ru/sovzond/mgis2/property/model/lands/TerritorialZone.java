@@ -2,7 +2,7 @@ package ru.sovzond.mgis2.property.model.lands;
 
 import com.vividsolutions.jts.geom.MultiPolygon;
 import org.hibernate.annotations.Type;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
 import ru.sovzond.mgis2.registers.national_classifiers.LandAllowedUsage;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 import ru.sovzond.mgis2.registers.national_classifiers.TerritorialZoneType;
@@ -66,7 +66,7 @@ public class TerritorialZone implements Cloneable {
 	private String allowedUsageByDocument;
 
 	@ManyToOne
-	private Document basisDocument;
+	private IsogdDocument basisDocument;
 
 	@Column
 	private Date stateOnTheDate;
@@ -195,11 +195,11 @@ public class TerritorialZone implements Cloneable {
 		this.allowedUsageByDocument = allowedUsageByDocument;
 	}
 
-	public Document getBasisDocument() {
+	public IsogdDocument getBasisDocument() {
 		return basisDocument;
 	}
 
-	public void setBasisDocument(Document basisDocument) {
+	public void setBasisDocument(IsogdDocument basisDocument) {
 		this.basisDocument = basisDocument;
 	}
 
@@ -230,7 +230,7 @@ public class TerritorialZone implements Cloneable {
 		zone.setAllowedUsageKind(allowedUsageKind != null ? allowedUsageKind.clone() : null);
 		zone.setAllowedUsageKindAsText(allowedUsageKindAsText);
 		zone.setAllowedUsageByDocument(allowedUsageByDocument);
-		zone.setBasisDocument(basisDocument != null ? basisDocument.clone() : null);
+		zone.setBasisDocument(basisDocument != null ? (IsogdDocument) basisDocument.clone() : null);
 		zone.setStateOnTheDate(stateOnTheDate);
 		return zone;
 	}

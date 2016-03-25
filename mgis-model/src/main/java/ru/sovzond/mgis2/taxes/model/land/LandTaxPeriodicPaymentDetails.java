@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Land tax periodic payment details
  */
 @Entity
-@Table(name = "tax_land_periodic_payment_details")
+@Table(name = "mgis2_taxes_land_periodic_payment_details")
 public class LandTaxPeriodicPaymentDetails extends TaxPeriodicPaymentDetails {
 
 	@ManyToOne(fetch = FetchType.LAZY)

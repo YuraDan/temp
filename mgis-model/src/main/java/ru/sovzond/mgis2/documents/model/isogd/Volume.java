@@ -1,7 +1,7 @@
 package ru.sovzond.mgis2.documents.model.isogd;
 
 import ru.sovzond.mgis2.Sortable;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class Volume implements Cloneable, Sortable {
 	private Long sortOrder;
 
 	@OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
-	private List<Document> documents = new ArrayList<>();
+	private List<IsogdDocument> documents = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -66,11 +66,11 @@ public class Volume implements Cloneable, Sortable {
 		this.sortOrder = sortOrder;
 	}
 
-	public List<Document> getDocuments() {
+	public List<IsogdDocument> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(List<Document> documents) {
+	public void setDocuments(List<IsogdDocument> documents) {
 		this.documents = documents;
 	}
 
@@ -82,7 +82,7 @@ public class Volume implements Cloneable, Sortable {
 		volume.setBook(book.clone());
 		volume.setSortOrder(sortOrder);
 		volume.setDocuments(documents.stream().map(document -> {
-			Document document2 = new Document();
+			IsogdDocument document2 = new IsogdDocument();
 			document2.setId(document.getId());
 			document2.setDocNumber(document.getDocNumber());
 			document2.setDocDate(document.getDocDate());

@@ -1,6 +1,7 @@
 package ru.sovzond.mgis2.documents.model.isogd.document;
 
 import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.representation.RepresentationFormat;
+import ru.sovzond.mgis2.documents.model.isogd.document.parts.StorageType;
 
 import javax.persistence.*;
 
@@ -24,6 +25,10 @@ public class DocumentContent implements Cloneable {
 
 	@ManyToOne(optional = false)
 	private RepresentationFormat representationFormat;
+
+	@Column
+	@Enumerated(EnumType.STRING)
+	private StorageType storageType;
 
 	public Long getId() {
 		return id;
@@ -57,6 +62,14 @@ public class DocumentContent implements Cloneable {
 		this.representationFormat = representationFormat;
 	}
 
+	public StorageType getStorageType() {
+		return storageType;
+	}
+
+	public void setStorageType(StorageType storageType) {
+		this.storageType = storageType;
+	}
+
 	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public DocumentContent clone() {
 		DocumentContent documentContent = new DocumentContent();
@@ -64,6 +77,7 @@ public class DocumentContent implements Cloneable {
 		documentContent.setFileName(fileName);
 		documentContent.setBytes(bytes);
 		documentContent.setRepresentationFormat(representationFormat != null ? representationFormat.clone() : null);
+		documentContent.setStorageType(getStorageType());
 		return documentContent;
 	}
 }

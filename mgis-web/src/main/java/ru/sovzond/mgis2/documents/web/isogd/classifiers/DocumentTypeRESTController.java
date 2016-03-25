@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.DocumentTypeService;
-import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentType;
+import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.IsogdDocumentType;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -23,17 +23,17 @@ public class DocumentTypeRESTController implements Serializable {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
-	public PageableContainer<DocumentType> list(@RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max) {
-		PageableContainer<DocumentType> pager = documentTypeBean.list(first, max);
+	public PageableContainer<IsogdDocumentType> list(@RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max) {
+		PageableContainer<IsogdDocumentType> pager = documentTypeBean.list(first, max);
 		return new PageableContainer<>(pager.getList().stream().map(representationForm -> representationForm.clone()).collect(Collectors.toList()), pager.getTotalNumberOfItems(), first, max);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@Transactional
-	public DocumentType save(@PathVariable("id") Long id, @RequestBody DocumentType documentType) {
-		DocumentType documentType2;
+	public IsogdDocumentType save(@PathVariable("id") Long id, @RequestBody IsogdDocumentType documentType) {
+		IsogdDocumentType documentType2;
 		if (id == 0) {
-			documentType2 = new DocumentType();
+			documentType2 = new IsogdDocumentType();
 		} else {
 			documentType2 = documentTypeBean.load(id);
 		}
@@ -45,7 +45,7 @@ public class DocumentTypeRESTController implements Serializable {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Transactional
-	public DocumentType read(@PathVariable Long id) {
+	public IsogdDocumentType read(@PathVariable Long id) {
 		return documentTypeBean.load(id).clone();
 	}
 

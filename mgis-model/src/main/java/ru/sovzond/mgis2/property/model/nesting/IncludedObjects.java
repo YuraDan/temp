@@ -2,9 +2,9 @@ package ru.sovzond.mgis2.property.model.nesting;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.common.Document;
 import ru.sovzond.mgis2.property.model.lands.Land;
+import ru.sovzond.mgis2.property.model.oks.CapitalConstruction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class IncludedObjects implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "property_included_objects_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_property_included_objects_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -93,32 +93,18 @@ public class IncludedObjects implements Cloneable {
 		this.urbanPlanningDocuments = urbanPlanningDocuments;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public IncludedObjects clone() {
-		IncludedObjects ic = new IncludedObjects();
-		ic.setId(getId());
-		ic.getIncludedLands().addAll(getIncludedLands().stream().map(land -> {
-			Land landClone = new Land();
-			landClone.setId(land.getId());
-			landClone.setCadastralNumber(land.getCadastralNumber());
-			landClone.setStateRealEstateCadastreaStaging(land.getStateRealEstateCadastreaStaging());
-			landClone.setLandCategory(land.getLandCategory() != null ? land.getLandCategory().clone() : null);
-			landClone.setAddress(land.getAddress() != null ? land.getAddress().clone() : null);
-			landClone.setRights(land.getRights() != null ? land.getRights().clone() : null);
-			return landClone;
-		}).collect(Collectors.toList()));
-		ic.getIncludedCapitalConstructions().addAll(getIncludedCapitalConstructions().stream().map(capitalConstruction -> {
-			CapitalConstruction ccClone = new CapitalConstruction();
-			ccClone.setId(capitalConstruction.getId());
-			ccClone.setCadastralNumber(capitalConstruction.getCadastralNumber());
-			ccClone.setName(capitalConstruction.getName());
-			ccClone.setType(capitalConstruction.getType() != null ? capitalConstruction.getType().clone() : null);
-			ccClone.setAddress(capitalConstruction.getAddress() != null ? capitalConstruction.getAddress().clone() : null);
-			return ccClone;
-		}).collect(Collectors.toList()));
-		ic.setInventoryDealDocument(getInventoryDealDocument() != null ? getInventoryDealDocument().clone() : null);
-		ic.setLandDealDocument(getLandDealDocument() != null ? getLandDealDocument().clone() : null);
-		ic.setUrbanPlanningDocuments(getUrbanPlanningDocuments().stream().map(Document::clone).collect(Collectors.toList()));
-		return ic;
+		IncludedObjects includedObjects;
+		try {
+			includedObjects = (IncludedObjects) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+		includedObjects.setIncludedLands(getIncludedLands().stream().map(Land::clone).collect(Collectors.toList()));
+		includedObjects.setIncludedCapitalConstructions(getIncludedCapitalConstructions().stream().map(CapitalConstruction::clone).collect(Collectors.toList()));
+		includedObjects.setInventoryDealDocument(getInventoryDealDocument() != null ? (Document) getInventoryDealDocument().clone() : null);
+		includedObjects.setLandDealDocument(getLandDealDocument() != null ? (Document) getLandDealDocument().clone() : null);
+		includedObjects.setUrbanPlanningDocuments(getUrbanPlanningDocuments().stream().map(entry -> (Document) entry.clone()).collect(Collectors.toList()));
+		return includedObjects;
 	}
 }

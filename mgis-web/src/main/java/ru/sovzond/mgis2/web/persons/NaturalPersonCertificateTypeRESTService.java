@@ -4,7 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
-import ru.sovzond.mgis2.registers.persons.NaturalPersonCertificateType;
+import ru.sovzond.mgis2.persons.model.NaturalPersonCertificateType;
 import ru.sovzond.mgis2.persons.NaturalPersonCertificateTypeBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 

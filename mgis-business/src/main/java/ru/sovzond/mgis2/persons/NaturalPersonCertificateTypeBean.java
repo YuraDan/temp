@@ -3,9 +3,9 @@ package ru.sovzond.mgis2.persons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
-import ru.sovzond.mgis2.registers.persons.NaturalPersonCertificateType;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
+import ru.sovzond.mgis2.persons.model.NaturalPersonCertificateType;
 
 /**
  * Created by donchenko-y on 12/17/15.

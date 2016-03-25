@@ -1,6 +1,7 @@
 package ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.representation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class RepresentationForm implements Cloneable {
 	/**
 	 * Код формы представления документа
 	 */
-	@Column(unique = true, nullable = false)
+	@NotNull
+	@Column(unique = true)
 	private String code;
 
 	@Column

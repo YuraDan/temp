@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class TaxPeriodicPaymentDetails {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "tax_periodic_payment_details_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_periodic_payment_details_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -80,10 +80,7 @@ public class TaxPeriodicPaymentDetails {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		details.setId(getId());
 		details.setReportingPeriod(getReportingPeriod() != null ? getReportingPeriod().clone() : null);
-		details.setTaxSum(getTaxSum());
-		details.setTaxCalculationType(getTaxCalculationType());
 		details.setPayerPaymentDetails(getPayerPaymentDetails().stream().map(TaxPeriodicPayerPaymentDetails::clone).collect(Collectors.toList()));
 		return details;
 	}

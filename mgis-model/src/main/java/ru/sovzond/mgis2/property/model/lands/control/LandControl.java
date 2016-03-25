@@ -1,8 +1,8 @@
 package ru.sovzond.mgis2.property.model.lands.control;
 
-import ru.sovzond.mgis2.registers.persons.ExecutivePerson;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
-import ru.sovzond.mgis2.registers.persons.Person;
+import ru.sovzond.mgis2.persons.model.ExecutivePerson;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
+import ru.sovzond.mgis2.persons.model.Person;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class LandControl implements Cloneable {
 	private float penaltyAmount;
 
 	@OneToMany
-	private List<Document> inspectionResultDocuments = new ArrayList<>();
+	private List<IsogdDocument> inspectionResultDocuments = new ArrayList<>();
 
 	public LandControl() {
 	}
@@ -166,11 +166,11 @@ public class LandControl implements Cloneable {
 		this.penaltyAmount = penaltyAmount;
 	}
 
-	public List<Document> getInspectionResultDocuments() {
+	public List<IsogdDocument> getInspectionResultDocuments() {
 		return inspectionResultDocuments;
 	}
 
-	public void setInspectionResultDocuments(List<Document> inspectionResultDocuments) {
+	public void setInspectionResultDocuments(List<IsogdDocument> inspectionResultDocuments) {
 		this.inspectionResultDocuments = inspectionResultDocuments;
 	}
 
@@ -186,7 +186,7 @@ public class LandControl implements Cloneable {
 		control.setInspectionReasonDescription(inspectionReasonDescription);
 		control.setInspectionResultAvailabilityOfViolations(inspectionResultAvailabilityOfViolations != null ? inspectionResultAvailabilityOfViolations.clone() : null);
 		control.setInspectionResultDescription(inspectionResultDescription);
-		control.setInspectionResultDocuments(inspectionResultDocuments.stream().map(Document::clone).collect(Collectors.toList()));
+		control.setInspectionResultDocuments(inspectionResultDocuments.stream().map(entry -> (IsogdDocument) entry.clone()).collect(Collectors.toList()));
 		control.setInspectionSubject(inspectionSubject != null ? inspectionSubject.clone() : null);
 		control.setInspectionType(inspectionType != null ? inspectionType.clone() : null);
 		control.setPenaltyAmount(penaltyAmount);

@@ -10,11 +10,11 @@ import javax.persistence.*;
  * Land tax rate
  */
 @Entity
-@Table(name = "tax_land_rate")
+@Table(name = "mgis2_taxes_land_rate")
 public class LandTaxRate {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "tax_land_rate_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_land_rate_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -56,8 +56,6 @@ public class LandTaxRate {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		landTaxRate.setId(getId());
-		landTaxRate.setTaxRate(getTaxRate());
 		landTaxRate.setLandCategory(getLandCategory() != null ? getLandCategory().clone() : null);
 		return landTaxRate;
 	}

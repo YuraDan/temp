@@ -1,9 +1,10 @@
 package ru.sovzond.mgis2.property.model.rights;
 
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.property.CertifyingDocument;
+import ru.sovzond.mgis2.documents.model.property.ConstitutiveDocument;
+import ru.sovzond.mgis2.persons.model.Person;
 import ru.sovzond.mgis2.registers.national_classifiers.LandRightKind;
 import ru.sovzond.mgis2.registers.national_classifiers.OKFS;
-import ru.sovzond.mgis2.registers.persons.Person;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ import java.util.stream.Collectors;
  * Subject right
  */
 @Entity
-@Table(name = "mgis2_subject_right")
+@Table(name = "mgis2_property_subject_right")
 public class SubjectRight implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "subject_right_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_property_subject_right_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -42,11 +43,11 @@ public class SubjectRight implements Cloneable {
 
 	@ManyToMany
 	@JoinTable(name = "mgis2_property_rights_cert_docs", joinColumns = @JoinColumn(name = "mgis2_property_rights_id"), inverseJoinColumns = @JoinColumn(name = "cert_doc_id"))
-	private List<Document> documentsCertifyingRights = new ArrayList<>();
+	private List<CertifyingDocument> documentsCertifyingRights = new ArrayList<>();
 
 	@ManyToMany
 	@JoinTable(name = "mgis2_property_rights_reg_docs", joinColumns = @JoinColumn(name = "mgis2_property_rights_id"), inverseJoinColumns = @JoinColumn(name = "registration_doc_id"))
-	private List<Document> registrationDocuments = new ArrayList<>();
+	private List<ConstitutiveDocument> registrationDocuments = new ArrayList<>();
 
 	@ManyToOne
 	private Person rightOwner;
@@ -121,19 +122,19 @@ public class SubjectRight implements Cloneable {
 		this.shareDenominator = shareDenominator;
 	}
 
-	public List<Document> getRegistrationDocuments() {
+	public List<ConstitutiveDocument> getRegistrationDocuments() {
 		return registrationDocuments;
 	}
 
-	public void setRegistrationDocuments(List<Document> registrationDocuments) {
+	public void setRegistrationDocuments(List<ConstitutiveDocument> registrationDocuments) {
 		this.registrationDocuments = registrationDocuments;
 	}
 
-	public List<Document> getDocumentsCertifyingRights() {
+	public List<CertifyingDocument> getDocumentsCertifyingRights() {
 		return documentsCertifyingRights;
 	}
 
-	public void setDocumentsCertifyingRights(List<Document> documentsCertifyingRights) {
+	public void setDocumentsCertifyingRights(List<CertifyingDocument> documentsCertifyingRights) {
 		this.documentsCertifyingRights = documentsCertifyingRights;
 	}
 
@@ -145,20 +146,18 @@ public class SubjectRight implements Cloneable {
 		this.registrationNumber = registrationNumber;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public SubjectRight clone() {
-		SubjectRight right = new SubjectRight();
-		right.setId(getId());
-		right.setOwnershipDate(getOwnershipDate());
-		right.setTerminationDate(getTerminationDate());
+		SubjectRight right;
+		try {
+			right = (SubjectRight) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 		right.setRightOwner(getRightOwner() != null ? getRightOwner().clone() : null);
 		right.setRightKind(getRightKind() != null ? getRightKind().clone() : null);
 		right.setOwnershipForm(getOwnershipForm() != null ? getOwnershipForm().clone() : null);
-		right.setShareNumerator(getShareNumerator());
-		right.setShareDenominator(getShareDenominator());
-		right.setRegistrationDocuments(getRegistrationDocuments() != null ? getRegistrationDocuments().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		right.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(document -> new Document(document.getId(), document.getName())).collect(Collectors.toList()) : null);
-		right.setRegistrationNumber(getRegistrationNumber());
+		right.setRegistrationDocuments(getRegistrationDocuments() != null ? getRegistrationDocuments().stream().map(ConstitutiveDocument::clone).collect(Collectors.toList()) : null);
+		right.setDocumentsCertifyingRights(getDocumentsCertifyingRights() != null ? getDocumentsCertifyingRights().stream().map(CertifyingDocument::clone).collect(Collectors.toList()) : null);
 		return right;
 	}
 }

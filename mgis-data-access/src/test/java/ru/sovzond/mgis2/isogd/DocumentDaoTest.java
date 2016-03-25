@@ -13,11 +13,11 @@ import ru.sovzond.mgis2.dataaccess.base.HibernateConfiguration;
 import ru.sovzond.mgis2.documents.dao.isogd.BookDao;
 import ru.sovzond.mgis2.documents.dao.isogd.SectionDao;
 import ru.sovzond.mgis2.documents.dao.isogd.VolumeDao;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
 import ru.sovzond.mgis2.documents.model.isogd.Book;
 import ru.sovzond.mgis2.documents.model.isogd.Section;
 import ru.sovzond.mgis2.documents.model.isogd.Volume;
-import ru.sovzond.mgis2.documents.dao.isogd.document.DocumentDao;
+import ru.sovzond.mgis2.documents.dao.isogd.document.IsogdDocumentDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = HibernateConfiguration.class)
@@ -33,7 +33,7 @@ public class DocumentDaoTest {
 	private BookDao bookDao;
 
 	@Autowired
-	private DocumentDao documentDao;
+	private IsogdDocumentDao documentDao;
 
 	@Test
 	@Transactional
@@ -55,7 +55,7 @@ public class DocumentDaoTest {
 				Assert.assertTrue(volume.getId() != null);
 
 				try {
-					Document document = new Document();
+					IsogdDocument document = new IsogdDocument();
 					document.setVolume(volume);
 					documentDao.save(document);
 

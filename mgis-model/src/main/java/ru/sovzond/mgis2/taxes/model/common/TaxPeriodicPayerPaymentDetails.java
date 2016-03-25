@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.taxes.model.common;
 
-import ru.sovzond.mgis2.registers.persons.Person;
+import ru.sovzond.mgis2.persons.model.Person;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,11 +11,11 @@ import javax.validation.constraints.NotNull;
  * Details about payment by tax payer
  */
 @Entity
-@Table(name = "tax_periodic_payer_payment_details")
+@Table(name = "mgis2_taxes_periodic_payer_payment_details")
 public class TaxPeriodicPayerPaymentDetails {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "tax_periodic_payer_payment_details_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_periodic_payer_payment_details_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -91,11 +91,6 @@ public class TaxPeriodicPayerPaymentDetails {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		details.setId(getId());
-		details.setTaxSum(getTaxSum());
-		details.setComment(getComment());
-		details.setReductionFactor(getReductionFactor());
-		details.setMultiplyingFactor(getMultiplyingFactor());
 		details.setTaxPayer(getTaxPayer() != null ? getTaxPayer().clone() : null);
 		return details;
 	}

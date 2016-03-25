@@ -3,8 +3,8 @@ package ru.sovzond.mgis2.property.model.common;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import org.hibernate.annotations.Type;
 import ru.sovzond.mgis2.address.Address;
+import ru.sovzond.mgis2.documents.model.common.Document;
 import ru.sovzond.mgis2.geo.SpatialGroup;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.property.model.nesting.IncludedObjects;
 import ru.sovzond.mgis2.property.model.rights.PropertyRights;
 import ru.sovzond.mgis2.registers.national_classifiers.LandEncumbrance;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  *
  * Superclass for property objects
  */
+@SuppressWarnings("unused")
 @MappedSuperclass
 public class Property implements Cloneable {
 
@@ -134,15 +135,13 @@ public class Property implements Cloneable {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		property.setCadastralNumber(getCadastralNumber());
+		property.setGeometry(null);
 		property.setRights(getRights() != null ? getRights().clone() : null);
 		property.setIncludedObjects(getIncludedObjects() != null ? getIncludedObjects().clone() : null);
 		property.setEncumbrance(getEncumbrance() != null ? getEncumbrance().clone() : null);
-		property.setCadastralRecordStatus(getCadastralRecordStatus());
-		property.setDocuments(getDocuments() != null ? getDocuments().stream().map(Document::clone).collect(Collectors.toList()) : null);
+		property.setDocuments(getDocuments() != null ? getDocuments().stream().map(entry -> (Document) entry.clone()).collect(Collectors.toList()) : null);
 		property.setSpatialData(getSpatialData() != null ? getSpatialData().clone() : null);
 		property.setAddress(getAddress() != null? getAddress().clone() : null);
-		property.setGeometry(null);
 		return property;
 	}
 }

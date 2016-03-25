@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.documents.model.isogd.Volume;
-import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
+import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
 import ru.sovzond.mgis2.documents.services.isogd.business.VolumeService;
 import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.DocumentSubObjectService;
 import ru.sovzond.mgis2.documents.services.isogd.business.document.parts.CommonPartService;
@@ -13,7 +13,7 @@ import ru.sovzond.mgis2.documents.services.isogd.business.document.parts.Documen
 import ru.sovzond.mgis2.documents.services.isogd.business.document.parts.SpecialPartService;
 import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentClass;
 import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentSubObject;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
 import ru.sovzond.mgis2.documents.model.isogd.document.DocumentContent;
 import ru.sovzond.mgis2.documents.model.isogd.document.parts.CommonPart;
 import ru.sovzond.mgis2.documents.model.isogd.document.parts.SpecialPart;
@@ -35,7 +35,7 @@ public class DocumentRESTController implements Serializable {
 	private VolumeService volumeBean;
 
 	@Autowired
-	private DocumentService documentBean;
+	private IsogdDocumentService documentBean;
 
 	@Autowired
 	private DocumentSubObjectService documentSubObjectBean;
@@ -54,17 +54,17 @@ public class DocumentRESTController implements Serializable {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
-	public PageableContainer<Document> list(@RequestParam("volumeId") Long volumeId, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max, @RequestParam(defaultValue = "id desc") String orderBy) {
+	public PageableContainer<IsogdDocument> list(@RequestParam("volumeId") Long volumeId, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max, @RequestParam(defaultValue = "id desc") String orderBy) {
 		Volume volume = volumeBean.readVolume(volumeId);
 		return documentBean.pageDocuments(volume, orderBy, first, max);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@Transactional
-	public Document save(@PathVariable("id") Long id, @RequestBody Document sourceDocument) {
-		Document document;
+	public IsogdDocument save(@PathVariable("id") Long id, @RequestBody IsogdDocument sourceDocument) {
+		IsogdDocument document;
 		if (id == 0) {
-			document = new Document();
+			document = new IsogdDocument();
 			document.setVolume(volumeBean.readVolume(sourceDocument.getVolume().getId()));
 		} else {
 			document = documentBean.load(id);
@@ -105,10 +105,10 @@ public class DocumentRESTController implements Serializable {
 			document.setAuthor(null);
 		}
 		documentBean.save(document);
-		return document.clone();
+		return (IsogdDocument) document.clone();
 	}
 
-	private void updateDocumentCommonPartContents(Document sourceDocument, CommonPart part) {
+	private void updateDocumentCommonPartContents(IsogdDocument sourceDocument, CommonPart part) {
 		List<Long> ids = sourceDocument.getCommonPart().getDocumentContents().stream().map(documentContent -> documentContent.getId()).collect(Collectors.toList());
 		if (ids.size() > 0) {
 			List<DocumentContent> documentContents = documentContentBean.load(ids);
@@ -119,7 +119,7 @@ public class DocumentRESTController implements Serializable {
 		}
 	}
 
-	private void updateDocumentSpecialPartContents(Document sourceDocument, SpecialPart part) {
+	private void updateDocumentSpecialPartContents(IsogdDocument sourceDocument, SpecialPart part) {
 		List<Long> ids = sourceDocument.getSpecialPart().getDocumentContents().stream().map(documentContent -> documentContent.getId()).collect(Collectors.toList());
 		if (ids.size() > 0) {
 			List<DocumentContent> documentContents = documentContentBean.load(ids);
@@ -132,8 +132,8 @@ public class DocumentRESTController implements Serializable {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Transactional
-	public Document read(@PathVariable("id") Long id) {
-		return documentBean.load(id).clone();
+	public IsogdDocument read(@PathVariable("id") Long id) {
+		return (IsogdDocument) documentBean.load(id).clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

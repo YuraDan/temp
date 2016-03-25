@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.documents.model.isogd.document.parts;
 
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.common.Document;
 import ru.sovzond.mgis2.documents.model.isogd.document.DocumentContent;
 
 import javax.persistence.*;
@@ -55,7 +55,7 @@ public class CommonPart implements Cloneable {
 		CommonPart part = new CommonPart();
 		part.setId(id);
 		Document document = new Document();
-		document.setId(this.document.getId());
+		document.setId(getDocument().getId());
 		part.setDocument(document);
 		part.setDocumentContents(documentContents.stream().map(documentContent -> {
 			DocumentContent documentContent1 = new DocumentContent();

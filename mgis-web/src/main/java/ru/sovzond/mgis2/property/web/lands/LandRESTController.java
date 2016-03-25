@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
+import ru.sovzond.mgis2.documents.model.common.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
+import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
+import ru.sovzond.mgis2.documents.services.property.CertifyingDocumentService;
+import ru.sovzond.mgis2.documents.services.property.ConstitutiveDocumentService;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
-import ru.sovzond.mgis2.documents.services.isogd.business.DocumentService;
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.ExecutivePersonBean;
 import ru.sovzond.mgis2.persons.PersonBean;
@@ -113,7 +116,13 @@ public class LandRESTController implements Serializable {
 	private ILandAreaTypeService landAreaTypeService;
 
 	@Autowired
-	private DocumentService documentBean;
+	private IsogdDocumentService isogdDocumentService;
+
+	@Autowired
+	private CertifyingDocumentService certifyingDocumentService;
+
+	@Autowired
+	private ConstitutiveDocumentService constitutiveDocumentService;
 
 	@Autowired
 	private SpatialDataBean spatialDataBean;
@@ -267,7 +276,7 @@ public class LandRESTController implements Serializable {
 			// Inspection result Documents
 			control2.getInspectionResultDocuments().clear();
 			if (control.getInspectionResultDocuments() != null && control.getInspectionResultDocuments().size() > 0) {
-				List<Document> load = documentBean.load(control.getInspectionResultDocuments().stream().map(Document::getId).collect(Collectors.toList()));
+				List<IsogdDocument> load = isogdDocumentService.load(control.getInspectionResultDocuments().stream().map(IsogdDocument::getId).collect(Collectors.toList()));
 				control2.getInspectionResultDocuments().addAll(load);
 			}
 
@@ -284,8 +293,8 @@ public class LandRESTController implements Serializable {
 				land2.setIncludedObjects(includedObjects2);
 				landIncludedObjectsService.save(includedObjects2);
 			}
-			includedObjects2.setInventoryDealDocument(includedObjects.getInventoryDealDocument() != null ? documentBean.load(includedObjects.getInventoryDealDocument().getId()) : null);
-			includedObjects2.setLandDealDocument(includedObjects.getLandDealDocument() != null ? documentBean.load(includedObjects.getLandDealDocument().getId()) : null);
+			includedObjects2.setInventoryDealDocument(includedObjects.getInventoryDealDocument() != null ? isogdDocumentService.load(includedObjects.getInventoryDealDocument().getId()) : null);
+			includedObjects2.setLandDealDocument(includedObjects.getLandDealDocument() != null ? isogdDocumentService.load(includedObjects.getLandDealDocument().getId()) : null);
 
 			List<Land> includedLands = includedObjects.getIncludedLands();
 			includedObjects2.getIncludedLands().clear();
@@ -380,26 +389,18 @@ public class LandRESTController implements Serializable {
 					"ownershipForm",
 					"rightKind",
 					"rightOwner",
-					"encumbrance",
-					"obligations",
-					"ownershipDate",
-					"terminationDate",
-					"comment",
-					"share",
-					"annualTax",
-					"totalArea",
 					"registrationDocuments",
 					"documentsCertifyingRights"
 			);
 			if (right.getDocumentsCertifyingRights() == null || right.getDocumentsCertifyingRights().size() == 0) {
 				persistent.getDocumentsCertifyingRights().clear();
 			} else {
-				persistent.setDocumentsCertifyingRights(documentBean.load(right.getDocumentsCertifyingRights().stream().map(Document::getId).collect(Collectors.toList())));
+				persistent.setDocumentsCertifyingRights(certifyingDocumentService.load(right.getDocumentsCertifyingRights().stream().map(Document::getId).collect(Collectors.toList())));
 			}
 			if (right.getRegistrationDocuments() == null || right.getRegistrationDocuments().size() == 0) {
 				persistent.getRegistrationDocuments().clear();
 			} else {
-				persistent.setRegistrationDocuments(documentBean.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
+				persistent.setRegistrationDocuments(constitutiveDocumentService.load(right.getRegistrationDocuments().stream().map(Document::getId).collect(Collectors.toList())));
 			}
 			persistent.setOwnershipForm(right.getOwnershipForm() != null ? landOwnershipFormBean.load(right.getOwnershipForm().getId()) : null);
 			persistent.setRightKind(right.getRightKind() != null ? landRightKindBean.load(right.getRightKind().getId()) : null);

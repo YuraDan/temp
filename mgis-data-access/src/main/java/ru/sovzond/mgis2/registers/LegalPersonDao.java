@@ -5,7 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
-import ru.sovzond.mgis2.registers.persons.LegalPerson;
+import ru.sovzond.mgis2.persons.model.LegalPerson;
 
 /**
  * Created by Alexander Arakelyan on 11.08.15.

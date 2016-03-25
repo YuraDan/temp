@@ -14,7 +14,7 @@ import ru.sovzond.mgis2.documents.model.isogd.Book;
 import ru.sovzond.mgis2.documents.model.isogd.Section;
 import ru.sovzond.mgis2.documents.model.isogd.Volume;
 import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentSubObject;
-import ru.sovzond.mgis2.documents.dao.isogd.document.DocumentDao;
+import ru.sovzond.mgis2.documents.dao.isogd.document.IsogdDocumentDao;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -37,7 +37,7 @@ public class DocumentSubObjectDaoTest {
     private VolumeDao volumeDao;
 
     @Autowired
-    private DocumentDao documentDao;
+    private IsogdDocumentDao documentDao;
 
     @Test
     @Transactional

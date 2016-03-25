@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Tax {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "taxes_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -32,7 +32,6 @@ public class Tax {
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		tax.setId(getId());
 		return tax;
 	}
 }

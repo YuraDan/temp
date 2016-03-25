@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.services.isogd.business.IncludedDocumentsService;
-import ru.sovzond.mgis2.documents.model.isogd.document.IncludedDocuments;
+import ru.sovzond.mgis2.documents.services.common.IncludedDocumentsService;
+import ru.sovzond.mgis2.documents.model.common.IncludedDocuments;
 import ru.sovzond.mgis2.national_classifiers.OKVEDBean;
 import ru.sovzond.mgis2.persons.NaturalPersonBean;
 import ru.sovzond.mgis2.persons.NaturalPersonCertificateTypeBean;
-import ru.sovzond.mgis2.registers.persons.NaturalPerson;
+import ru.sovzond.mgis2.persons.model.NaturalPerson;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;

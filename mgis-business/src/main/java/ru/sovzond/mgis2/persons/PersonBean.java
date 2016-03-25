@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
-import ru.sovzond.mgis2.registers.persons.Person;
+import ru.sovzond.mgis2.persons.model.Person;
 
 /**
  * Created by Alexander Arakelyan on 27.07.15.

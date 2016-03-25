@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  * Created by Alexander Arakelyan on 05.11.15.
  *
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "occ_capital_construction", indexes = @Index(name = "oks_cadastral_number_ind", unique = true, columnList = "cadastralnumber"))
 public class CapitalConstruction extends Property implements Cloneable {
@@ -272,24 +273,10 @@ public class CapitalConstruction extends Property implements Cloneable {
 	public CapitalConstruction clone() {
 		CapitalConstruction construct = (CapitalConstruction) super.clone();
 		if(construct == null) return null;
-		construct.setId(id);
-		construct.setName(name);
-		construct.setActualUsage(actualUsage);
-		construct.setBuildCompletionYear(buildCompletionYear);
-		construct.setConditionalNumber(conditionalNumber);
-		construct.getConstructiveElements().addAll(constructiveElements.stream().map(ConstructiveElement::clone).collect(Collectors.toList()));
-		construct.setInventoryNumber(inventoryNumber);
-		construct.setLastReconstructionDate(lastReconstructionDate);
-		construct.setLetter(letter);
-		construct.setMunicipalEntity(municipalEntity != null ? municipalEntity.clone() : null);
-		construct.setObjectPurpose(objectPurpose);
-		construct.setOperationStartYear(operationStartYear);
-		construct.setOverallArea(overallArea);
-		construct.setPlacement(placement);
-		construct.setRebuildingLastYear(rebuildingLastYear);
-		construct.setTechnicalAccountingStatementDate(technicalAccountingStatementDate);
-		construct.setType(type != null ? type.clone() : null);
-		construct.setCharacteristics(characteristics != null ? characteristics.clone() : null);
+		construct.getConstructiveElements().addAll(getConstructiveElements().stream().map(ConstructiveElement::clone).collect(Collectors.toList()));
+		construct.setMunicipalEntity(getMunicipalEntity() != null ? getMunicipalEntity().clone() : null);
+		construct.setType(getType() != null ? getType().clone() : null);
+		construct.setCharacteristics(getCharacteristics() != null ? getCharacteristics().clone() : null);
 		return construct;
 	}
 

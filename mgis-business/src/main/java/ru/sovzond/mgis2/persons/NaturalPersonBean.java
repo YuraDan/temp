@@ -7,8 +7,8 @@ import ru.sovzond.mgis2.dataaccess.base.IIdentifiableDao;
 import ru.sovzond.mgis2.dataaccess.base.IPageableDAOBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.dataaccess.base.impl.Pageable;
+import ru.sovzond.mgis2.persons.model.NaturalPerson;
 import ru.sovzond.mgis2.registers.NaturalPersonDao;
-import ru.sovzond.mgis2.registers.persons.NaturalPerson;
 
 import java.util.stream.Collectors;
 

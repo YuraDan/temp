@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.documents.model.isogd.document.parts;
 
-import ru.sovzond.mgis2.documents.model.isogd.document.Document;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
 import ru.sovzond.mgis2.documents.model.isogd.document.DocumentContent;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ public class SpecialPart implements Cloneable {
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	private Document document;
+	private IsogdDocument document;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<DocumentContent> documentContents = new ArrayList<>();
@@ -32,11 +32,11 @@ public class SpecialPart implements Cloneable {
 		this.id = id;
 	}
 
-	public Document getDocument() {
+	public IsogdDocument getDocument() {
 		return document;
 	}
 
-	public void setDocument(Document document) {
+	public void setDocument(IsogdDocument document) {
 		this.document = document;
 	}
 
@@ -52,7 +52,7 @@ public class SpecialPart implements Cloneable {
 	public SpecialPart clone() {
 		SpecialPart part = new SpecialPart();
 		part.setId(id);
-		Document document = new Document();
+		IsogdDocument document = new IsogdDocument();
 		document.setId(this.document.getId());
 		part.setDocument(document);
 		part.setDocumentContents(documentContents.stream().map(documentContent -> {

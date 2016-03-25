@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "lands_land", indexes = @Index(name = "lands_cadastral_number_ind", unique = true, columnList = "cadastralnumber"))
 public class Land extends Property implements Cloneable {
@@ -182,18 +183,13 @@ public class Land extends Property implements Cloneable {
 	public Land clone() {
 		Land land = (Land) super.clone();
 		if(land == null) return null;
-		land.setId(id);
-		land.setStateRealEstateCadastreaStaging(stateRealEstateCadastreaStaging);
-		land.setAllowedUsageByDictionary(allowedUsageByDictionary != null ? allowedUsageByDictionary.clone() : null);
-		land.setAllowedUsageByDocument(getAllowedUsageByDocument());
-		land.setAllowedUsageByTerritorialZone(allowedUsageByTerritorialZone != null ? allowedUsageByTerritorialZone.clone() : null);
-		land.setLandCategory(landCategory != null ? landCategory.clone() : null);
-		land.setAddressOfMunicipalEntity(addressOfMunicipalEntity != null ? addressOfMunicipalEntity.clone() : null);
-		land.setAddressPlacement(getAddressPlacement());
-		land.setCharacteristics(characteristics != null ? characteristics.clone() : null);
-		land.setControl(control != null ? control.clone() : null);
-		land.getLandAreas().addAll(landAreas.stream().map(LandArea::clone).collect(Collectors.toList()));
-		land.setLandCadastralStatus(getLandCadastralStatus());
+		land.setAllowedUsageByDictionary(getAllowedUsageByDictionary() != null ? getAllowedUsageByDictionary().clone() : null);
+		land.setAllowedUsageByTerritorialZone(getAllowedUsageByTerritorialZone() != null ? getAllowedUsageByTerritorialZone().clone() : null);
+		land.setLandCategory(getLandCategory() != null ? getLandCategory().clone() : null);
+		land.setAddressOfMunicipalEntity(getAddressOfMunicipalEntity() != null ? getAddressOfMunicipalEntity().clone() : null);
+		land.setCharacteristics(getCharacteristics() != null ? getCharacteristics().clone() : null);
+		land.setControl(getControl() != null ? getControl().clone() : null);
+		land.setLandAreas(getLandAreas().stream().map(LandArea::clone).collect(Collectors.toList()));
 		return land;
 	}
 
