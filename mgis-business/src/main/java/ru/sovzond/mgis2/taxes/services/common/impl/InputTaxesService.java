@@ -24,7 +24,6 @@ public class InputTaxesService extends CRUDBeanBase<InputTaxes> implements IInpu
 	@Autowired
 	private IInputTaxesDao dao;
 
-
 	@Override
 	protected IPageableDAOBase<InputTaxes> getPageableDao() {
 		return null;
