@@ -3,10 +3,11 @@ package ru.sovzond.mgis2.documents.web.isogd.classifiers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.DocumentClassService;
-import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.DocumentObjectService;
-import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.DocumentSubObjectService;
-import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentObject;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocumentObject;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocumentSubObject;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentClassService;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentObjectService;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentSubObjectService;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -20,51 +21,51 @@ import java.util.stream.Collectors;
 public class DocumentObjectRESTController implements Serializable {
 
 	@Autowired
-	private DocumentClassService documentClassBean;
+	private IIsogdDocumentClassService documentClassService;
 
 	@Autowired
-	private DocumentObjectService documentObjectBean;
+	private IIsogdDocumentObjectService documentObjectService;
 
 	@Autowired
-	private DocumentSubObjectService documentSubObjectBean;
+	private IIsogdDocumentSubObjectService documentSubObjectService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
-	public PageableContainer<DocumentObject> list(@RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max) {
-		PageableContainer<DocumentObject> pager = documentObjectBean.list(first, max);
-		return new PageableContainer<>(pager.getList().stream().map(item -> item.clone()).collect(Collectors.toList()), pager.getTotalNumberOfItems(), first, max);
+	public PageableContainer<IsogdDocumentObject> list(@RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max) {
+		PageableContainer<IsogdDocumentObject> pager = documentObjectService.list(first, max);
+		return new PageableContainer<>(pager.getList().stream().map(IsogdDocumentObject::clone).collect(Collectors.toList()), pager.getTotalNumberOfItems(), first, max);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	@Transactional
-	public DocumentObject save(@PathVariable("id") Long id, @RequestBody DocumentObject documentObject) {
-		DocumentObject result;
+	public IsogdDocumentObject save(@PathVariable("id") Long id, @RequestBody IsogdDocumentObject documentObject) {
+		IsogdDocumentObject result;
 		if (id == 0) {
-			result = new DocumentObject();
+			result = new IsogdDocumentObject();
 		} else {
-			result = documentObjectBean.load(id);
+			result = documentObjectService.load(id);
 		}
 		result.setCode(documentObject.getCode());
 		result.setName(documentObject.getName());
-		result.setDocumentClass(documentClassBean.load(documentObject.getDocumentClass().getId()));
+		result.setDocumentClass(documentClassService.load(documentObject.getDocumentClass().getId()));
 		if (documentObject.getDocumentSubObjects().size() > 0) {
-			result.setDocumentSubObjects(documentSubObjectBean.load(documentObject.getDocumentSubObjects().stream().map(documentSubObject -> documentSubObject.getId()).collect(Collectors.toList())));
+			result.setDocumentSubObjects(documentSubObjectService.load(documentObject.getDocumentSubObjects().stream().map(IsogdDocumentSubObject::getId).collect(Collectors.toList())));
 		} else {
 			result.getDocumentSubObjects().clear();
 		}
-		documentObjectBean.save(result);
+		documentObjectService.save(result);
 		return result.clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Transactional
-	public DocumentObject read(@PathVariable Long id) {
-		return documentObjectBean.load(id).clone();
+	public IsogdDocumentObject read(@PathVariable Long id) {
+		return documentObjectService.load(id).clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@Transactional
 	public void delete(@PathVariable Long id) {
-		documentObjectBean.remove(documentObjectBean.load(id));
+		documentObjectService.remove(documentObjectService.load(id));
 	}
 }

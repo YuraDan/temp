@@ -1,6 +1,6 @@
 package ru.sovzond.mgis2.persons.model;
 
-import ru.sovzond.mgis2.documents.model.common.IncludedDocuments;
+import ru.sovzond.mgis2.documents.model.nesting.IncludedDocuments;
 
 import javax.persistence.*;
 

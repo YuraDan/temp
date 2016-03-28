@@ -4,13 +4,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+import ru.sovzond.mgis2.business.CRUDBeanBase;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.model.isogd.Book;
-import ru.sovzond.mgis2.documents.model.isogd.Section;
-import ru.sovzond.mgis2.documents.services.isogd.business.BookService;
-import ru.sovzond.mgis2.documents.services.isogd.business.SectionService;
-import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.DocumentObjectService;
-import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentObject;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocumentObject;
+import ru.sovzond.mgis2.documents.model.isogd.section.Book;
+import ru.sovzond.mgis2.documents.model.isogd.section.Section;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentObjectService;
+import ru.sovzond.mgis2.documents.services.isogd.section.IBookService;
+import ru.sovzond.mgis2.documents.services.isogd.section.ISectionService;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -24,19 +25,19 @@ public class BookRESTController implements Serializable {
 	private static final long serialVersionUID = 4539915548911543515L;
 
 	@Autowired
-	private SectionService sectionBean;
+	private ISectionService sectionService;
 
 	@Autowired
-	private BookService bookBean;
+	private IBookService bookService;
 
 	@Autowired
-	private DocumentObjectService documentObjectBean;
+	private IIsogdDocumentObjectService documentObjectService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
 	@Transactional
 	public PageableContainer<Book> list(@RequestParam("sectionId") Long sectionId, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max, @RequestParam(defaultValue = "sortOrder") String orderBy) {
-		Section section = sectionBean.readSection(sectionId);
-		return bookBean.list(section, orderBy, first, max);
+		Section section = sectionService.readSection(sectionId);
+		return bookService.list(section, orderBy, first, max);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -45,38 +46,38 @@ public class BookRESTController implements Serializable {
 		Book book2;
 		if (id == 0) {
 			book2 = new Book();
-			book2.setSection(sectionBean.readSection(book.getSection().getId()));
+			book2.setSection(sectionService.readSection(book.getSection().getId()));
 		} else {
-			book2 = bookBean.load(id);
+			book2 = bookService.load(id);
 		}
-		BeanUtils.copyProperties(book, book2, new String[]{"id", "section", "documentObject", "volumes"});
-		book2.setDocumentObject(documentObjectBean.load(book.getDocumentObject().getId()));
-		bookBean.save(book2);
+		BeanUtils.copyProperties(book, book2, "id", "section", "documentObject", "volumes");
+		book2.setDocumentObject(documentObjectService.load(book.getDocumentObject().getId()));
+		bookService.save(book2);
 		return book2.clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
 	@Transactional
 	public Book read(@PathVariable Long id) {
-		return bookBean.load(id).clone();
+		return bookService.load(id).clone();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@Transactional
 	public void delete(@PathVariable Long id) {
-		bookBean.remove(bookBean.load(id));
+		bookService.remove(bookService.load(id));
 	}
 
 	@RequestMapping(value = "/listDocumentObjectsBySectionId/{sectionId}")
 	@Transactional
-	public PageableContainer<DocumentObject> listDocumentObjectsBySectionId(@PathVariable Long sectionId) {
-		return new PageableContainer<>(bookBean.listDocumentObjectsBySection(sectionBean.readSection(sectionId)).stream().map(documentObject -> documentObject.clone()).collect(Collectors.toList()));
+	public PageableContainer<IsogdDocumentObject> listDocumentObjectsBySectionId(@PathVariable Long sectionId) {
+		return new PageableContainer<>(bookService.listDocumentObjectsBySection(sectionService.readSection(sectionId)).stream().map(IsogdDocumentObject::clone).collect(Collectors.toList()));
 	}
 
 	@RequestMapping(value = "/swap-orders", method = RequestMethod.POST)
 	@Transactional
 	public void swapOrders(@RequestBody SwapIdPair pair) {
-		SwapManager.byOrder(pair, bookBean);
+		SwapManager.byOrder(pair, (CRUDBeanBase) bookService);
 	}
 
 }

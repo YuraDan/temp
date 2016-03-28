@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.services.common.IncludedDocumentsService;
-import ru.sovzond.mgis2.documents.model.common.IncludedDocuments;
+import ru.sovzond.mgis2.documents.model.nesting.IncludedDocuments;
+import ru.sovzond.mgis2.documents.services.nesting.IIncludedDocumentsService;
 import ru.sovzond.mgis2.national_classifiers.OKVEDBean;
 import ru.sovzond.mgis2.persons.NaturalPersonBean;
 import ru.sovzond.mgis2.persons.NaturalPersonCertificateTypeBean;
@@ -37,7 +37,7 @@ public class NaturalPersonRESTService implements Serializable {
 	private NaturalPersonCertificateTypeBean naturalPersonCertificateTypeBean;
 
 	@Autowired
-	private IncludedDocumentsService includedDocumentsBean;
+	private IIncludedDocumentsService includedDocumentsService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
@@ -73,10 +73,10 @@ public class NaturalPersonRESTService implements Serializable {
 		}
 		// IncludedDocuments
 		IncludedDocuments documents = naturalPerson.getDocuments();
-		IncludedDocuments documents1 = includedDocumentsBean.syncIncludedDocuments(naturalPerson1.getDocuments(), documents);
+		IncludedDocuments documents1 = includedDocumentsService.syncIncludedDocuments(naturalPerson1.getDocuments(), documents);
 		if(documents1 != null) {
 			naturalPerson1.setDocuments(documents1);
-			includedDocumentsBean.save(documents1);
+			includedDocumentsService.save(documents1);
 		}
 
 		return naturalPersonBean.save(naturalPerson1).clone();

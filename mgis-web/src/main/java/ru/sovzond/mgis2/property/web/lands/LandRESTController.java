@@ -8,9 +8,9 @@ import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 import ru.sovzond.mgis2.documents.model.common.Document;
 import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
-import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
-import ru.sovzond.mgis2.documents.services.property.CertifyingDocumentService;
-import ru.sovzond.mgis2.documents.services.property.ConstitutiveDocumentService;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentService;
+import ru.sovzond.mgis2.documents.services.property.ICertifyingDocumentService;
+import ru.sovzond.mgis2.documents.services.property.IConstitutiveDocumentService;
 import ru.sovzond.mgis2.geo.SpatialDataBean;
 import ru.sovzond.mgis2.geo.SpatialGroup;
 import ru.sovzond.mgis2.national_classifiers.*;
@@ -116,13 +116,13 @@ public class LandRESTController implements Serializable {
 	private ILandAreaTypeService landAreaTypeService;
 
 	@Autowired
-	private IsogdDocumentService isogdDocumentService;
+	private IIsogdDocumentService isogdDocumentService;
 
 	@Autowired
-	private CertifyingDocumentService certifyingDocumentService;
+	private ICertifyingDocumentService certifyingDocumentService;
 
 	@Autowired
-	private ConstitutiveDocumentService constitutiveDocumentService;
+	private IConstitutiveDocumentService constitutiveDocumentService;
 
 	@Autowired
 	private SpatialDataBean spatialDataBean;

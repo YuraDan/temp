@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.model.isogd.Section;
-import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
-import ru.sovzond.mgis2.documents.services.isogd.business.SectionService;
 import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
+import ru.sovzond.mgis2.documents.model.isogd.section.Section;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentService;
+import ru.sovzond.mgis2.documents.services.isogd.section.ISectionService;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -25,10 +25,10 @@ import java.util.Date;
 public class DocumentSearchRESTController implements Serializable {
 
 	@Autowired
-	private SectionService sectionBean;
+	private ISectionService sectionService;
 
 	@Autowired
-	private IsogdDocumentService documentBean;
+	private IIsogdDocumentService isogdDocumentService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@Transactional
@@ -38,15 +38,17 @@ public class DocumentSearchRESTController implements Serializable {
 											@RequestParam(value = "docDateFrom", required = false) Date documentDateFrom,
 											@RequestParam(value = "docDateTill", required = false) Date documentDateTill,
 											@RequestParam(value = "docNumber", required = false) String documentNumber,
-											@RequestParam(defaultValue = "name") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max
+											@RequestParam(defaultValue = "name") String orderBy,
+												 @RequestParam(defaultValue = "0") int first,
+												 @RequestParam(defaultValue = "0") int max
 	) {
 		Section section = null;
 		if (sectionId != null && sectionId != 0) {
-			section = sectionBean.load(sectionId);
+			section = sectionService.load(sectionId);
 			if (section == null) {
 				throw new IllegalArgumentException("NO_SECTION_FOUND");
 			}
 		}
-		return documentBean.find(section, documentName, documentDate, documentDateFrom, documentDateTill, documentNumber, orderBy, first, max);
+		return isogdDocumentService.find(section, documentName, documentDate, documentDateFrom, documentDateTill, documentNumber, orderBy, first, max);
 	}
 }

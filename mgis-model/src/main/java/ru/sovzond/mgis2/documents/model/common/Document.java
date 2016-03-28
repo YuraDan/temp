@@ -1,6 +1,5 @@
 package ru.sovzond.mgis2.documents.model.common;
 
-import ru.sovzond.mgis2.documents.model.isogd.document.parts.CommonPart;
 import ru.sovzond.mgis2.persons.model.Person;
 
 import javax.persistence.*;

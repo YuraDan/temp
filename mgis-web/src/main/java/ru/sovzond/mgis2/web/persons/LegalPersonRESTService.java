@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.Address;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.services.common.IncludedDocumentsService;
-import ru.sovzond.mgis2.documents.model.common.IncludedDocuments;
+import ru.sovzond.mgis2.documents.model.nesting.IncludedDocuments;
+import ru.sovzond.mgis2.documents.services.nesting.IIncludedDocumentsService;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.LegalPersonBean;
 import ru.sovzond.mgis2.persons.PersonBean;
+import ru.sovzond.mgis2.persons.model.LegalPerson;
+import ru.sovzond.mgis2.persons.model.Person;
 import ru.sovzond.mgis2.registers.national_classifiers.OKATO;
 import ru.sovzond.mgis2.registers.national_classifiers.OKOGU;
 import ru.sovzond.mgis2.registers.national_classifiers.OKOPF;
 import ru.sovzond.mgis2.registers.national_classifiers.OKVED;
-import ru.sovzond.mgis2.persons.model.LegalPerson;
-import ru.sovzond.mgis2.persons.model.Person;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public class LegalPersonRESTService implements Serializable {
 	private PersonBean personBean;
 
 	@Autowired
-	private IncludedDocumentsService includedDocumentsBean;
+	private IIncludedDocumentsService includedDocumentsService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
@@ -107,15 +107,15 @@ public class LegalPersonRESTService implements Serializable {
 
 		Long legalPersonDocumentsId = legalPerson.getDocuments() != null ? legalPerson.getDocuments().getId() : null;
 		if (legalPersonDocumentsId != null && legalPersonDocumentsId != 0) {
-			legalPerson1.setDocuments(includedDocumentsBean.load(legalPersonDocumentsId));
+			legalPerson1.setDocuments(includedDocumentsService.load(legalPersonDocumentsId));
 		}
 
 		// IncludedDocuments
 		IncludedDocuments documents = legalPerson.getDocuments();
-		IncludedDocuments documents1 = includedDocumentsBean.syncIncludedDocuments(legalPerson1.getDocuments(), documents);
+		IncludedDocuments documents1 = includedDocumentsService.syncIncludedDocuments(legalPerson1.getDocuments(), documents);
 		if(documents1 != null) {
 			legalPerson1.setDocuments(documents1);
-			includedDocumentsBean.save(documents1);
+			includedDocumentsService.save(documents1);
 		}
 
 		return legalPersonBean.save(legalPerson1).clone();

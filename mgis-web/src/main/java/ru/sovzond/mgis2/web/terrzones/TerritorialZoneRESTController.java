@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
-import ru.sovzond.mgis2.documents.services.isogd.business.IsogdDocumentService;
+import ru.sovzond.mgis2.documents.services.isogd.document.IIsogdDocumentService;
 import ru.sovzond.mgis2.national_classifiers.LandAllowedUsageBean;
 import ru.sovzond.mgis2.national_classifiers.OKTMOBean;
 import ru.sovzond.mgis2.property.model.lands.TerritorialZone;
@@ -35,7 +35,7 @@ public class TerritorialZoneRESTController {
 	private LandAllowedUsageBean landAllowedUsageBean;
 
 	@Autowired
-	private IsogdDocumentService documentBean;
+	private IIsogdDocumentService isogdDocumentService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
@@ -74,7 +74,7 @@ public class TerritorialZoneRESTController {
 		zone2.setAllowedUsageKind(zone.getAllowedUsageKind() != null ? landAllowedUsageBean.load(zone.getAllowedUsageKind().getId()) : null);
 		zone2.setAllowedUsageKindAsText(zone.getAllowedUsageKindAsText());
 		zone2.setAllowedUsageByDocument(zone.getAllowedUsageByDocument());
-		zone2.setBasisDocument(zone.getBasisDocument() != null ? documentBean.load(zone.getBasisDocument().getId()) : null);
+		zone2.setBasisDocument(zone.getBasisDocument() != null ? isogdDocumentService.load(zone.getBasisDocument().getId()) : null);
 		zone2.setStateOnTheDate(zone.getStateOnTheDate());
 		territorialZoneService.save(zone2);
 		return zone2.clone();

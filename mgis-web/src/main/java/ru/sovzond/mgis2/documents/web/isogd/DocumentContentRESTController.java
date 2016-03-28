@@ -10,10 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.sovzond.mgis2.documents.services.isogd.business.classifiers.representation.RepresentationFormatBean;
-import ru.sovzond.mgis2.documents.services.isogd.business.document.parts.DocumentContentService;
-import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.representation.RepresentationFormat;
-import ru.sovzond.mgis2.documents.model.isogd.document.DocumentContent;
+import ru.sovzond.mgis2.documents.model.common.DocumentContent;
+import ru.sovzond.mgis2.documents.model.isogd.document.representation.RepresentationFormat;
+import ru.sovzond.mgis2.documents.services.common.IDocumentContentService;
+import ru.sovzond.mgis2.documents.services.isogd.document.representation.IRepresentationFormatService;
 import ru.sovzond.mgis2.preview.ImageManipulationBean;
 
 import javax.transaction.Transactional;
@@ -40,10 +40,10 @@ public class DocumentContentRESTController {
 	private static final int MAX_ALLOWED_PREVIEW_BYTES_SIZE = 512 * 1024;
 
 	@Autowired
-	private DocumentContentService documentContentBean;
+	private IDocumentContentService documentContentService;
 
 	@Autowired
-	private RepresentationFormatBean representationFormatBean;
+	private IRepresentationFormatService representationFormatService;
 
 	@Autowired
 	private ImageManipulationBean imageManipulationBean;
@@ -53,7 +53,7 @@ public class DocumentContentRESTController {
 	@ResponseBody
 	public String uploadCommonContent(@RequestBody MultipartFile file) throws IOException {
 		String contentType = file.getContentType();
-		List<RepresentationFormat> list = representationFormatBean.findByFormat(contentType);
+		List<RepresentationFormat> list = representationFormatService.findByFormat(contentType);
 		switch (list.size()) {
 			case 0:
 				throw new IllegalArgumentException("NO_REPRESENTATION_FORMAT_FOUND: " + contentType);
@@ -67,7 +67,7 @@ public class DocumentContentRESTController {
 				} catch (IOException ex) {
 					throw ex;
 				}
-				documentContentBean.save(documentContent);
+				documentContentService.save(documentContent);
 				ObjectMapper mapper = new ObjectMapper();
 				try {
 					DocumentContent clone = documentContent.clone();
@@ -91,7 +91,7 @@ public class DocumentContentRESTController {
 	@RequestMapping(value = "/{contentId}/preview")
 	@Transactional
 	public ResponseEntity<byte[]> preview(@PathVariable("contentId") Long contentId) throws IOException {
-		DocumentContent documentContent = documentContentBean.load(contentId);
+		DocumentContent documentContent = documentContentService.load(contentId);
 		Set<String> formats = documentContent.getRepresentationFormat().getFormats();
 		MediaType defaultFormat = MediaType.IMAGE_PNG;
 		byte[] previewBytes = null;
@@ -128,7 +128,7 @@ public class DocumentContentRESTController {
 	@RequestMapping(value = "/{contentId}/download")
 	@Transactional
 	public ResponseEntity<byte[]> download(@PathVariable("contentId") Long contentId) {
-		DocumentContent documentContent = documentContentBean.load(contentId);
+		DocumentContent documentContent = documentContentService.load(contentId);
 		Set<String> formats = documentContent.getRepresentationFormat().getFormats();
 		MediaType defaultFormat = MediaType.IMAGE_PNG;
 		for (String format : formats) {

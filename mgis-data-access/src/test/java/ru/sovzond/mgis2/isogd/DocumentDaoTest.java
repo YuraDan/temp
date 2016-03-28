@@ -10,14 +10,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ru.sovzond.mgis2.dataaccess.base.HibernateConfiguration;
-import ru.sovzond.mgis2.documents.dao.isogd.BookDao;
-import ru.sovzond.mgis2.documents.dao.isogd.SectionDao;
-import ru.sovzond.mgis2.documents.dao.isogd.VolumeDao;
+import ru.sovzond.mgis2.documents.dao.isogd.section.impl.BookDao;
+import ru.sovzond.mgis2.documents.dao.isogd.section.impl.SectionDao;
+import ru.sovzond.mgis2.documents.dao.isogd.section.impl.VolumeDao;
 import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocument;
-import ru.sovzond.mgis2.documents.model.isogd.Book;
-import ru.sovzond.mgis2.documents.model.isogd.Section;
-import ru.sovzond.mgis2.documents.model.isogd.Volume;
-import ru.sovzond.mgis2.documents.dao.isogd.document.IsogdDocumentDao;
+import ru.sovzond.mgis2.documents.model.isogd.section.Book;
+import ru.sovzond.mgis2.documents.model.isogd.section.Section;
+import ru.sovzond.mgis2.documents.model.isogd.section.Volume;
+import ru.sovzond.mgis2.documents.dao.isogd.document.impl.IsogdDocumentDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = HibernateConfiguration.class)

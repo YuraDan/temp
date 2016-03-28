@@ -2,9 +2,7 @@ package ru.sovzond.mgis2.documents.model.isogd.document;
 
 import ru.sovzond.mgis2.common.classifiers.oktmo.Territory;
 import ru.sovzond.mgis2.documents.model.common.Document;
-import ru.sovzond.mgis2.documents.model.isogd.Volume;
-import ru.sovzond.mgis2.documents.model.isogd.classifiers.documents.DocumentSubObject;
-import ru.sovzond.mgis2.documents.model.isogd.document.parts.SpecialPart;
+import ru.sovzond.mgis2.documents.model.isogd.section.Volume;
 import ru.sovzond.mgis2.registers.national_classifiers.OKTMO;
 
 import javax.persistence.*;
@@ -21,10 +19,10 @@ public class IsogdDocument extends Document implements Cloneable {
 	private Volume volume;
 
 	@OneToOne(mappedBy = "document", cascade = CascadeType.REMOVE)
-	private SpecialPart specialPart;
+	private IsogdSpecialPart specialPart;
 
 	@ManyToOne
-	private DocumentSubObject documentSubObject;
+	private IsogdDocumentSubObject documentSubObject;
 
 	@ManyToOne(targetEntity = OKTMO.class)
 	@JoinColumn(name = "oktmo_id")
@@ -54,19 +52,19 @@ public class IsogdDocument extends Document implements Cloneable {
 		this.oktmo = oktmo;
 	}
 
-	public DocumentSubObject getDocumentSubObject() {
+	public IsogdDocumentSubObject getDocumentSubObject() {
 		return documentSubObject;
 	}
 
-	public void setDocumentSubObject(DocumentSubObject documentSubObject) {
+	public void setDocumentSubObject(IsogdDocumentSubObject documentSubObject) {
 		this.documentSubObject = documentSubObject;
 	}
 
-	public SpecialPart getSpecialPart() {
+	public IsogdSpecialPart getSpecialPart() {
 		return specialPart;
 	}
 
-	public void setSpecialPart(SpecialPart specialPart) {
+	public void setSpecialPart(IsogdSpecialPart specialPart) {
 		this.specialPart = specialPart;
 	}
 
