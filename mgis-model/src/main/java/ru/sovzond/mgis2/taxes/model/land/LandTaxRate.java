@@ -1,5 +1,6 @@
 package ru.sovzond.mgis2.taxes.model.land;
 
+import ru.sovzond.mgis2.registers.national_classifiers.LandAllowedUsage;
 import ru.sovzond.mgis2.registers.national_classifiers.LandCategory;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "mgis2_taxes_land_rate")
-public class LandTaxRate {
+public class LandTaxRate implements Cloneable {
 
 	@Id
 	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_land_rate_seq", allocationSize = 1)
@@ -21,6 +22,9 @@ public class LandTaxRate {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private LandCategory landCategory;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private LandAllowedUsage allowedUsage;
 
 	@Column
 	private double taxRate;
@@ -41,6 +45,14 @@ public class LandTaxRate {
 		this.landCategory = landCategory;
 	}
 
+	public LandAllowedUsage getAllowedUsage() {
+		return allowedUsage;
+	}
+
+	public void setAllowedUsage(LandAllowedUsage allowedUsage) {
+		this.allowedUsage = allowedUsage;
+	}
+
 	public double getTaxRate() {
 		return taxRate;
 	}
@@ -57,6 +69,7 @@ public class LandTaxRate {
 			return null;
 		}
 		landTaxRate.setLandCategory(getLandCategory() != null ? getLandCategory().clone() : null);
+		landTaxRate.setAllowedUsage(getAllowedUsage() != null ? getAllowedUsage().clone() : null);
 		return landTaxRate;
 	}
 }

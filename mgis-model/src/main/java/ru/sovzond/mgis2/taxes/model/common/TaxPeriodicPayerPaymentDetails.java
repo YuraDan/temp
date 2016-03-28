@@ -10,15 +10,8 @@ import javax.validation.constraints.NotNull;
  *
  * Details about payment by tax payer
  */
-@Entity
-@Table(name = "mgis2_taxes_periodic_payer_payment_details")
-public class TaxPeriodicPayerPaymentDetails {
-
-	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_periodic_payer_payment_details_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
-	@Column
-	private Long id;
+@MappedSuperclass
+public class TaxPeriodicPayerPaymentDetails implements Cloneable {
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -35,14 +28,6 @@ public class TaxPeriodicPayerPaymentDetails {
 
 	@Column
 	private double taxSum;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public double getTaxSum() {
 		return taxSum;
@@ -84,7 +69,7 @@ public class TaxPeriodicPayerPaymentDetails {
 		this.taxPayer = taxPayer;
 	}
 
-	public TaxPeriodicPayerPaymentDetails clone() {
+	public Object clone() {
 		TaxPeriodicPayerPaymentDetails details;
 		try {
 			details = (TaxPeriodicPayerPaymentDetails) super.clone();

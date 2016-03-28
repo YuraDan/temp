@@ -8,30 +8,13 @@ import javax.persistence.*;
  * Taxes
  */
 @MappedSuperclass
-public class Tax {
-
-	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
-	@Column
-	private Long id;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+public class Tax implements Cloneable {
 
 	public Object clone() {
-		Tax tax;
 		try {
-			tax = (Tax) super.clone();
+			return super.clone();
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-		return tax;
 	}
 }

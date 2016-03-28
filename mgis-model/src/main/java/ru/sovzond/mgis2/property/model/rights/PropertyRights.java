@@ -37,10 +37,13 @@ public class PropertyRights implements Cloneable {
 		this.rights = rights;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public PropertyRights clone() {
-		PropertyRights rights = new PropertyRights();
-		rights.setId(getId());
+		PropertyRights rights;
+		try {
+			rights = (PropertyRights) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 		rights.setRights(getRights() != null ? getRights().stream().map(SubjectRight::clone).collect(Collectors.toList()) : null);
 		return rights;
 	}

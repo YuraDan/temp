@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "mgis2_taxes_reporting_period")
-public class ReportingPeriod {
+public class ReportingPeriod implements Cloneable {
 
 	@Id
 	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_taxes_reporting_period_seq", allocationSize = 1)
@@ -63,12 +63,10 @@ public class ReportingPeriod {
 	}
 
 	public ReportingPeriod clone() {
-		ReportingPeriod period;
 		try {
-			period = (ReportingPeriod) super.clone();
+			return (ReportingPeriod) super.clone();
 		} catch (CloneNotSupportedException e) {
-			return null;
+			 return null;
 		}
-		return period;
 	}
 }
