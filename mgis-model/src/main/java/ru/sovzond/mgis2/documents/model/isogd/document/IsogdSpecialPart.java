@@ -47,22 +47,16 @@ public class IsogdSpecialPart implements Cloneable {
 		this.documentContents = documentContents;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public IsogdSpecialPart clone() {
-		IsogdSpecialPart part = new IsogdSpecialPart();
-		part.setId(id);
-		IsogdDocument document = new IsogdDocument();
-		document.setId(this.document.getId());
-		part.setDocument(document);
-		part.setDocumentContents(documentContents.stream().map(documentContent -> {
-			DocumentContent documentContent1 = new DocumentContent();
-			documentContent1.setId(documentContent.getId());
-			documentContent1.setFileName(documentContent.getFileName());
-			//documentContent1.setBytes(documentContent.getBytes());
-			documentContent1.setRepresentationFormat(documentContent.getRepresentationFormat() != null ? documentContent.getRepresentationFormat().clone() : null);
-			return documentContent1;
-		}).collect(Collectors.toList()));
-
+		IsogdSpecialPart part;
+		try {
+			part = (IsogdSpecialPart) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+		if(part == null) return null;
+		part.setDocument(getDocument() != null ? (IsogdDocument) getDocument().clone() : null);
+		part.setDocumentContents(getDocumentContents().stream().map(DocumentContent::clone).collect(Collectors.toList()));
 		return part;
 	}
 

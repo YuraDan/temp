@@ -78,17 +78,21 @@ public class IsogdDocumentObject implements Cloneable {
 		this.documentSubObjects = documentSubObjects;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public IsogdDocumentObject clone() {
-		IsogdDocumentObject documentObject = new IsogdDocumentObject();
-		documentObject.setId(id);
-		documentObject.setCode(code);
-		documentObject.setName(name);
-		IsogdDocumentClass documentClass = new IsogdDocumentClass();
-		documentClass.setId(getDocumentClass().getId());
-		documentClass.setCode(getDocumentClass().getCode());
-		documentObject.setDocumentClass(documentClass);
-		documentObject.setDocumentSubObjects(documentSubObjects.stream().map(IsogdDocumentSubObject::clone).collect(Collectors.toList()));
+		IsogdDocumentObject documentObject;
+		try {
+			documentObject = (IsogdDocumentObject) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+		if(documentObject == null) return null;
+		if(getDocumentClass() != null) {
+			IsogdDocumentClass newDocumentClass = new IsogdDocumentClass();
+			newDocumentClass.setId(getDocumentClass().getId());
+			newDocumentClass.setCode(getDocumentClass().getCode());
+			documentObject.setDocumentClass(getDocumentClass() != null ? newDocumentClass : null);
+		}
+		documentObject.setDocumentSubObjects(getDocumentSubObjects().stream().map(IsogdDocumentSubObject::clone).collect(Collectors.toList()));
 		return documentObject;
 	}
 

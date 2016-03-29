@@ -41,7 +41,6 @@ public class IsogdDocumentClass implements Cloneable {
 	@Column
 	private boolean hasSpecialPart;
 
-
 	public Long getId() {
 		return id;
 	}
@@ -90,15 +89,15 @@ public class IsogdDocumentClass implements Cloneable {
 		this.hasSpecialPart = hasSpecialPart;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public IsogdDocumentClass clone() {
-		IsogdDocumentClass documentClass = new IsogdDocumentClass();
-		documentClass.setId(id);
-		documentClass.setCode(code);
-		documentClass.setName(name);
-		documentClass.setHasCommonPart(hasCommonPart);
-		documentClass.setHasSpecialPart(hasSpecialPart);
-		documentClass.setDocumentObjects(documentObjects.stream().map(IsogdDocumentObject::clone).collect(Collectors.toList()));
+		IsogdDocumentClass documentClass;
+		try {
+			documentClass = (IsogdDocumentClass) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+		if(documentClass == null) return null;
+		documentClass.setDocumentObjects(getDocumentObjects().stream().map(IsogdDocumentObject::clone).collect(Collectors.toList()));
 		return documentClass;
 	}
 

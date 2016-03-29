@@ -6,7 +6,7 @@ angular.module("mgis.lands.lands", ["ui.router", "ui.bootstrap", "ui.select", "u
 	"mgis.terr-zones.zone.service",
 	"mgis.persons.person",
 	"mgis.lands.land.map",
-	"mgis.isogd.document.selector",
+	"mgis.common.document.selector",
 	"mgis.address.selector",
 	"mgis.geo.spatial.data",
 	"mgis.address",

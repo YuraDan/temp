@@ -69,14 +69,15 @@ public class DocumentContent implements Cloneable {
 		this.storageType = storageType;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public DocumentContent clone() {
-		DocumentContent documentContent = new DocumentContent();
-		documentContent.setId(id);
-		documentContent.setFileName(fileName);
-		documentContent.setBytes(bytes);
-		documentContent.setRepresentationFormat(representationFormat != null ? representationFormat.clone() : null);
-		documentContent.setStorageType(getStorageType());
+		DocumentContent documentContent;
+		try {
+			documentContent = (DocumentContent) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+		if(documentContent == null) return null;
+		documentContent.setRepresentationFormat(getRepresentationFormat() != null ? getRepresentationFormat().clone() : null);
 		return documentContent;
 	}
 }

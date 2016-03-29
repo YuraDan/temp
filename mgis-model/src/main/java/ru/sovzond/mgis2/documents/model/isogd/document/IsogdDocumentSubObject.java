@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "isogd_cls_document_sub_obj")
-public class IsogdDocumentSubObject {
+public class IsogdDocumentSubObject implements Cloneable {
 
 	@Id
 	@SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_cls_document_sub_obj_seq", allocationSize = 1)
@@ -63,16 +63,21 @@ public class IsogdDocumentSubObject {
 		this.documentObject = documentObject;
 	}
 
-	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public IsogdDocumentSubObject clone() {
-		IsogdDocumentSubObject documentSubObject = new IsogdDocumentSubObject();
-		documentSubObject.setId(id);
-		documentSubObject.setCode(code);
-		documentSubObject.setName(name);
-		IsogdDocumentObject documentObject = new IsogdDocumentObject();
-		documentObject.setId(this.documentObject.getId());
-		documentObject.setCode(this.getDocumentObject().getCode());
-		documentSubObject.setDocumentObject(documentObject);
+		IsogdDocumentSubObject documentSubObject;
+
+		try {
+			documentSubObject = (IsogdDocumentSubObject) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+		if(documentSubObject == null) return null;
+		IsogdDocumentObject object = new IsogdDocumentObject();
+		if(getDocumentObject() != null) {
+			object.setId(getDocumentObject().getId());
+			object.setCode(getDocumentObject().getCode());
+			documentSubObject.setDocumentObject(getDocumentObject() != null ? object : null);
+		}
 		return documentSubObject;
 	}
 

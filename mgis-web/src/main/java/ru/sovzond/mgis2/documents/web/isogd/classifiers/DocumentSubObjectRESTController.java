@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * Created by Alexander Arakelyan on 22.06.15.
  */
 @RestController
-@RequestMapping("/isogd/classifiers/documents/subObjects")
+@RequestMapping("/isogd/classifiers/documents/subobjects")
 public class DocumentSubObjectRESTController implements Serializable {
 
 	@Autowired

@@ -103,6 +103,7 @@
 	<script type="text/javascript" src="app2/indicators/technical-indicator/technical-indicator-module.js"></script>
 
 	<!-- Documents -->
+	<script type="text/javascript" src="app2/documents/common/document-selector/document-selector-component.js"></script>
 	<script type="text/javascript" src="app2/documents/isogd/isogd.js"></script>
 	<script type="text/javascript" src="app2/documents/isogd/section/isogd-sections-service.js"></script>
 	<script type="text/javascript" src="app2/documents/isogd/section/isogd-sections-module.js"></script>

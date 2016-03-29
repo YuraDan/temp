@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "isogd_cls_document_type")
-public class IsogdDocumentType {
+public class IsogdDocumentType implements Cloneable {
 
     @Id
     @SequenceGenerator(name = "pk_sequence", sequenceName = "isogd_cls_document_type_seq", allocationSize = 1)
@@ -59,12 +59,11 @@ public class IsogdDocumentType {
         this.name = name;
     }
 
-    @SuppressWarnings("CloneDoesntCallSuperClone")
     public IsogdDocumentType clone() {
-        IsogdDocumentType documentType = new IsogdDocumentType();
-        documentType.setId(id);
-        documentType.setCode(code);
-        documentType.setName(name);
-        return documentType;
+        try {
+            return (IsogdDocumentType) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 }
