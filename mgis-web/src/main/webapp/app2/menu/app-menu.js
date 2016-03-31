@@ -10,6 +10,7 @@ angular.module("mgis.menu.main", ["ui.router", "ui.bootstrap"]) //
 			$scope.personsMenuActive = false;
 			$scope.addressesMenuActive = false;
 			$scope.geoMenuActive = false;
+			$scope.analyticsMenuActive = false;
 		}
 
 		$scope.isogdMenuClicked = function () {
@@ -27,6 +28,10 @@ angular.module("mgis.menu.main", ["ui.router", "ui.bootstrap"]) //
 		$scope.oksMenuClicked = function () {
 			resetMenus();
 			$scope.oksMenuActive = true;
+		}
+		$scope.analyticsMenuClicked = function () {
+			resetMenus();
+			$scope.analyticsMenuActive = true;
 		}
 		$scope.administrationMenuClicked = function () {
 			resetMenus();

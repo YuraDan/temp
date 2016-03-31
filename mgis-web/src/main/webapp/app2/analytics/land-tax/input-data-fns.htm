@@ -1,0 +1,50 @@
+<div ng-controller="InputTaxesController">
+	<div class="panel panel-default" style="margin-left: 205px">
+		<div class="panel-heading">
+			<h3 translate>RusRegister.Schemes.FNS</h3>
+		</div>
+		<div class="panel-body">
+			<table st-table="inputTaxesPager.list" st-safe-src="inputTaxesPager2.list" class="table table-striped">
+				<thead>
+				<tr>
+					<th colspan="10">
+						<input st-search placeholder="{{'Search'|translate}}" class="input-sm form-control"
+							   type="search"/>
+					</th>
+				</tr>
+				<tr>
+					<th></th>
+					<th st-sort="cadastralNumber">cadastralNumber</th>
+					<th st-sort="area">area</th>
+					<th>landCategory</th>
+					<th>allowedUsage</th>
+					<th st-sort="address">address</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="row in inputTaxesPager.list">
+					<td cs-select="row"></td>
+					<td>{{row.cadastralNumber}}</td>
+					<td>{{row.area}}</td>
+					<td>{{row.landCategory}}</td>
+					<td>{{row.allowedUsage}}</td>
+					<td>{{row.address}}</td>
+					<td>
+						<button type="button" ng-click="deleteItem(row.id)" class="btn btn-sm btn-danger">
+							<i class="glyphicon glyphicon-remove-circle">
+							</i>
+						</button>
+					</td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td colspan="5" class="text-center">
+						<div st-pagination="" st-items-by-page="itemsPerPage" st-displayed-pages="pagerMaxSize"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>

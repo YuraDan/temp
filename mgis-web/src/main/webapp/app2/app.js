@@ -3,6 +3,7 @@ angular.module("mgis", //
 		"mgis.isogd",
 		"mgis.menu.main",
 		"mgis.capital-constructs",
+		"mgis.analytics",
 		"mgis.admin",
 		"mgis.lands",
 		"mgis.terr-zones",

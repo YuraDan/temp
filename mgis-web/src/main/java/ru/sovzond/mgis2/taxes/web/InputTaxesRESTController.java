@@ -12,7 +12,6 @@ import java.io.Serializable;
 
 /**
  * Created by donchenko-y on 3/22/16.
- *
  */
 
 @RestController
@@ -35,5 +34,10 @@ public class InputTaxesRESTController implements Serializable {
 		return inputTaxesService.load(id).clone();
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Transactional
+	public void delete(@PathVariable Long id) {
+		inputTaxesService.remove(inputTaxesService.load(id));
+	}
 
 }

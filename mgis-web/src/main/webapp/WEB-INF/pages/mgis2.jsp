@@ -31,6 +31,7 @@
 	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+	<script type="text/javascript" src="bower_components/angular-smart-table/dist/smart-table.js"></script>
 	<script type="text/javascript"
 			src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
 	<script type="text/javascript" src="bower_components/angular-utils-ui-breadcrumbs/uiBreadcrumbs.js"></script>
@@ -209,6 +210,10 @@
 	<script type="text/javascript" src="app2/data-exchange/data-exchange.js"></script>
 	<script type="text/javascript" src="app2/data-exchange/import/import-module.js"></script>
 	<script type="text/javascript" src="app2/data-exchange/export/export-module.js"></script>
+
+	<!-- AnalyticsAndStatistics -->
+	<script type="text/javascript" src="app2/analytics/analytics.js"></script>
+	<script type="text/javascript" src="app2/analytics/analytics-service.js"></script>
 
 	<!-- Reports -->
 	<script type="text/javascript" src="app2/reports/reports.js"></script>

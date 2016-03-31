@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 /**
  * Created by donchenko-y on 3/22/16.
- *
  */
 
 @Service
@@ -26,12 +25,12 @@ public class InputTaxesService extends CRUDBeanBase<InputTaxes> implements IInpu
 
 	@Override
 	protected IPageableDAOBase<InputTaxes> getPageableDao() {
-		return null;
+		return dao;
 	}
 
 	@Override
 	protected IIdentifiableDao<InputTaxes> getIIdentifiableDao() {
-		return null;
+		return dao;
 	}
 
 	@Override

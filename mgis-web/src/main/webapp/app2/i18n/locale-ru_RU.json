@@ -27,7 +27,7 @@
   "Select.DeselectAll": "Убрать выделение",
   "Deselect": "Убрать из списка",
   "Find": "Найти",
-  "Search": "Искать",
+  "Search": "Поиск",
   "Add": "Добавить",
   "Open": "Открыть",
   "Close": "Закрыть",
@@ -497,5 +497,12 @@
   "RusRegister.Schemes.FNS": "Данные ФНС",
   "FirstName": "Имя",
   "Surname": "Фамилия",
-  "Patronymic": "Отчество"
+  "Patronymic": "Отчество",
+  "analyticsAndStatistics":"Аналитика и статистика",
+  "Analytics.LandTax":"Земельный налог",
+  "Analytics.PropertyTax":"Имущественный налог",
+  "Analytics.LeasePayments":"Арендные платежи",
+  "Analytics.LandTax.Result":"Результат начисления земельного налога",
+  "Analytics.LandTax.Analysis":"Анализ поступления ЗН",
+  "Analytics.LandTax.Assessment":"Оценка поступления ЗН"
 }
