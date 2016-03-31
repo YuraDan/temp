@@ -4,7 +4,8 @@ angular.module("mgis.common.document.selector", ["ui.bootstrap", "ui.select", //
 	"mgis.isogd.sections.service",
 	"mgis.isogd.books.service",
 	"mgis.isogd.volumes.service",
-	"mgis.isogd.documents.service"
+	"mgis.isogd.documents.service",
+	"mgis.common.document.selector.list"
 ])
 	.directive("commonDocumentSelector", function ($rootScope) {
 		return {
@@ -12,6 +13,7 @@ angular.module("mgis.common.document.selector", ["ui.bootstrap", "ui.select", //
 			scope: {
 				document: "=",
 				documents: "=",
+				documentTypes: "&",
 				multipleDocuments: "@",
 				selectClicked: "&"
 			},
@@ -21,6 +23,10 @@ angular.module("mgis.common.document.selector", ["ui.bootstrap", "ui.select", //
 					var modalScope = $rootScope.$new();
 					modalScope.selectedDocuments = [];
 					modalScope.multipleDocuments = $scope.multipleDocuments;
+					if(!$scope.documentTypes) {
+						$scope.documentTypes = 'isogd';
+					}
+					modalScope.documentTypes = $scope.documentTypes;
 					if ($scope.multipleDocuments) {
 						if ($scope.documents) {
 							modalScope.selectedDocuments = [].concat($scope.documents);
@@ -54,9 +60,15 @@ angular.module("mgis.common.document.selector", ["ui.bootstrap", "ui.select", //
 					}
 				};
 				$scope.editDocument = function (id) {
+
+
+
 					ISOGDDocumentCRUDService.editItem(id, function () {
 						ISOGDDocumentCRUDService.reloadItemInList(id, $scope.documents);
 					});
+
+
+
 				};
 				$scope.deselect = function (id) {
 					MGISCommonsModalForm.confirmRemoval(function (modalInstance) {
@@ -103,14 +115,6 @@ angular.module("mgis.common.document.selector", ["ui.bootstrap", "ui.select", //
 				$scope.selectedDocuments.push(item);
 				if ($scope.selectionCompleteHandler) {
 					$scope.selectionCompleteHandler($scope.selectedDocuments);
-				}
-			}
-		};
-
-		$scope.removeSelectedDocument = function (item) {
-			for (var i = 0; i < $scope.selectedDocuments.length; i++) {
-				if ($scope.selectedDocuments[i].id == item.id) {
-					$scope.selectedDocuments.splice(i, 1);
 				}
 			}
 		};
