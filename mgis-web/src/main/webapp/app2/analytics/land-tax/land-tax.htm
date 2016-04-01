@@ -1,0 +1,34 @@
+<tabset class="tabs-left">
+	<tab>
+		<tab-heading>
+			<span translate>RusRegister.Schemes.FNS</span>
+		</tab-heading>
+		<div ng-include src="'app2/analytics/land-tax/input-data-fns.htm'"></div>
+	</tab>
+	<tab>
+		<tab-heading>
+			<span translate>Analytics.LandTax.Result</span>
+		</tab-heading>
+		<div class="panel panel-default">
+			<div ng-controller="ExampleController">
+				<div ng-bind-html="myHTML"></div>
+			</div>
+		</div>
+	</tab>
+	<tab>
+		<tab-heading>
+			<span translate>Analytics.LandTax.Analysis</span>
+		</tab-heading>
+		<div class="panel panel-default">
+			<div ng-include src="'app2/analytics/land-tax/'"></div>
+		</div>
+	</tab>
+	<tab>
+		<tab-heading>
+			<span translate>Analytics.LandTax.Assessment</span>
+		</tab-heading>
+		<div class="panel panel-default">
+			<div ng-include src="'app2/analytics/land-tax/'"></div>
+		</div>
+	</tab>
+</tabset>
