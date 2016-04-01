@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.Rights.MainInformation</h3>
+	</div>
+	<div class="panel-body">
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Rights.RightsSubject</label>
+			</div>
+
+			<div class="col-sm-8">
+				<person-selector person="right.rightOwner"></person-selector>
+			</div>
+		</div>
+
+		<commons-forms-drop-down form="form" name="ownershipForm" title="Lands.Land.Rights.OwnershipForm" property="right.ownershipForm"
+								 available-elements="availableLandOwnershipForms"
+								 element-label-expression="(element.name + (element.gatheringParent?' ('+element.gatheringParent.name+')' : ''))"
+				></commons-forms-drop-down>
+
+		<commons-forms-drop-down form="form" name="ownershipForm" title="Lands.Land.Rights.RightsKind" property="right.rightKind"
+								 available-elements="availableLandRightKinds"></commons-forms-drop-down>
+
+		<commons-forms-text form="form" name="share" title="Lands.Land.Rights.Share" property="right.share"></commons-forms-text>
+
+		<commons-forms-date form="form" name="ownershipDate" title="Lands.Land.Rights.DateOfCreation"
+							property="right.ownershipDate"></commons-forms-date>
+
+		<commons-forms-date form="form" name="terminationDate" title="Lands.Land.Rights.DateOfTermination"
+							property="right.terminationDate"></commons-forms-date>
+
+		<div class="form-group row">
+			<div class="col-sm-4"><label translate>Lands.Land.Rights.RegistrationDocument</label></div>
+			<div class="col-sm-8">
+				<common-document-selector documents="right.registrationDocuments" multiple-documents="true"></common-document-selector>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4"><label translate>Lands.Land.Rights.DocumentCertifyingRights</label></div>
+			<div class="col-sm-8">
+				<common-document-selector documents="right.documentsCertifyingRights" multiple-documents="true"></common-document-selector>
+			</div>
+		</div>
+
+	</div>
+</div>

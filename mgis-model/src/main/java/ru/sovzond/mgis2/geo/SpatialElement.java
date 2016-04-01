@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Table(name = "mgis2_geo_spatial_elem")
 public class SpatialElement implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_geo_spatial_elem_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -48,6 +48,7 @@ public class SpatialElement implements Cloneable {
 		this.coordinates = coordinates;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public SpatialElement clone() {
 		SpatialElement spatialElement = new SpatialElement();
 		spatialElement.setId(id);

@@ -6,17 +6,19 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
+import ru.sovzond.mgis2.documents.model.nesting.IncludedDocuments;
+import ru.sovzond.mgis2.documents.services.nesting.IIncludedDocumentsService;
 import ru.sovzond.mgis2.national_classifiers.OKVEDBean;
 import ru.sovzond.mgis2.persons.NaturalPersonBean;
 import ru.sovzond.mgis2.persons.NaturalPersonCertificateTypeBean;
-import ru.sovzond.mgis2.registers.persons.NaturalPerson;
+import ru.sovzond.mgis2.persons.model.NaturalPerson;
 
-import javax.security.cert.Certificate;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
  * Created by Alexander Arakelyan on 30/08/15.
+ *
  */
 @RestController
 @RequestMapping("/persons/natural-persons")
@@ -34,6 +36,8 @@ public class NaturalPersonRESTService implements Serializable {
 	@Autowired
 	private NaturalPersonCertificateTypeBean naturalPersonCertificateTypeBean;
 
+	@Autowired
+	private IIncludedDocumentsService includedDocumentsService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
@@ -50,7 +54,7 @@ public class NaturalPersonRESTService implements Serializable {
 		} else {
 			naturalPerson1 = naturalPersonBean.load(id);
 		}
-		BeanUtils.copyProperties(naturalPerson, naturalPerson1, new String[]{"id", "actualAddress", "legalAddress", "activityType"});
+		BeanUtils.copyProperties(naturalPerson, naturalPerson1, "id", "actualAddress", "legalAddress", "activityType", "documents");
 		Long actualAddressId = naturalPerson.getActualAddress() != null ? naturalPerson.getActualAddress().getId() : null;
 		if (actualAddressId != null && actualAddressId != 0) {
 			naturalPerson1.setActualAddress(addressBean.load(actualAddressId));
@@ -66,6 +70,13 @@ public class NaturalPersonRESTService implements Serializable {
 		Long naturalPersonSertTypeId = naturalPerson.getCertificateType() != null ? naturalPerson.getCertificateType().getId() : null;
 		if (naturalPersonSertTypeId != null && naturalPersonSertTypeId != 0) {
 			naturalPerson1.setCertificateType(naturalPersonCertificateTypeBean.load(naturalPersonSertTypeId));
+		}
+		// IncludedDocuments
+		IncludedDocuments documents = naturalPerson.getDocuments();
+		IncludedDocuments documents1 = includedDocumentsService.syncIncludedDocuments(naturalPerson1.getDocuments(), documents);
+		if(documents1 != null) {
+			naturalPerson1.setDocuments(documents1);
+			includedDocumentsService.save(documents1);
 		}
 
 		return naturalPersonBean.save(naturalPerson1).clone();

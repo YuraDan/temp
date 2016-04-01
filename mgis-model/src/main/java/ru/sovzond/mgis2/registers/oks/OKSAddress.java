@@ -38,12 +38,13 @@ import javax.persistence.*;
  * Тип tLevel3 (Строение) tLevel3 Type ОА Т Тип По справочнику dLocationLevel3Type «Тип адресного элемента третьего уровня» tLevel3 Value ОА Т(255) Значение
  * Тип tApartment (Квартира) tApartment Type ОА Т Тип По справочнику dApartmentType «Тип адресного элемента четвертого уровня» tApartment Value ОА Т(255) Значение
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_address")
 public class OKSAddress implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_address_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -190,6 +191,7 @@ public class OKSAddress implements Cloneable {
 		this.region = region;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKSAddress clone() {
 		OKSAddress address = new OKSAddress();
 		address.setId(id);

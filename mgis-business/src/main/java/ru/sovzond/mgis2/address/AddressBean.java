@@ -40,8 +40,8 @@ public class AddressBean extends CRUDBeanBase<Address> {
 		return dao;
 	}
 
-	public PageableContainer<Address> list(String orderBy, int first, int max, String name) {
-		Pageable<Address> pager = dao.pager(dao.createFilter(name, orderBy, first, max));
+	public PageableContainer<Address> list(String orderBy, int first, int max, String name, String oktmo) {
+		Pageable<Address> pager = dao.pager(dao.createFilter(name, oktmo, orderBy, first, max));
 		return new PageableContainer<>(pager.list().stream().map(Address::clone).collect(Collectors.toList()), pager.count(), first, max);
 	}
 
@@ -53,7 +53,10 @@ public class AddressBean extends CRUDBeanBase<Address> {
 		KLADRLocality subject = findSubject(filter);
 		KLADRLocality region = findRegion(filter, subject);
 		KLADRLocality locality = findLocality(filter, subject, region);
-		KLADRStreet street = findStreet(filter, subject, region, locality);
+		KLADRStreet street = null;
+		if (locality != null) {
+			street = findStreet(filter, subject, region, locality);
+		}
 		return dao.find(subject, region, locality, street, filter.getHome(), filter.getHousing(), filter.getBuilding(), filter.getApartment());
 	}
 
@@ -63,6 +66,8 @@ public class AddressBean extends CRUDBeanBase<Address> {
 		switch (size) {
 			case 1:
 				return streets.get(0);
+			case 0:
+				return null;
 			default:
 				throw streetNotFoundException(size, filter, subject, region, locality);
 		}
@@ -74,6 +79,8 @@ public class AddressBean extends CRUDBeanBase<Address> {
 		switch (size) {
 			case 1:
 				return localities.get(0);
+			case 0:
+				return null;
 			default:
 				throw localityNotFoundException(size, filter, subject, region);
 		}

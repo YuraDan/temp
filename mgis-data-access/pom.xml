@@ -73,7 +73,7 @@
 			<version>9.4-1201-jdbc41</version>
 		</dependency>
 
-		<!-- JUnit depeldency -->
+		<!-- JUnit dependency -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -84,6 +84,13 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>2.0.21-beta</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>3.0.0</version>
 			<scope>test</scope>
 		</dependency>
 

@@ -10,7 +10,7 @@ import javax.persistence.*;
 /**
  * Описание раздела «Адрес (описание местоположения)»
  * Код элемента Содержание элемента Тип Формат Наименование Дополнительная информация Address (Адрес (описание местоположения)) Тип tAddressOut
- * <p>
+ * <p/>
  * OKATO Н Т(11) ОКАТО Ограничение на тип строка OKATOType.
  * KLADR Н Т(20) КЛАДР
  * OKTMO Н Т(11) ОКТМО Ограничение на тип строка OKTMOType.
@@ -28,7 +28,7 @@ import javax.persistence.*;
  * Apartment Н SА Квартира Тип tApartment. См. описание типа ниже в данной таблице.
  * Other Н Т(2500) Иное
  * Note Н Т(4000) Неформализованное описание
- * <p>
+ * <p/>
  * Описание комплексных типов
  * Тип tName (Наименование) tName Name ОА Т(255) Наименование tName Type ОА Т(255) Тип
  * Тип tUrbanDistrict (Городской район) tUrbanDistrict Name ОА Т(255) Наименование tUrbanDistrict Type ОА Т Тип По справочнику dUrbanDistrict «Городской район»
@@ -116,25 +116,6 @@ public class Address implements Cloneable {
 
 	public void setRegion(KLADRLocality region) {
 		this.region = region;
-	}
-
-	public Address clone() {
-		Address address = new Address();
-		address.setId(id);
-		address.setOkato(okato != null ? okato.clone() : null);
-		address.setOktmo(oktmo != null ? oktmo.clone() : null);
-		address.setPostalCode(postalCode);
-		address.setSubject(subject != null ? subject.clone() : null);
-		address.setRegion(region != null ? region.clone() : null);
-		address.setLocality(locality != null ? locality.clone() : null);
-		address.setStreet(street != null ? street.clone() : null);
-		address.setHome(home);
-		address.setHousing(housing);
-		address.setBuilding(building);
-		address.setApartment(apartment);
-		address.setNote(note);
-		address.setOther(other);
-		return address;
 	}
 
 	public OKATO getOkato() {
@@ -232,4 +213,25 @@ public class Address implements Cloneable {
 	public void setSubject(KLADRLocality subject) {
 		this.subject = subject;
 	}
+
+	@SuppressWarnings("CloneDoesntCallSuperClone")
+	public Address clone() {
+		Address address = new Address();
+		address.setId(id);
+		address.setOkato(okato != null ? okato.clone() : null);
+		address.setOktmo(oktmo != null ? oktmo.clone() : null);
+		address.setPostalCode(postalCode);
+		address.setSubject(subject != null ? subject.clone() : null);
+		address.setRegion(region != null ? region.clone() : null);
+		address.setLocality(locality != null ? locality.clone() : null);
+		address.setStreet(street != null ? street.clone() : null);
+		address.setHome(home);
+		address.setHousing(housing);
+		address.setBuilding(building);
+		address.setApartment(apartment);
+		address.setNote(note);
+		address.setOther(other);
+		return address;
+	}
+
 }

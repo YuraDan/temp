@@ -55,6 +55,7 @@ public class OKOGU implements Cloneable {
 		this.comment = comment;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKOGU clone() {
 		OKOGU okogu = new OKOGU();
 		okogu.setId(id);

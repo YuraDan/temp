@@ -44,6 +44,7 @@ public class TerritorialZoneType implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public TerritorialZoneType clone() {
 		TerritorialZoneType zoneType = new TerritorialZoneType();
 		zoneType.setId(id);

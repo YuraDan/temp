@@ -30,6 +30,10 @@ public class OKEIBean extends CRUDBeanBase<OKEI> {
 		return dao;
 	}
 
+	public OKEI findByCode(Integer code) {
+		return dao.findByCode(code);
+	}
+
 	public PageableContainer<OKEI> list(String name, String orderBy, int first, int max) {
 		Pageable<OKEI> pager = dao.pager(dao.createFilter(name, orderBy, first, max));
 		return new PageableContainer<>(pager.list().stream().map(OKEI::clone).collect(Collectors.toList()), pager.count(), first, max);

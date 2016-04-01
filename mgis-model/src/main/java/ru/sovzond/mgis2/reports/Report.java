@@ -81,6 +81,7 @@ public class Report implements Cloneable {
 		this.filters = filters;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Report clone() {
 		Report report = new Report();
 		report.setId(id);

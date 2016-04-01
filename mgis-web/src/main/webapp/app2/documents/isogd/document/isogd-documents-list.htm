@@ -1,0 +1,27 @@
+<breadcrumb sectionId="{{stateParams.sectionId}}" bookId="{{stateParams.bookId}}" volumeId="{{stateParams.volumeId}}"></breadcrumb>
+
+<div ng-repeat="document in documentsPager.list">
+    <div class="col-sm-12" style="padding: 5px;">
+        <a href="javascript://" ng-click="editDocument(document.id)">{{document.name}}</a>
+
+        <div style="float: right">
+            <button class="btn btn-info btn-sm" ng-click="editDocument(document.id)" translate>ISOGD.EditTheDocument</button>
+            <button class="btn btn-danger btn-sm" ng-click="removeDocument(document.id)" translate>ISOGD.RemoveTheDocument</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div>
+        <pagination total-items="documentsPager.totalNumberOfItems" ng-model="currentPage"
+                    items-per-page="itemsPerPage" ng-change="pageChanged()"
+                    class="pagination-sm" previous-text="&lsaquo;"
+                    next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size="pagerMaxSize"></pagination>
+        <label class="mgis-pagination-total-label">{{'Total'|translate}} :
+            {{documentsPager.totalNumberOfItems}}</label>
+    </div>
+</div>
+
+<div>
+    <button class="btn btn-info btn-sm" ng-click="addDocument(stateParams.volumeId)" translate>ISOGD.AddADocument</button>
+</div>

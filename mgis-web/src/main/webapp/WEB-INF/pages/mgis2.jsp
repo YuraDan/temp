@@ -31,6 +31,7 @@
 	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+	<script type="text/javascript" src="bower_components/angular-smart-table/dist/smart-table.js"></script>
 	<script type="text/javascript"
 			src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
 	<script type="text/javascript" src="bower_components/angular-utils-ui-breadcrumbs/uiBreadcrumbs.js"></script>
@@ -44,6 +45,9 @@
 	<!-- <script type="text/javascript" src="bower_components/angular-dialog-service/dist/dialogs.js"></script> -->
 	<script type="text/javascript" src="bower_components/select2/select2.js"></script>
 	<script type="text/javascript" src="bower_components/angular-ui-select/dist/select.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-mask/dist/mask.js"></script>
+	<%--<script type="text/javascript" src="bower_components/angular-cleanmask/angular-cleanmask.js"></script>--%>
+	<script type="text/javascript" src="app2/commons/angular-cleanmask.js"></script>
 	<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 
 	<link type="text/css" rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
@@ -93,68 +97,80 @@
 	<script type="text/javascript" src="app2/nc/nc-services.js"></script>
 	<script type="text/javascript" src="app2/nc/nc-caching-module.js"></script>
 
-	<!-- Property -->
-	<script type="text/javascript" src="app2/property/property-service.js"></script>
-	<script type="text/javascript" src="app2/property/property-module.js"></script>
-
 	<!-- Indicators -->
 	<script type="text/javascript" src="app2/indicators/indicator-services.js"></script>
 	<script type="text/javascript" src="app2/indicators/indicator-module.js"></script>
 	<script type="text/javascript" src="app2/indicators/price-indicator/price-indicator-module.js"></script>
 	<script type="text/javascript" src="app2/indicators/technical-indicator/technical-indicator-module.js"></script>
 
-	<!-- ISOGD -->
-	<script type="text/javascript" src="app2/isogd/isogd.js"></script>
-	<script type="text/javascript" src="app2/isogd/section/isogd-sections-service.js"></script>
-	<script type="text/javascript" src="app2/isogd/section/isogd-sections-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/volume/isogd-volumes-service.js"></script>
-	<script type="text/javascript" src="app2/isogd/volume/isogd-volumes-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/book/isogd-books-service.js"></script>
-	<script type="text/javascript" src="app2/isogd/book/isogd-books-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/document/isogd-documents-service.js"></script>
-	<script type="text/javascript" src="app2/isogd/document/isogd-documents-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/classifiers/classifiers.js"></script>
+	<!-- Documents -->
+	<script type="text/javascript" src="app2/documents/common/document-selector/document-selector-component.js"></script>
+	<script type="text/javascript" src="app2/documents/common/document-selector/list/document-selector-list.js"></script>
+
+	<script type="text/javascript" src="app2/documents/isogd/isogd.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/section/isogd-sections-service.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/section/isogd-sections-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/volume/isogd-volumes-service.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/volume/isogd-volumes-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/book/isogd-books-service.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/book/isogd-books-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/document/isogd-documents-service.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/document/isogd-documents-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/classifiers/classifiers.js"></script>
 	<script type="text/javascript"
-			src="app2/isogd/classifiers/documents/structure/isogd-docs-structure-service.js"></script>
+			src="app2/documents/isogd/classifiers/documents/structure/isogd-docs-structure-service.js"></script>
 	<script type="text/javascript"
-			src="app2/isogd/classifiers/documents/structure/isogd-docs-structure-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/classifiers/documents/types/isogd-docs-types-service.js"></script>
-	<script type="text/javascript" src="app2/isogd/classifiers/documents/types/isogd-docs-types-module.js"></script>
+			src="app2/documents/isogd/classifiers/documents/structure/isogd-docs-structure-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/classifiers/documents/types/isogd-docs-types-service.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/classifiers/documents/types/isogd-docs-types-module.js"></script>
 	<script type="text/javascript"
-			src="app2/isogd/classifiers/documents/representation/isogd-docs-representation-service.js"></script>
+			src="app2/documents/isogd/classifiers/documents/representation/isogd-docs-representation-service.js"></script>
 	<script type="text/javascript"
-			src="app2/isogd/classifiers/documents/representation/isogd-docs-representation-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/document-selector/document-selector-component.js"></script>
-	<script type="text/javascript" src="app2/isogd/document-search/document-search-module.js"></script>
-	<script type="text/javascript" src="app2/isogd/document-search/document-search-service.js"></script>
+			src="app2/documents/isogd/classifiers/documents/representation/isogd-docs-representation-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/document-selector/document-selector-component.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/document-search/document-search-module.js"></script>
+	<script type="text/javascript" src="app2/documents/isogd/document-search/document-search-service.js"></script>
+
+	<!-- Admin -->
 	<script type="text/javascript" src="app2/admin/admin.js"></script>
 	<script type="text/javascript" src="app2/admin/users/admin-users-service.js"></script>
 	<script type="text/javascript" src="app2/admin/users/admin-users-module.js"></script>
 	<script type="text/javascript" src="app2/admin/privileges/admin-privileges-service.js"></script>
 	<script type="text/javascript" src="app2/admin/privileges/admin-privileges-module.js"></script>
 
-	<!-- Capital Constructs -->
-	<script type="text/javascript" src="app2/capital-constructs/capital-construct-selector/capital-construct-selector-module.js"></script>
-	<script type="text/javascript" src="app2/capital-constructs/capital-constructs.js"></script>
-	<script type="text/javascript" src="app2/capital-constructs/characteristics/characteristics-module.js"></script>
-	<script type="text/javascript" src="app2/capital-constructs/characteristics/characteristics-services.js"></script>
-	<script type="text/javascript"
-			src="app2/capital-constructs/constructive-element/constructive-element-module.js"></script>
-	<script type="text/javascript"
-			src="app2/capital-constructs/constructive-element-type/constructive-element-type-module.js"></script>
-	<script type="text/javascript"
-			src="app2/capital-constructs/constructive-element-type/constructive-element-type-service.js"></script>
-	<script type="text/javascript" src="app2/capital-constructs/construct/construct-module.js"></script>
-	<script type="text/javascript" src="app2/capital-constructs/construct/construct-service.js"></script>
+	<!-- Property -->
+	<script type="text/javascript" src="app2/property/property-service.js"></script>
+	<script type="text/javascript" src="app2/property/property-module.js"></script>
 
-	<link type="text/css" rel="stylesheet" href="app2/lands/land/lands-leaflet-control.css">
-	<script type="text/javascript" src="app2/lands/land/lands-leaflet-control.js"></script>
-	<script type="text/javascript" src="app2/lands/land-selector/land-selector-module.js"></script>
-	<script type="text/javascript" src="app2/lands/lands.js"></script>
-	<script type="text/javascript" src="app2/lands/land/land-services.js"></script>
-	<script type="text/javascript" src="app2/lands/land/land-map-module.js"></script>
-	<script type="text/javascript" src="app2/lands/land/land-modules.js"></script>
-	<script type="text/javascript" src="app2/lands/land/land-maps-module.js"></script>
+	<!-- Capital Constructs -->
+	<script type="text/javascript" src="app2/property/oks/capital-construct-selector/capital-construct-selector-module.js"></script>
+	<script type="text/javascript" src="app2/property/oks/capital-constructs.js"></script>
+	<script type="text/javascript" src="app2/property/oks/characteristics/characteristics-module.js"></script>
+	<script type="text/javascript" src="app2/property/oks/characteristics/characteristics-services.js"></script>
+	<script type="text/javascript"
+			src="app2/property/oks/constructive-element/constructive-element-module.js"></script>
+	<script type="text/javascript"
+			src="app2/property/oks/constructive-element-type/constructive-element-type-module.js"></script>
+	<script type="text/javascript"
+			src="app2/property/oks/constructive-element-type/constructive-element-type-service.js"></script>
+	<script type="text/javascript" src="app2/property/oks/construct/construct-module.js"></script>
+	<script type="text/javascript" src="app2/property/oks/construct/construct-service.js"></script>
+	<script type="text/javascript" src="app2/property/oks/construct/construct-map-module.js"></script>
+	<script type="text/javascript" src="app2/property/oks/construct/construct-maps-module.js"></script>
+	<link type="text/css" rel="stylesheet" href="app2/property/oks/construct/constructs-leaflet-control.css">
+	<script type="text/javascript" src="app2/property/oks/construct/constructs-leaflet-control.js"></script>
+
+	<!-- Lands -->
+	<link type="text/css" rel="stylesheet" href="app2/property/lands/land/lands-leaflet-control.css">
+	<script type="text/javascript" src="app2/property/lands/land/lands-leaflet-control.js"></script>
+	<script type="text/javascript" src="app2/property/lands/land-selector/land-selector-module.js"></script>
+	<script type="text/javascript" src="app2/property/lands/lands.js"></script>
+	<script type="text/javascript" src="app2/property/lands/land/land-services.js"></script>
+	<script type="text/javascript" src="app2/property/lands/land/land-map-module.js"></script>
+	<script type="text/javascript" src="app2/property/lands/land/land-modules.js"></script>
+	<script type="text/javascript" src="app2/property/lands/land/land-maps-module.js"></script>
+
+
 	<script type="text/javascript" src="app2/terr-zones/terr-zones.js"></script>
 	<script type="text/javascript" src="app2/terr-zones/zone/zone-service.js"></script>
 	<script type="text/javascript" src="app2/terr-zones/zone/zone-module.js"></script>
@@ -194,6 +210,10 @@
 	<script type="text/javascript" src="app2/data-exchange/data-exchange.js"></script>
 	<script type="text/javascript" src="app2/data-exchange/import/import-module.js"></script>
 	<script type="text/javascript" src="app2/data-exchange/export/export-module.js"></script>
+
+	<!-- AnalyticsAndStatistics -->
+	<script type="text/javascript" src="app2/analytics/analytics.js"></script>
+	<script type="text/javascript" src="app2/analytics/analytics-service.js"></script>
 
 	<!-- Reports -->
 	<script type="text/javascript" src="app2/reports/reports.js"></script>

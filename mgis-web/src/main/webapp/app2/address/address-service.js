@@ -4,13 +4,14 @@ angular.module("mgis.address.service", ["ngResource",
 	.factory("AddressService", function ($resource, $q, MGISErrorService) {
 		var res = $resource('rest/addresses/:id.json');
 		return {
-			get: function (id, first, max, name) {
+			get: function (id, first, max, name, oktmo) {
 				var deferred = $q.defer();
 				res.get({
 					id: id,
 					first: first,
 					max: max,
-					name: name
+					name: name,
+					oktmo: oktmo
 				}, {}, function (data) {
 					deferred.resolve(data);
 				}, function (error) {
@@ -32,7 +33,8 @@ angular.module("mgis.address.service", ["ngResource",
 					home: item.home,
 					housing: item.housing,
 					building: item.building,
-					apartment: item.apartment
+					apartment: item.apartment,
+					other: item.other
 				};
 				res.save({id: item.id}, address, function (data) {
 					deferred.resolve(data);
@@ -49,7 +51,7 @@ angular.module("mgis.address.service", ["ngResource",
 					deferred.resolve(data);
 				});
 				return deferred.promise;
-			},
+			}
 		}
 	})
 	.factory("AddressElementSearchService", function ($resource, $q, MGISErrorService) {

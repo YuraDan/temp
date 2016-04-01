@@ -37,6 +37,7 @@ public abstract class ResolverBase<T> implements ILandResolver<T> {
 			reportCollector.report(name);
 		} catch (Exception ex) {
 			reportCollector.report(name, ex);
+			System.out.println(ex);
 		}
 	}
 

@@ -4,13 +4,14 @@ import javax.persistence.*;
 
 /**
  * Created by Alexander Arakelyan on 22.06.15.
+ *
  */
 @Entity
 @Table(name = "isogd_cls_document_type")
 public class Territory implements Cloneable {
 
     @Id
-    @SequenceGenerator(name = "pk_sequence", sequenceName = "common_classifiers_seq", allocationSize = 1)
+    @SequenceGenerator(name = "pk_sequence", sequenceName = "common_classifiers_territory_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Column
     private Long id;
@@ -67,6 +68,7 @@ public class Territory implements Cloneable {
         this.parent = parent;
     }
 
+    @SuppressWarnings("CloneDoesntCallSuperClone")
     public Territory clone() {
         Territory territory = new Territory();
         territory.setId(id);

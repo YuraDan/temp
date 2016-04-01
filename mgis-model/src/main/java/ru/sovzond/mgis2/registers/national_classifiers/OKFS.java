@@ -69,13 +69,14 @@ public class OKFS implements Cloneable {
 		this.gatheringParent = gatheringParent;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKFS clone() {
 		OKFS form = new OKFS();
 		form.setId(id);
 		form.setCode(code);
 		form.setName(name);
-		form.setGatheringAlgo(gatheringAlgo);
-		form.setGatheringParent(gatheringParent != null ? gatheringParent.clone() : null);
+		form.setGatheringAlgo(getGatheringAlgo());
+		form.setGatheringParent(getGatheringParent() != null ? getGatheringParent().clone() : null);
 		return form;
 	}
 

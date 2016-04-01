@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class GisServer implements Cloneable {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_layer_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "mgis2_gis_server_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -46,6 +46,7 @@ public class GisServer implements Cloneable {
 		this.url = url;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public GisServer clone() {
 		GisServer gisServer = new GisServer();
 		gisServer.setCode(code);

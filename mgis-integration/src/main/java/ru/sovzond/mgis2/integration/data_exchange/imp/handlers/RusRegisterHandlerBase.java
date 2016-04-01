@@ -105,7 +105,7 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 	boolean t_IssueOrgan = false;
 	boolean t_MunicipalBoundary = false;
 	boolean t_Name_MB = false;
-	//-------Coord_System---------
+	//-------Coord_Srystem---------
 	boolean t_Coord_System = false;
 	//-------Certification_Doc-----
 	boolean t_Certification_Doc = false;
@@ -114,6 +114,9 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 	boolean t_Number_Cert = false;
 	boolean t_Appointment = false;
 	boolean t_FIO = false;
+	//-------object_realty----------
+	private boolean t_objectRealty;
+	//------------------------------
 	SimpleDateFormat dateFormat = new SimpleDateFormat(YYYY_MM_DD);
 	private NamespaceSupport namespaceSupport;
 	private String[] qNames = new String[3];
@@ -123,7 +126,6 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 
 	private final BuildingBuilder buildingBuilder;
 	private final IncompleteBuilder incompleteBuilder;
-	private boolean t_objectRealty;
 	private ILandResolver<LandDTO> landResolver;
 	private ILandResolver<BuildingDTO> buildingResolver;
 	private ILandResolver<IncompleteDTO> incompleteConstructResolver;
@@ -156,6 +158,7 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 				qName -> byNode(qName, LEVEL_1),
 				qName -> byNode(qName, NOTE),
 				qName -> byNode(qName, CADASTRAL_COST),
+				qName -> byNode(qName, KEY_PARAMETER),
 				qName -> byNode(qName, ENTITY_SPATIAL),
 				qName -> byNode(qName, SPATIAL_ELEMENT),
 				qName -> byNode(qName, SPELEMENT_UNIT),
@@ -183,6 +186,7 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 				qName -> byNode(qName, LEVEL_1),
 				qName -> byNode(qName, NOTE),
 				qName -> byNode(qName, CADASTRAL_COST),
+				qName -> byNode(qName, KEY_PARAMETER),
 				qName -> byNode(qName, ENTITY_SPATIAL),
 				qName -> byNode(qName, SPATIAL_ELEMENT),
 				qName -> byNode(qName, SPELEMENT_UNIT),
@@ -351,6 +355,7 @@ public abstract class RusRegisterHandlerBase extends DefaultHandler {
 		//-------Utiliz--------------------------
 		if (byNode(qName2, UTILIZATION) && t_Parcel) {
 			t_Utilization = true;
+			landDTO.setUtilizationByNc(byNodeAttr(attributes, UTILIZ_ATTR_NC));
 			landDTO.setUtilizationByDoc(byNodeAttr(attributes, UTILIZ_ATTR));
 			t_Utilization = false;
 		}

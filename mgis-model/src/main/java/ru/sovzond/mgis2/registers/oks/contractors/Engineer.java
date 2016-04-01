@@ -13,12 +13,13 @@ import javax.persistence.Table;
  *
  *         Кадастровый инженер
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "rosreg_oks_engineer")
 public class Engineer {
 
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_entity_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "rosreg_oks_engineer_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -52,4 +53,6 @@ public class Engineer {
 	 */
 	@Column
 	private String organizationName;
+
+
 }

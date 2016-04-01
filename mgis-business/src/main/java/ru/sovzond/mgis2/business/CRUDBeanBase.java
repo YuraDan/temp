@@ -11,12 +11,14 @@ import java.util.List;
 
 /**
  * Created by Alexander Arakelyan on 20/06/15.
+ *
  */
 public abstract class CRUDBeanBase<T> {
 
 	protected final Class<T> persistentClass;
 
 	public CRUDBeanBase() {
+		//noinspection unchecked
 		persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
@@ -52,4 +54,5 @@ public abstract class CRUDBeanBase<T> {
 	public void remove(T entity) {
 		getPageableDao().delete(entity);
 	}
+
 }

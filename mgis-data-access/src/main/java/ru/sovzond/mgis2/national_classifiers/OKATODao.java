@@ -8,8 +8,11 @@ import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
 import ru.sovzond.mgis2.registers.national_classifiers.OKATO;
 
+import java.util.List;
+
 /**
  * Created by Alexander Arakelyan on 29.07.15.
+ * modify by y.donchenko
  */
 @Repository
 public class OKATODao extends CRUDDaoBase<OKATO> {
@@ -17,8 +20,24 @@ public class OKATODao extends CRUDDaoBase<OKATO> {
 		return new OKATOPagerBuilder(code, name, orderBy, first, max);
 	}
 
-	public OKATO findByCode(String code) {
-		return (OKATO) createCriteria().add(Restrictions.eq("code", code)).uniqueResult();
+	public OKATO findByCode(String code) { //if more then one result return OKATO with control number 1
+		List<OKATO> list = createCriteria().add(Restrictions.eq("code", code)).list();
+
+		if (list.size() > 1) {
+			return findMainOkatoFromList(list);
+		} else if (list.size() == 1) {
+			//return (OKATO) createCriteria().add(Restrictions.eq("code", code)).uniqueResult();
+			return list.get(0);
+		}
+		return null;
+	}
+
+
+	private OKATO findMainOkatoFromList(List<OKATO> list) {
+		for (OKATO okato : list) {
+			if (okato.getControlNumber() == 1) return okato;
+		}
+		return null;
 	}
 
 	private class OKATOPagerBuilder extends PagerBuilderCriteria<OKATO> {
@@ -34,10 +53,10 @@ public class OKATODao extends CRUDDaoBase<OKATO> {
 		@Override
 		protected void applyFilter(Criteria criteria) {
 			if (code != null && code.length() > 0) {
-				criteria.add(Restrictions.like("code", code));
+				criteria.add(Restrictions.like("code", "%" + code + "%"));
 			}
 			if (name != null && name.length() > 0) {
-				criteria.add(Restrictions.like("name", "%" + name + "%"));
+				criteria.add(Restrictions.ilike("name", "%" + name + "%"));
 			}
 		}
 	}

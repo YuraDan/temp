@@ -89,15 +89,16 @@ public class OKEI implements Cloneable {
 		this.literalNameInternational = literalNameInternational;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKEI clone() {
 		OKEI okei = new OKEI();
 		okei.setId(id);
 		okei.setCode(code);
-		okei.setLiteralNameInternational(literalNameInternational);
-		okei.setLiteralNameNational(literalNameNational);
+		okei.setLiteralNameInternational(getLiteralNameInternational());
+		okei.setLiteralNameNational(getLiteralNameNational());
 		okei.setName(name);
-		okei.setShortNameInternational(shortNameInternational);
-		okei.setShortNameNational(shortNameNational);
+		okei.setShortNameInternational(getShortNameInternational());
+		okei.setShortNameNational(getShortNameNational());
 		return okei;
 	}
 

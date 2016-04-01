@@ -18,6 +18,7 @@ public abstract class ConstructBuilder<T extends ConstructDTO> extends Hierarchi
 	protected final DoubleNodeBuilder area;
 	protected final AddressBuilder address;
 	protected final CadastralCostBuilder cadastralCost;
+	protected final KeyParameterBuilder keyParameter;
 	protected final EntitySpatialBuilder entitySpatial;
 
 	public ConstructBuilder(
@@ -35,6 +36,7 @@ public abstract class ConstructBuilder<T extends ConstructDTO> extends Hierarchi
 			Predicate<String> level1Predicate,
 			Predicate<String> notePredicate,
 			Predicate<String> cadastralCostPredicate,
+			Predicate<String> keyParameterPredicate,
 			Predicate<String> entitySpatialPredicate,
 			Predicate<String> spatialElementPredicate,
 			Predicate<String> spelementUnitPredicate,
@@ -57,6 +59,7 @@ public abstract class ConstructBuilder<T extends ConstructDTO> extends Hierarchi
 		assignationBuilding = new StringNodeBuilder(this, assignationBuildingPredicate);
 		area = new DoubleNodeBuilder(this, areaPredicate);
 		cadastralCost = new CadastralCostBuilder(this, cadastralCostPredicate);
+		keyParameter = new KeyParameterBuilder(this, keyParameterPredicate);
 		entitySpatial = new EntitySpatialBuilder(this, entitySpatialPredicate, spatialElementPredicate, spelementUnitPredicate, ordinatePredicate);
 	}
 
@@ -70,7 +73,7 @@ public abstract class ConstructBuilder<T extends ConstructDTO> extends Hierarchi
 
 	@Override
 	protected NodeBuilder[] children() {
-		return new NodeBuilder[]{objectType, assignationBuilding, area, address, cadastralCost, entitySpatial};
+		return new NodeBuilder[]{objectType, assignationBuilding, area, address, cadastralCost, entitySpatial, keyParameter};
 	}
 
 	@Override

@@ -5,11 +5,12 @@ import javax.persistence.*;
 /**
  * Created by Alexander Arakelyan on 08.09.15.
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "kladr_street", indexes = {@Index(columnList = "code", name = "kladr_street_code_index"), @Index(columnList = "name", name = "kladr_street_name_index")})
 public class KLADRStreet implements Cloneable {
 	@Id
-	@SequenceGenerator(name = "pk_sequence", sequenceName = "kladr_seq", allocationSize = 1)
+	@SequenceGenerator(name = "pk_sequence", sequenceName = "kladr_street_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
 	@Column
 	private Long id;
@@ -128,6 +129,7 @@ public class KLADRStreet implements Cloneable {
 		this.ocatd = ocatd;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public KLADRStreet clone() {
 		KLADRStreet street = new KLADRStreet();
 		street.setCode(code);

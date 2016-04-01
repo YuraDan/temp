@@ -1,0 +1,80 @@
+<div ng-controller="CapitalConstructsConstructListController">
+	<div class="container">
+		<form name="constructSearchForm" class="form-horizontal pull-right"
+			  style="position: relative; top: -60px; height: 0px;">
+			<div class="control-group">
+				<label for="constructName" translate>CapitalConstructs.Construct.Name</label>
+				<div class="controls form-inline">
+					<input type="text" id="constructName" name="constructName" ng-model="constructName"
+						   class="form-control"/>
+					<button class="btn btn-primary btn-sm" ng-click="find()" translate>Find</button>
+					<button class="btn btn-primary btn-sm" ng-click="displayOnTheMap()" translate>
+						CapitalConstructs.Construct.DisplayOnTheMap
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="row mgis-row-header">
+		<div class="col-sm-2" translate>CapitalConstructs.Construct.Name</div>
+		<div class="col-sm-2" translate>CadastralNumber</div>
+		<div class="col-sm-3" translate>Address</div>
+		<div class="col-sm-2" translate>CapitalConstructs.Construct.ActualUsage</div>
+		<div class="col-sm-3">
+		</div>
+	</div>
+
+	<div>
+		<div ng-repeat="item in constructsPager.list" ng-class="selectedIds[item.id].checked?'mgis-row-selected mgis-grid-row row':'mgis-grid-row row'" style="padding: 5px;">
+			<div class="col-sm-2">
+				<input type="checkbox" ng-model="selectedIds[item.id].checked"
+					   ng-click="checkConstructSelected(selectedIds[item.id].checked,item)" ng-true-value="true"
+					   ng-false-value="false"/>
+				<a href="javascript:void(0)" ng-click="editItem(item.id)">{{item.name}}</a>
+				<span class="glyphicon glyphicon-map-marker" ng-if="item.spatialData|spatialDataExistsFilter"></span>
+			</div>
+			<div class="col-sm-2">
+				{{item.cadastralNumber}}
+			</div>
+			<div class="col-sm-3">
+				<a href="javascript:void(0)" ng-click="editAddressItem(item.address.id)">{{item.address|addressFormatter}}</a>
+			</div>
+			<div class="col-sm-2">{{item.actualUsage}}</div>
+			<div class="col-sm-3">
+				<button class="btn btn-warning btn-sm" ng-click="editItem(item.id)" translate>Edit</button>
+				<button class="btn btn-danger btn-sm" ng-click="deleteItem(item.id)" translate>Delete</button>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div>
+			<pagination total-items="constructsPager.totalNumberOfItems" ng-model="currentPage"
+						items-per-page="itemsPerPage" ng-change="pageChanged()"
+						class="pagination-sm" previous-text="&lsaquo;"
+						next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+						max-size="pagerMaxSize"
+					></pagination>
+			<label class="mgis-pagination-total-label">{{'Total'|translate}} :
+				{{constructsPager.totalNumberOfItems}}</label>
+		</div>
+
+	</div>
+
+	<div>
+		<button class="btn btn-info btn-sm" ng-click="addItem()" translate>Add</button>
+		<button class="btn btn-warning btn-sm" ng-click="selectAll()" translate>Select.All</button>
+		<span ng-if="isNotEmpty(selectedIds)">
+			<button class="btn btn-warning btn-sm" ng-click="deselectAll()" translate>
+				Select.DeselectAll
+			</button>
+			<button class="btn btn-danger btn-sm" ng-click="deleteSelectedItems()" translate>
+				Delete.Selected
+			</button>
+		</span>
+
+
+	</div>
+
+</div>

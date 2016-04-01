@@ -14,6 +14,7 @@ angular.module("mgis.persons.person.natural", ["ui.router", "ui.bootstrap", //
 	.factory("NaturalPersonModule", function (NaturalPersonService, MGISCommonsModalForm, $rootScope, NcOKVEDService, NaturalPersonCertificateTypeService) {
 
 		function editItem0(modalScope, updateFunction) {
+			modalScope.isNatural = true;
 			modalScope.refreshAvailableActivityTypes = function (name) {
 				NcOKVEDService.get("", 0, 15, name).then(function (okveds) {
 					modalScope.availableActivityTypes = okveds.list;
@@ -73,7 +74,7 @@ angular.module("mgis.persons.person.natural", ["ui.router", "ui.bootstrap", //
 		}
 	})
 	.controller("NaturalPersonSelectorController", function ($scope, $rootScope, NaturalPersonService, MGISCommonsModalForm, NcOKVEDService, NaturalPersonModule) {
-		$scope.list = new Array();
+		$scope.list = [];
 		$scope.first = 0;
 		$scope.max = 15;
 		$scope.name = $scope.person ? $scope.person.name : "";
@@ -118,16 +119,29 @@ angular.module("mgis.persons.person.natural", ["ui.router", "ui.bootstrap", //
 		}
 	})
 
-	.controller("NaturalPersonsController", function ($scope, NaturalPersonModule, NaturalPersonService) {
+	.controller("NaturalPersonsController", function ($scope,
+													  $filter,
+													  NaturalPersonModule,
+													  NaturalPersonService,
+													  CommonsPagerManager) {
 		$scope.currentPage = 1;
-		$scope.itemsPerPage = 15;
+		$scope.itemsPerPage = CommonsPagerManager.pageSize();
+		$scope.pagerMaxSize = CommonsPagerManager.maxSize();
+		$scope.searchText = "";
+		$scope.naturalPersonSurname = "";
+
 		function updateGrid() {
-			NaturalPersonService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage).then(function (data) {
+			NaturalPersonService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage, $scope.naturalPersonSurname)
+				.then(function (data) {
 				$scope.naturalPersonsPager = data;
 			})
 		}
 
 		$scope.pageChanged = function () {
+			updateGrid();
+		}
+
+		$scope.find = function () {
 			updateGrid();
 		}
 

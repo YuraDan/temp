@@ -21,6 +21,8 @@ public class LandDTO {
 	private Double cadastralCostValue;
 	private Integer cadastralCostUnit;
 	private String utilizationByDoc;
+	private String utilizationByNc;
+
 	private EntitySpatialDTO entitySpatial;
 
 	public String getCadastralNumber() {
@@ -142,5 +144,13 @@ public class LandDTO {
 
 	public void setEntitySpatial(EntitySpatialDTO entitySpatial) {
 		this.entitySpatial = entitySpatial;
+	}
+
+	public String getUtilizationByNc() {
+		return utilizationByNc;
+	}
+
+	public void setUtilizationByNc(String utilizationByNc) {
+		this.utilizationByNc = utilizationByNc;
 	}
 }

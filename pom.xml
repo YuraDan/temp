@@ -17,6 +17,7 @@
 		<hibernate.spatial.version>4.3</hibernate.spatial.version>
 		<jstl.version>1.2</jstl.version>
 		<junit.version>4.12</junit.version>
+		<jackson.version>2.5.3</jackson.version>
 	</properties>
 
 	<!-- add repositories for JTS and Hibernate Spatial and Hibernate (JBoss) -->

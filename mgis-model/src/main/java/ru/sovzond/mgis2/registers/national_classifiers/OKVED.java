@@ -57,6 +57,7 @@ public class OKVED implements Cloneable {
 		this.name = name;
 	}
 
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public OKVED clone() {
 		OKVED okved = new OKVED();
 		okved.setId(id);

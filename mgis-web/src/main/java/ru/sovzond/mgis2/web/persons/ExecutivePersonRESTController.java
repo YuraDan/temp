@@ -3,7 +3,7 @@ package ru.sovzond.mgis2.web.persons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
-import ru.sovzond.mgis2.registers.persons.ExecutivePerson;
+import ru.sovzond.mgis2.persons.model.ExecutivePerson;
 import ru.sovzond.mgis2.persons.ExecutivePersonBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
 

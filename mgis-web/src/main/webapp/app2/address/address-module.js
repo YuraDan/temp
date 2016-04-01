@@ -15,7 +15,7 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 
 		function editItem0(modalScope, updateFunction) {
 			var min = 0;
-			var max = 15;
+			var max = 30;
 
 			function refreshAvailableProperty(property, filter) {
 				AddressElementSearchService.get("", min, max, filter).then(function (data) {
@@ -51,6 +51,13 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 				return null;
 			}
 
+			function retrieveOther() {
+				if (modalScope.address && modalScope.address.other) {
+					return modalScope.address && modalScope.address.other;
+				}
+				return null;
+			}
+
 			modalScope.refreshAvailableOKATOs = function (name) {
 				NcOKATOService.get("", min, max, null, name).then(function (data) {
 					modalScope.availableOKATOs = data.list;
@@ -58,6 +65,16 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 			}
 			modalScope.refreshAvailableOKTMOs = function (name) {
 				NcOKTMOService.get("", min, max, null, name).then(function (data) {
+					modalScope.availableOKTMOs = data.list;
+				});
+			}
+			modalScope.refreshAvailableOKATOsByCode = function (code) {
+				NcOKATOService.get("", min, max, code, null).then(function (data) {
+					modalScope.availableOKATOs = data.list;
+				});
+			}
+			modalScope.refreshAvailableOKTMOsByCode = function (code) {
+				NcOKTMOService.get("", min, max, code, null).then(function (data) {
 					modalScope.availableOKTMOs = data.list;
 				});
 			}
@@ -143,6 +160,10 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 				//return modalScope.availableApartments;
 			}
 
+			modalScope.refreshAvailableOther = function (name) {
+				return new Array();
+			}
+
 			function emptyRegion() {
 				modalScope.address.region = {};
 				emptyLocality();
@@ -179,6 +200,7 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 			function emptyApartment() {
 				modalScope.address.apartment = "";
 			}
+
 
 			modalScope.subjectSelected = function () {
 				modalScope.refreshAvailableRegions("");
@@ -259,9 +281,12 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = 15;
+		$scope.pagerMaxSize = 10;
+		$scope.addressFind = "";
+		$scope.oktmoFind = "";
 
 		function updateGrid() {
-			AddressService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage).then(function (data) {
+			AddressService.get("", ($scope.currentPage - 1) * $scope.itemsPerPage, $scope.itemsPerPage, $scope.addressFind, $scope.oktmoFind).then(function (data) {
 				$scope.addressPager = data;
 			});
 		}
@@ -282,6 +307,15 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 			AddressModule.remove(id, updateGrid);
 		}
 
+		$scope.find = function () {
+			updateGrid();
+		}
+
+		$scope.resetSearchClick = function () {
+			$scope.addressFind = "";
+			$scope.find();
+		}
+
 		updateGrid();
 	})
 	.filter("addressFormatter", function ($filter) {
@@ -296,6 +330,16 @@ angular.module("mgis.address", ["ui.bootstrap", "ui.select",
 					+ (address.building ? ", " + $filter("translate")("Address.Building.Short") + address.building : "")
 					+ (address.apartment ? ", " + $filter("translate")("Address.Apartment.Short") + address.apartment : "")
 					;
+			}
+			return undefined;
+		}
+	})
+	.filter("addressOtherFormater", function ($filter) {
+		return function (address) {
+			if (address.other && (!address.locality || !address.street)) {
+				return ("Из КПТ: " + address.other );
+			} else {
+				return address.other;
 			}
 			return undefined;
 		}

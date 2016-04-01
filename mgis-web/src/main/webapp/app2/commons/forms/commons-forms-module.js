@@ -73,7 +73,8 @@ angular.module("mgis.commons.forms", ["ui.bootstrap",
 				form: "=",
 				name: "@",
 				required: "=",
-				pattern: "="
+				pattern: "=",
+				mask: "="
 			},
 			templateUrl: "app2/commons/forms/text.htm",
 			controller: function ($scope) {

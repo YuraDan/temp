@@ -6,9 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.sovzond.mgis2.dataaccess.base.impl.CRUDDaoBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderBase;
 import ru.sovzond.mgis2.dataaccess.base.impl.PagerBuilderCriteria;
-import ru.sovzond.mgis2.registers.persons.ExecutivePerson;
-
-import javax.naming.spi.ResolveResult;
+import ru.sovzond.mgis2.persons.model.ExecutivePerson;
 
 /**
  * Created by Alexander Arakelyan on 31.07.15.
@@ -31,9 +29,9 @@ public class ExecutivePersonDao extends CRUDDaoBase<ExecutivePerson> {
 		protected void applyFilter(Criteria criteria) {
 			if (name != null && name.length() > 0) {
 				criteria.add(Restrictions.or(
-						Restrictions.like("surname", "%" + name + "%"),
-						Restrictions.like("firstName", "%" + name + "%"),
-						Restrictions.like("patronymic", "%" + name + "%")
+						Restrictions.ilike("surname", "%" + name + "%"),
+						Restrictions.ilike("firstName", "%" + name + "%"),
+						Restrictions.ilike("patronymic", "%" + name + "%")
 				));
 			}
 		}

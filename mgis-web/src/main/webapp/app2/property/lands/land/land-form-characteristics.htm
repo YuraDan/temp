@@ -1,0 +1,176 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.Characteristics.CostRights</h3>
+	</div>
+	<div class="panel-body">
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.CadastralCost</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="cadastralCost" ng-model="land.characteristics.cadastralCost"/>
+			</div>
+		</div>
+
+		<commons-forms-date form="landForm" name="cadastralCostImplementationDate" property="land.characteristics.cadastralCostImplementationDate"
+							title="Lands.Land.Characteristics.CadastralCostImplementationDate"></commons-forms-date>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.SpecificIndexOfCadastralCost</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="specificIndexOfCadastralCost"
+					   ng-model="land.characteristics.specificIndexOfCadastralCost"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.MarketCost</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="marketCost" ng-model="land.characteristics.marketCost"/>
+			</div>
+		</div>
+
+		<commons-forms-date form="landForm" name="marketCostImplementationDate" property="land.characteristics.marketCostImplementationDate"
+							title="Lands.Land.Characteristics.MarketCostImplementationDate"></commons-forms-date>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.MortgageValue</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="mortgageValue" ng-model="land.characteristics.mortgageValue"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.StandardCost</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="standardCost" ng-model="land.characteristics.standardCost"/>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.Characteristics.SocialTechnical</h3>
+	</div>
+	<div class="panel-body">
+
+		<!--se Временно скрыто, заменить на нормальный элемент-->
+		<!--<div class="form-group row">-->
+			<!--<div class="col-sm-4">-->
+				<!--<label translate>Lands.Land.Characteristics.TypeOfEngineeringSupportArea</label>-->
+			<!--</div>-->
+			<!--<div class="col-sm-8">-->
+				<!--<p class="input-group input-group-sm">-->
+					<!--<multiselect-->
+							<!--ng-model="land.characteristics.typeOfEngineeringSupportArea"-->
+							<!--options="c.name for c in availableTypesfEngineeringSuportAreas"-->
+							<!--data-multiple="false"-->
+							<!--data-compare-by="id"-->
+							<!--scroll-after-rows="15">-->
+					<!--</multiselect>-->
+				<!--</p>-->
+			<!--</div>-->
+		<!--</div>-->
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.DistanceToTheConnectionPoint</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="distanceToTheConnectionPoint"
+					   ng-model="land.characteristics.distanceToTheConnectionPoint"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.DistanceToTheConnectionPointLength</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="distanceToTheConnectionPointLength"
+					   ng-model="land.characteristics.distanceToTheConnectionPointLength"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.DistanceToTheObjectsOfTransportInfrastructure</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="distanceToTheObjectsOfTransportInfrastructure"
+					   ng-model="land.characteristics.distanceToTheObjectsOfTransportInfrastructure"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.NearestMunicipalEntity</label>
+			</div>
+			<div class="col-sm-8">
+				<p class="input-group input-group-sm">
+
+					<ui-select ng-model="land.characteristics.nearestMunicipalEntity" theme="select2" style="width: 450px;">
+						<ui-select-match placeholder="">{{land.characteristics.nearestMunicipalEntity.name}}</ui-select-match>
+						<ui-select-choices repeat="terrZone in availableNearestMunicipalEntities | filter: {name: $select.search}"
+										   refresh="refreshAvailableNearestMunicipalEntities($select.search)"
+										   refresh-delay="0">
+							{{terrZone.name}}
+							<div ng-bind-html="terrZone.name"></div>
+						</ui-select-choices>
+					</ui-select>
+
+				</p>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.DistanceToTheNearestMunicipalEntity</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="distanceToTheNearestMunicipalEntity"
+					   ng-model="land.characteristics.distanceToTheNearestMunicipalEntity"/>
+			</div>
+		</div>
+
+		<commons-forms-drop-down-ajax form="landForm" name="characteristicsCountrySubject"
+									  property="land.characteristics.countrySubject"
+									  title="Lands.Land.Characteristics.CountrySubject"
+									  available-elements="availableCountrySubjects"
+									  available-elements-loader="refreshAvailableCountrySubjects(search)"
+									  element-label-expression="(element.name + ' (' + element.code + ')')"
+				></commons-forms-drop-down-ajax>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Characteristics.DistanceToTheCountrySubjectCenter</label>
+			</div>
+
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="distanceToTheCountrySubjectCenter"
+					   ng-model="land.characteristics.distanceToTheCountrySubjectCenter"/>
+			</div>
+		</div>
+	</div>
+</div>

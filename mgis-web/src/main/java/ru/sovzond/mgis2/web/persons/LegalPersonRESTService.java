@@ -7,14 +7,17 @@ import org.springframework.web.bind.annotation.*;
 import ru.sovzond.mgis2.address.Address;
 import ru.sovzond.mgis2.address.AddressBean;
 import ru.sovzond.mgis2.dataaccess.base.PageableContainer;
+import ru.sovzond.mgis2.documents.model.nesting.IncludedDocuments;
+import ru.sovzond.mgis2.documents.services.nesting.IIncludedDocumentsService;
 import ru.sovzond.mgis2.national_classifiers.*;
 import ru.sovzond.mgis2.persons.LegalPersonBean;
 import ru.sovzond.mgis2.persons.PersonBean;
+import ru.sovzond.mgis2.persons.model.LegalPerson;
+import ru.sovzond.mgis2.persons.model.Person;
 import ru.sovzond.mgis2.registers.national_classifiers.OKATO;
 import ru.sovzond.mgis2.registers.national_classifiers.OKOGU;
 import ru.sovzond.mgis2.registers.national_classifiers.OKOPF;
 import ru.sovzond.mgis2.registers.national_classifiers.OKVED;
-import ru.sovzond.mgis2.registers.persons.LegalPerson;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Alexander Arakelyan on 30/08/15.
+ *
  */
 @RestController
 @RequestMapping("/persons/legal-persons")
@@ -52,6 +56,9 @@ public class LegalPersonRESTService implements Serializable {
 	@Autowired
 	private PersonBean personBean;
 
+	@Autowired
+	private IIncludedDocumentsService includedDocumentsService;
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@Transactional
 	public PageableContainer<LegalPerson> list(@RequestParam(value = "name", defaultValue = "") String name, @RequestParam(value = "orderBy", defaultValue = "") String orderBy, @RequestParam(defaultValue = "0") int first, @RequestParam(defaultValue = "0") int max) {
@@ -67,11 +74,11 @@ public class LegalPersonRESTService implements Serializable {
 		} else {
 			legalPerson1 = legalPersonBean.load(id);
 		}
-		BeanUtils.copyProperties(legalPerson, legalPerson1, new String[]{"id", "ownershipForm", "founders", "activityType", "okogu", "organizationalForm", "actualAddressTerritoryOkatoCode", "actualAddress", "legalAddressTerritoryOkatoCode", "legalAddress",});
+		BeanUtils.copyProperties(legalPerson, legalPerson1, "id", "ownershipForm", "founders", "activityType", "okogu", "organizationalForm", "actualAddressTerritoryOkatoCode", "actualAddress", "legalAddressTerritoryOkatoCode", "legalAddress", "documents");
 		legalPerson1.setOwnershipForm(legalPerson.getOwnershipForm() != null ? ownershipFormBean.load(legalPerson.getOwnershipForm().getId()) : null);
 		if (legalPerson.getFounders() != null && legalPerson.getFounders().size() > 0) {
 			legalPerson1.getFounders().clear();
-			List<Long> founderIds = legalPerson.getFounders().stream().map(person -> person.getId()).collect(Collectors.toList());
+			List<Long> founderIds = legalPerson.getFounders().stream().map(Person::getId).collect(Collectors.toList());
 			legalPerson1.getFounders().addAll(personBean.load(founderIds));
 		}
 
@@ -98,6 +105,18 @@ public class LegalPersonRESTService implements Serializable {
 		Address legalAddress = legalPerson.getLegalAddress();
 		legalPerson1.setLegalAddress(legalAddress != null && legalAddress.getId() != null && legalAddress.getId() != 0 ? addressBean.load(legalAddress.getId()) : null);
 
+		Long legalPersonDocumentsId = legalPerson.getDocuments() != null ? legalPerson.getDocuments().getId() : null;
+		if (legalPersonDocumentsId != null && legalPersonDocumentsId != 0) {
+			legalPerson1.setDocuments(includedDocumentsService.load(legalPersonDocumentsId));
+		}
+
+		// IncludedDocuments
+		IncludedDocuments documents = legalPerson.getDocuments();
+		IncludedDocuments documents1 = includedDocumentsService.syncIncludedDocuments(legalPerson1.getDocuments(), documents);
+		if(documents1 != null) {
+			legalPerson1.setDocuments(documents1);
+			includedDocumentsService.save(documents1);
+		}
 
 		return legalPersonBean.save(legalPerson1).clone();
 	}

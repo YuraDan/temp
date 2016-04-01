@@ -1,0 +1,118 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.CadastralInformation</h3>
+	</div>
+	<div class="panel-body">
+		<!-- CadastralNumber -->
+		<commons-forms-text form="landForm" name="cadastralNumber" property="land.cadastralNumber" required="true"
+							pattern="LAND_CADASTRAL_NUMBER" mask="LAND_CADASTRAL_NUMBER_MASK" title="CadastralNumber"></commons-forms-text>
+
+		<commons-forms-drop-down form="landForm" name="landCategory" property="land.landCategory" required="true"
+								 title="Lands.LandCategory" available-elements="availableLandCategories"></commons-forms-drop-down>
+
+		<commons-forms-date form="landForm" name="docDate" property="land.stateRealEstateCadastreaStaging" required="true"
+							title="Lands.Land.StateRealEstateCadastralStaging"></commons-forms-date>
+
+		<commons-forms-drop-down form="landForm" name="cadastralRecordStatus" property="land.cadastralRecordStatus"
+								 title="Lands.CadastralRecordStatus" available-elements="availableCadastralRecordStatus"
+								 element-label-expression="element.translateTemplate|translate">
+		</commons-forms-drop-down>
+
+		<commons-forms-drop-down form="landForm" name="landCadastralStatus" property="land.landCadastralStatus"
+								 title="Lands.LandCadastralStatus" available-elements="availableLandCadastralStatus"
+								 element-label-expression="element.translateTemplate|translate">
+		</commons-forms-drop-down>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Documents</h3>
+	</div>
+	<div class="panel-body">
+		<common-document-selector multiple-documents="true" documents="land.documents"></common-document-selector>
+	</div>
+</div>
+
+<div class="panel panel-default" ng-controller="LandsLandAreaController">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.Areas.SquareMeters</h3>
+	</div>
+	<div class="panel-body">
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<div class="row" ng-repeat="area in areas track by $index" style="padding: 5px;">
+					<div class="col-sm-4">{{area.landAreaType.name}}</div>
+					<div class="col-sm-2">{{area.value}}</div>
+					<div class="col-sm-6">
+						<button class="btn btn-info btn-sm" ng-click="editLandArea(area)" translate>Edit</button>
+						<button class="btn btn-danger btn-sm" ng-click="removeLandArea(area)" translate>Delete</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+			</div>
+			<div class="col-sm-8">
+				<div class="form-group form-group-sm">
+					<button class="btn btn-info btn-sm" ng-click="addLandArea()" translate>Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.AllowedUsage</h3>
+	</div>
+	<div class="panel-body">
+
+		<commons-forms-drop-down form="landForm" name="allowedUsageByDictionary" property="land.allowedUsageByDictionary"
+								 title="Lands.Land.AllowedUsage.ByDictionary" available-elements="availableLandsAllowedUsage"
+								 element-label-expression="(element.name + (element.parent?' ('+element.parent.name+')' + (element.parent.parent?' ('+element.parent.parent.name+')':'') : ''))"
+				></commons-forms-drop-down>
+
+		<commons-forms-text form="landForm" name="allowedUsageByDocument" property="land.allowedUsageByDocument"
+							title="Lands.Land.AllowedUsage.ByDocument"></commons-forms-text>
+
+		<commons-forms-drop-down-ajax form="landForm" name="allowedUsageByTerritorialZone"
+									  property="land.allowedUsageByTerritorialZone"
+									  title="TerritorialZones.Zone"
+									  available-elements="availableAllowedUsageByTerritorialZones"
+									  available-elements-loader="refreshAvailableAllowedUsageByTerritorialZones(search)"
+									  element-filter="name"
+									  element-label-expression="name"
+				></commons-forms-drop-down-ajax>
+
+	</div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 translate>Lands.Land.Address</h3>
+	</div>
+	<div class="panel-body">
+
+		<commons-forms-drop-down-ajax form="landForm" name="addressOfMunicipalEntity"
+									  property="land.addressOfMunicipalEntity"
+									  title="MunicipalEntity"
+									  available-elements="availableAddressMunicipalEntities"
+									  available-elements-loader="refreshAvailableMunicipalEntities(search)"
+				></commons-forms-drop-down-ajax>
+
+		<commons-forms-text form="landForm" name="addressPlacement" property="land.addressPlacement"
+							title="Lands.Land.Placement"></commons-forms-text>
+
+		<div class="form-group row">
+			<div class="col-sm-4">
+				<label translate>Lands.Land.Address</label>
+			</div>
+
+			<div class="col-sm-8">
+				<address-selector address="land.address"></address-selector>
+			</div>
+		</div>
+	</div>
+</div>

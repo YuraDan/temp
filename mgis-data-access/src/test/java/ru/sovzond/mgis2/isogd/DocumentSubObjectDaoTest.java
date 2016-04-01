@@ -7,8 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.sovzond.mgis2.dataaccess.base.HibernateConfiguration;
-import ru.sovzond.mgis2.isogd.classifiers.documents.DocumentSubObject;
-import ru.sovzond.mgis2.isogd.document.DocumentDao;
+import ru.sovzond.mgis2.documents.dao.isogd.section.impl.BookDao;
+import ru.sovzond.mgis2.documents.dao.isogd.section.impl.SectionDao;
+import ru.sovzond.mgis2.documents.dao.isogd.section.impl.VolumeDao;
+import ru.sovzond.mgis2.documents.model.isogd.section.Book;
+import ru.sovzond.mgis2.documents.model.isogd.section.Section;
+import ru.sovzond.mgis2.documents.model.isogd.section.Volume;
+import ru.sovzond.mgis2.documents.model.isogd.document.IsogdDocumentSubObject;
+import ru.sovzond.mgis2.documents.dao.isogd.document.impl.IsogdDocumentDao;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -31,7 +37,7 @@ public class DocumentSubObjectDaoTest {
     private VolumeDao volumeDao;
 
     @Autowired
-    private DocumentDao documentDao;
+    private IsogdDocumentDao documentDao;
 
     @Test
     @Transactional
@@ -53,7 +59,7 @@ public class DocumentSubObjectDaoTest {
                     volume.setName("testVolume1");
                     volume.setBook(book);
                     volumeDao.save(volume);
-                    List<DocumentSubObject> listAvailableDocumentSubObjects = documentDao.listAvailableDocumentSubObjects(volume);
+                    List<IsogdDocumentSubObject> listAvailableDocumentSubObjects = documentDao.listAvailableDocumentSubObjects(volume);
                     Assert.assertNotNull(listAvailableDocumentSubObjects);
                 } finally {
                     if (volume != null && volume.getId() > 0) {
